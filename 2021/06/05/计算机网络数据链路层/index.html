@@ -1,0 +1,304 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="计算机网络数据链路层"><meta name="keywords" content="计算机网络,数据链路层"><meta name="author" content="luo,1127959736@qq.com"><meta name="copyright" content="luo"><title>计算机网络数据链路层 | luo's Blog</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '5.4.0'
+} </script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="luo's Blog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E7%9A%84%E8%AE%BE%E8%AE%A1%E5%88%9D%E8%A1%B7"><span class="toc-number">1.</span> <span class="toc-text">数据链路层的设计初衷</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E8%B7%AF%EF%BC%8C%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E4%B8%8E%E5%B8%A7"><span class="toc-number">2.</span> <span class="toc-text">链路，数据链路与帧</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%93%BE%E8%B7%AF"><span class="toc-number">2.1.</span> <span class="toc-text">链路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF"><span class="toc-number">2.2.</span> <span class="toc-text">数据链路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%A7"><span class="toc-number">2.3.</span> <span class="toc-text">帧</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E4%B8%AA%E5%9F%BA%E6%9C%AC%E9%97%AE%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text">三个基本问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%81%E8%A3%85%E6%88%90%E5%B8%A7"><span class="toc-number">3.1.</span> <span class="toc-text">封装成帧</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%8F%E6%98%8E%E4%BC%A0%E8%BE%93"><span class="toc-number">3.2.</span> <span class="toc-text">透明传输</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%AE%E9%94%99%E6%A3%80%E6%B5%8B"><span class="toc-number">3.3.</span> <span class="toc-text">差错检测</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%AF%94%E7%89%B9%E5%B7%AE%E9%94%99"><span class="toc-number">3.3.1.</span> <span class="toc-text">比特差错</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E5%86%97%E4%BD%99%E6%A3%80%E9%AA%8C"><span class="toc-number">3.3.2.</span> <span class="toc-text">循环冗余检验</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%97%A0%E5%B7%AE%E9%94%99%E4%BC%A0%E8%BE%93%E5%92%8C%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93"><span class="toc-number">3.3.3.</span> <span class="toc-text">无差错传输和可靠传输</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%82%B9%E5%AF%B9%E7%82%B9%E4%BF%A1%E9%81%93%E7%9A%84%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82-%E5%92%8C-%E7%82%B9%E5%AF%B9%E7%82%B9%E5%8D%8F%E8%AE%AE-PPP"><span class="toc-number">4.</span> <span class="toc-text">点对点信道的数据链路层 和 点对点协议 PPP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%82%B9%E5%AF%B9%E7%82%B9%E4%BF%A1%E9%81%93%E7%9A%84%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82"><span class="toc-number">4.1.</span> <span class="toc-text">点对点信道的数据链路层</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%82%B9%E5%AF%B9%E7%82%B9%E5%8D%8F%E8%AE%AEPPP"><span class="toc-number">4.2.</span> <span class="toc-text">点对点协议PPP</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#PPP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-number">4.2.1.</span> <span class="toc-text">PPP协议的特点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#PPP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-number">4.2.2.</span> <span class="toc-text">PPP协议的组成</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#PPP%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%B8%A7%E6%A0%BC%E5%BC%8F"><span class="toc-number">4.2.3.</span> <span class="toc-text">PPP协议的帧格式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#PPP%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8A%B6%E6%80%81"><span class="toc-number">4.2.4.</span> <span class="toc-text">PPP协议的工作状态</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%B9%BF%E6%92%AD%E4%BF%A1%E9%81%93%E7%9A%84%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82"><span class="toc-number">5.</span> <span class="toc-text">使用广播信道的数据链路层</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%80%E5%9F%9F%E7%BD%91"><span class="toc-number">5.1.</span> <span class="toc-text">局域网</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B1%E4%BA%AB%E4%BF%A1%E9%81%93%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">5.2.</span> <span class="toc-text">共享信道需要考虑的问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CSMA-CD-%E5%8D%8F%E8%AE%AE"><span class="toc-number">5.3.</span> <span class="toc-text">CSMA&#x2F;CD 协议</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#CSMA-CD%E5%8D%8F%E8%AE%AE%E7%9A%84%E8%A6%81%E7%82%B9%EF%BC%9A"><span class="toc-number">5.3.1.</span> <span class="toc-text">CSMA&#x2F;CD协议的要点：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#CSMA-CD%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%85%B7%E4%BD%93%E8%BF%87%E7%A8%8B"><span class="toc-number">5.3.2.</span> <span class="toc-text">CSMA&#x2F;CD协议的具体过程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%87%8D%E4%BC%A0%E6%9C%BA%E5%88%B6%E2%80%94%E6%88%AA%E6%96%AD%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%8C%87%E6%95%B0%E9%80%80%E9%81%BF-truncated-binary-exponential-backoff"><span class="toc-number">5.3.3.</span> <span class="toc-text">重传机制—截断二进制指数退避(truncated binary exponential backoff)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%BA%E5%8C%96%E7%A2%B0%E6%92%9E"><span class="toc-number">5.3.4.</span> <span class="toc-text">强化碰撞</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B8%A7%E9%97%B4%E6%9C%80%E5%B0%8F%E9%97%B4%E9%9A%94"><span class="toc-number">5.3.5.</span> <span class="toc-text">帧间最小间隔</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A5%E5%A4%AA%E7%BD%91%E7%9A%84%E4%BF%A1%E9%81%93%E5%88%A9%E7%94%A8%E7%8E%87"><span class="toc-number">5.4.</span> <span class="toc-text">以太网的信道利用率</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A5%E5%A4%AA%E7%BD%91%E7%9A%84MAC%E5%B1%82"><span class="toc-number">5.5.</span> <span class="toc-text">以太网的MAC层</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#MAC%E5%B1%82%E7%9A%84%E7%A1%AC%E4%BB%B6%E5%9C%B0%E5%9D%80"><span class="toc-number">5.5.1.</span> <span class="toc-text">MAC层的硬件地址</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#MAC%E5%B8%A7%E7%9A%84%E6%A0%BC%E5%BC%8F"><span class="toc-number">5.5.2.</span> <span class="toc-text">MAC帧的格式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%97%A0%E6%95%88%E7%9A%84MAC%E5%B8%A7"><span class="toc-number">5.5.3.</span> <span class="toc-text">无效的MAC帧</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%B1%80%E5%9F%9F%E7%BD%91VLAN"><span class="toc-number">6.</span> <span class="toc-text">虚拟局域网VLAN</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%A5%E5%A4%AA%E7%BD%91%E4%BA%A4%E6%8D%A2%E6%9C%BA"><span class="toc-number">6.0.1.</span> <span class="toc-text">以太网交换机</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#VLAN"><span class="toc-number">6.0.2.</span> <span class="toc-text">VLAN</span></a></li></ol></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/touxiang.jpg"></div><div class="author-info__name text-center">luo</div><div class="author-info__description text-center">在一群优秀的人中间，常常以为自己是他们一员，然后忘了努力</div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">13</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">11</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">3</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">友情链接</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://m0d1.top">mod1</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://c10udlnk.top">c10udlnk</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://fxizenta.design">Fxizenta</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://mclaren888.cn">Mclaren</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/background2.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">luo's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">luo</a><a class="site-page" href="/archives">时间线</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/categories">分类</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">计算机网络数据链路层</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-06-05</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">11.3k</span><span class="post-meta__separator">|</span><span>阅读时长: 34 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h3 id="数据链路层的设计初衷"><a href="#数据链路层的设计初衷" class="headerlink" title="数据链路层的设计初衷"></a>数据链路层的设计初衷</h3><p>我们知道物理层的线路上传输的是我们的<strong>比特流</strong>，物理层的线路由传输介质与通信设备组成。比特流在物理线上的传输肯定会存在误差。这样我们就引入了数据链路层在物理层之上，在数据链路层中采用<strong>差错检测</strong>，<strong>差错控制</strong>和<strong>流量控制</strong>等方法，向网络层提高<strong>高质量</strong>的数据传输服务。</p>
+<p>注意这里说的是<strong>高质量</strong>，而不是<strong>可靠</strong>，数据传输的<strong>可靠仍然要靠我们传输层的TCP协议实现</strong>。数据链路层提供了<strong>差错检测机制</strong>，相对于物理层来说，提高了数据传输的质量。</p>
+<p>这样<strong>数据链路层</strong>就可以看成了<strong>网络层</strong>和<strong>物理层</strong>之间的一层<strong>抽象</strong>，属于计算机网络中的低层。</p>
+<span id="more"></span>
+<p>下面我们通过一个例子看一下<strong>数据链路层</strong>在主机通过互联网进行通信时所处的地位。如图：</p>
+<p><img src="/2021/06/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/1.jpg" style="zoom:20%;"></p>
+<p>图3-1(a)从主机的角度表示了H1主机向H2主机发送数据报时，中间经过了三个路由器R1,R2,R3，最后数据到达H2。</p>
+<p>图3-1(b)从数据报经过的协议的角度来看数据的流动，主机H1和H2都有完整的五层协议栈，路由器在转发分组时使用的协议栈只有三层。主机H1在应用层将数据报一层一层向下交付直到物理层。数据进入路由器后先从物理层上到网络层，在<strong>路由器的转发表</strong>中<strong>找到下一跳的地址</strong>后，再下到物理层转发出去，到下一个路由器。主机H2收到数据报后，从物理层往上交付给应用层。</p>
+<p>图3-2是我们常用的研究数据链路层的问题时用的图形，在许多情况下我们只关心在协议栈中水平方向的各数据链路层，<strong>想象数据在数据链路层就是简单地从左往右水平传送的</strong>。</p>
+<p>数据链路层使用的信道主要有以下两种类型：</p>
+<ul>
+<li><p><strong>点对点信道</strong>：使用一对一的点对点通信方式的信道。</p>
+</li>
+<li><p><strong>广播信道</strong>：使用一对多的广播通信方式。</p>
+</li>
+</ul>
+<h3 id="链路，数据链路与帧"><a href="#链路，数据链路与帧" class="headerlink" title="链路，数据链路与帧"></a>链路，数据链路与帧</h3><h4 id="链路"><a href="#链路" class="headerlink" title="链路"></a>链路</h4><p>所谓<strong>链路(link)</strong>就是从一个结点到<strong>相邻结点</strong>的一段<strong>物理线路</strong>(有线或无线)，而<strong>中间没有任何其他的交换结点</strong>。在主机间进行数据通信时，之间的通信路径往往要经过<strong>许多段链路</strong>，<strong>链路</strong>只是一条路径的<strong>组成部分</strong>。又称<strong>物理链路</strong></p>
+<h4 id="数据链路"><a href="#数据链路" class="headerlink" title="数据链路"></a>数据链路</h4><p><strong>数据链路</strong>则不仅仅包括一条物理线路，它还包括了数据传送时起控制作用的<strong>协议</strong>。把实现这些<strong>协议</strong>的硬件和软件加到链路上，就构成了<strong>数据链路</strong>。又称<strong>逻辑链路</strong>。</p>
+<p>可以简单地理解为，<strong>数据链路</strong>就是<strong>链路加上必要的通信协议</strong>。</p>
+<h4 id="帧"><a href="#帧" class="headerlink" title="帧"></a>帧</h4><p><strong>帧</strong>是数据链路层的协议数据单元。</p>
+<p>一个<strong>很重要的关系</strong>需要我们知道的是：网络层传输的是<strong>数据报</strong>，而数据链路层传输的是<strong>数据帧</strong>，而物理层传输的是<strong>比特流</strong>。数据链路层将网络层传输的<strong>数据报</strong>装入<strong>帧</strong>中，而物理层将<strong>帧</strong>以<strong>比特流</strong>的形式通过物理的传输线路在<strong>物理网络</strong>中传输。</p>
+<p>网络层和数据链路层，物理层的数据传输关系大概可以用下图描述：</p>
+<p><img src="/2021/06/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/2.jpg" style="zoom:20%;"></p>
+<h3 id="三个基本问题"><a href="#三个基本问题" class="headerlink" title="三个基本问题"></a>三个基本问题</h3><p>数据链路层协议有很多，但有共同的<strong>三个基本问题</strong>：<strong>封装成帧</strong>，<strong>透明传输</strong>，<strong>差错检测</strong>。</p>
+<h4 id="封装成帧"><a href="#封装成帧" class="headerlink" title="封装成帧"></a>封装成帧</h4><p><strong>封装成帧</strong>(framing)就是在一段数据的前后分别添加<strong>首部</strong>和<strong>尾部</strong>，构成一个<strong>帧</strong>。</p>
+<p>接收端在收到物理层上交的比特流后，可以根据<strong>首部</strong>和<strong>尾部</strong>的标记，判断出<strong>帧的开始和结束</strong>，我们又称为<strong>帧定界</strong>。此外，首部和尾部还包括了许多必要的<strong>控制信息</strong>。</p>
+<p>在上面我们提到了网络层传输的<strong>IP数据报</strong>，而数据链路层传输的是<strong>数据帧</strong>，但网络层的IP数据报传送到数据链路层上只成为<strong>数据帧</strong>的<strong>数据部分</strong>，在需要再数据部分的前面和后面分别加上<strong>数据首部</strong>和<strong>数据尾部</strong>，构成一个完整的帧。一个<strong>数据帧</strong>=数据首部+数据部分+数据尾部，关系图如3-4</p>
+<p><img src="/2021/06/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/3.jpg" style="zoom:20%;"></p>
+<p>为了提高帧的传输效率，应当规定<strong>帧的数据部分长度应该尽可能地大于首部和尾部的长度</strong>。尽管如此，帧的数据部分也不可能无数长，每一种链路层协议都规定了所能传送的帧的<strong>数据部分长度上限—-最大传送单元MTU</strong>(Maximum Transfer Unit)。</p>
+<p>首部和尾部如何做到<strong>帧定界</strong>呢？当数据是可打印的ASCII码时，我们就可以使用特殊的<strong>帧定界符号</strong>，大家统一规定了某个符号一出现就表示是帧的开始或结束。比如说我们规定控制字符<strong>SOH</strong>(Start Of Header)表示帧的首部开始，另一控制字符<strong>EOT</strong>(End Of Transmission)表示帧的结束。注意SOH和EOT都是控制字符的名称，而不是三个字符。</p>
+<p>控制字符进行<strong>帧定界</strong>的方法举例：</p>
+<p><img src="/2021/06/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/4.jpg" style="zoom:20%;"></p>
+<p><strong>帧定界符</strong>在数据传输出现差错时，可以起到作用。假定发送端在尚未发送完一个帧是突然出故障，中断了发送。随后很快恢复正常，于是<strong>重新从头开始</strong>发送刚才为发送完毕的帧。因为使用了帧定界符，接收端知道了前面收到的这个帧是不完整的，选择丢弃。后面的帧是完整的，选择收下。</p>
+<h4 id="透明传输"><a href="#透明传输" class="headerlink" title="透明传输"></a>透明传输</h4><p><strong>透明传输</strong>，这里提到的<strong>“透明”</strong>是一个很重要的术语。表示<strong>某一实际存在的事物但看起来却好像不存在一样</strong>，类似于一个100%透明的玻璃，实际存在，但正常情况你看不见，除非你猛得一头撞上了”玻璃”。在数据链路层<strong>透明传送数据</strong>的意思就是：无论什么样的比特组合的数据，都能够按照原来照样没有差错地通过这个数据链路层，不存在有什么妨碍他们传输的东西。</p>
+<p>封装成帧看起来十分的<strong>合理和<del>完美</del></strong>。但我们其实违背了<strong>透明传输</strong>，我们细想，万一我们传输的数据当中就包括了我们的<strong>帧定界符</strong>呢？那样接收端怎么判断这个帧定界是数据部分的还是数据首部或尾部的？如果按照一收到<strong>帧定界符</strong>就判断帧结束了，那么一旦数据部分包括了帧定界符，数据链路层就会<strong>错误地</strong>以为找到了帧的边界，把部分帧收下，而把剩下那部分的数据帧丢弃了。如图3-6所示：</p>
+<p>而如图3-6，帧的传输就明显不是透明传输，因为数据帧中碰巧<strong>出现了帧定界符EOT</strong>。</p>
+<p><img src="/2021/06/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/5.jpg" style="zoom:20%;"></p>
+<p>如何解决这种<strong>误会</strong>呢？</p>
+<p>答案是增加一个转义字符<strong>ESC</strong>。具体的方法是：发送端的数据链路层中的数据出现控制字符SOH和EOT，则在前面插入一个转义字符ESC，表明这个控制字符表示的是<strong>它本身的意思</strong>，而不是什么<strong>帧定界符</strong>。而在接收方的数据链路层，在把数据送往网络层之前<strong>删除</strong>这个插入的转义字符。这种方法我们又称作<strong>字节填充(byte stuffing)</strong>或<strong>字符填充(character stuffing)</strong>。</p>
+<p>可能你又想到了，那么如果ESC表示的是它本身的意思呢？很简单，那么就在ESC前面再插入一个ESC(<strong>套娃成功</strong>)，当接收端连续收到两个转义字符时，就删除其中前面的那一个。图3-7表示用字节填充法解决透明传输的问题：</p>
+<p><img src="/2021/06/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/6.jpg" style="zoom:20%;"></p>
+<h4 id="差错检测"><a href="#差错检测" class="headerlink" title="差错检测"></a>差错检测</h4><p>上面提到了物理层比特流在物理网传输的过程中难免会出现差错，而<strong>数据链路层想向网络层提供”更高质量”的数据传输</strong>，实现的手段就是<strong>差错检测</strong>(更准确地说<strong>比特差错检测</strong>）。</p>
+<h5 id="比特差错"><a href="#比特差错" class="headerlink" title="比特差错"></a>比特差错</h5><p>比特在传输过程中可能会产生差错：1可能会变成0,0也可能变成1，这就叫做<strong>比特差错</strong>。比特差错是传输差错中的一种，在差错检测这一节，差错指的一般是<strong>比特差错</strong>。</p>
+<h5 id="循环冗余检验"><a href="#循环冗余检验" class="headerlink" title="循环冗余检验"></a>循环冗余检验</h5><p>在一段时间内，传输错误的比特占所传输比特总述的比率称为<strong>误码率BER(Bit Error Rate)</strong>。比如说误码率为$10^{-10}$表示平均传送$10^{10}$个比特就会出现一个比特的差错。在计算机网络传输数据时，需要采用各种差错检测的措施，目前在数据链路层广泛使用的是<strong>循环冗余检验CRC(Cyclic Redundancy Check)</strong>的检错技术。</p>
+<p>下面我们通过一个简单的例子说明<strong>循环冗余检验的原理</strong>：</p>
+<p>在发送端，我们将数据分成组，假定每组为k个比特。现假定待传送的数据M=101001(k=6)。CRC运算就是在数据M的后面添加供差错检测用的<strong>n位冗余码</strong>，然后构成一个帧(k+n)位，发送出去。</p>
+<p>这n位的<strong>冗余码</strong>如何得出？我们用的是先用二进制的<strong>模2运算</strong>进行$2^{n}$乘M的操作，相当于M左移n位，也就是在M的后面添加n个0。得到的(k+n)位的数用<strong>模2除法</strong>除以收发双方事先约定的长度为(n+1)位除数P，得出商为Q而余数为R(n位，比P少一位)。这个余数R就作为<strong>冗余码</strong>拼接在数据M的后面发送出去。</p>
+<p>这种为了进行检错而添加的冗余码也常称为<strong>帧检验序列FCS(Frame Check Sequence)</strong>。</p>
+<p>举个例子：我们假定除数P为1101(n=3)，M=101001，$2^{n}$乘M得到101001000 ，用<strong>模2除法</strong>除以1101，得到商Q=110101(并没有什么实际用处)，余数R=001。所以我们最终发送的帧为 101001001，一共k+n=9位。</p>
+<p>关于<strong>模2除法</strong>，<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_33411687/article/details/82593466">已经有博主讲得挺好的了</a>，就不再赘述。</p>
+<p>这里区分一下<strong>循环冗余检验</strong>和<strong>帧检验序列</strong>，这两个并不是一个概念,CRC是一种<strong>检错的方法</strong>，FCS是添加在传输数据后面的<strong>冗余码</strong>，通过其他的检错方法也可以得到FCS。可以说，得到FCS是我们要的目的，而CRC只是我们达到目的的一种手段罢了。(<strong>小丑CRC</strong>)</p>
+<h5 id="无差错传输和可靠传输"><a href="#无差错传输和可靠传输" class="headerlink" title="无差错传输和可靠传输"></a>无差错传输和可靠传输</h5><p>这里需要强调一下，在数据链路层<strong>仅仅</strong>使用CRC差错检测技术，只能做到对<strong>帧的无差错接受</strong>。什么叫<strong>无差错接受</strong>，就是说我们接受到了的帧，我们都能以非常接近于1的概率认为这些帧在传输过程中没有产生差错(指<strong>比特出错</strong>)。而那些传输过程中出现差错(也是指<strong>比特差错</strong>)的帧，我们会丢弃，即这些帧不会被接受。</p>
+<p>但<strong>可靠传输</strong>要求的是<strong>数据链路层的发送端发送什么，在接收端就接受到什么</strong>。</p>
+<p>我的理解是，<strong>无差错接受</strong>针对的是到达了目的主机的帧，我对帧进行检查，这个检查只是针对<strong>比特差错</strong>的，就是判断有没有1变成0,0变成1的情况，没有我就收下。但是传输错误不仅仅包括比特错误，还包括有些<strong>帧丢失</strong>了，<strong>帧重复</strong>了，<strong>帧失序</strong>了，那样无差错接受就<strong>无能为力</strong>了。就需要上层协议去处理了，所以<strong>可靠传输</strong>是上层协议TCP去搞的。</p>
+<p>还是那句话，<strong>数据链路层</strong>只是尽力提供<strong>“更高质量”</strong>的数据传输。“更高质量”体现在现在<strong>比特错误</strong>我能处理了，但我还是不能<strong>完全可靠</strong>。</p>
+<h3 id="点对点信道的数据链路层-和-点对点协议-PPP"><a href="#点对点信道的数据链路层-和-点对点协议-PPP" class="headerlink" title="点对点信道的数据链路层 和 点对点协议 PPP"></a>点对点信道的数据链路层 和 点对点协议 PPP</h3><h4 id="点对点信道的数据链路层"><a href="#点对点信道的数据链路层" class="headerlink" title="点对点信道的数据链路层"></a>点对点信道的数据链路层</h4><p>以AB两主机进行通信为例子，点对点信道的数据链路层在进行通信时的主要步骤为：</p>
+<ol>
+<li><strong>A</strong>的数据链路层把网络层交下来的IP数据报添加首部和尾部<strong>封装成帧</strong>。</li>
+<li><strong>A</strong>把封装好的帧发送给主机B的数据链路层。</li>
+<li><strong>B</strong>检查数据链路层收到的帧无比特差错，则从收到的帧中提取出IP数据报交给上面的网络层；否则丢弃这个帧。</li>
+</ol>
+<h4 id="点对点协议PPP"><a href="#点对点协议PPP" class="headerlink" title="点对点协议PPP"></a>点对点协议PPP</h4><p><strong>点对点协议 PPP(Point-to-Point Protocol)</strong>是<strong>点对点的链路</strong>目前使用得最广泛的<strong>数据链路层协议</strong>。</p>
+<h5 id="PPP协议的特点"><a href="#PPP协议的特点" class="headerlink" title="PPP协议的特点"></a>PPP协议的特点</h5><p>互联网用户通常都要连接到某个ISP才能接入到互联网。PPP协议就是用户计算机和ISP进行通信时所使用的数据链路层协议，如图3-9：</p>
+<p><img src="/2021/06/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/7.jpg" style="zoom:20%;"></p>
+<p>PPP协议需要满足的<strong>一些需求</strong>：</p>
+<ol>
+<li><strong>简单</strong>：PPP基本的原理很简单：发送方发送帧，接收方收到一个帧，进行CRC检验，无比特差错，收下，否者丢弃，<strong>什么都不做</strong>。</li>
+<li><strong>封装成帧</strong>：PPP协议是数据链路层，必然逃不过数据链路层三个基本问题中的封装成帧。</li>
+<li><strong>透明性</strong>：PPP协议是数据链路层，必然逃不过数据链路层三个基本问题中的透明传输。</li>
+<li><strong>多种网络层协议</strong>：PPP协议必须能够在<strong>同一条物理链路</strong>上同时支持<strong>多种网络层协议</strong>。向上层提供更多的支持。</li>
+<li><strong>多种类型链路</strong>：PPP协议必须能够在<strong>多种类型的链路</strong>上运行。比如串行链路，并行链路，同步链路，异步链路等。</li>
+<li><strong>差错检测</strong>： 数据链路层的三个基本问题。</li>
+<li><strong>检测连接状态</strong>：PPP协议必须具有一种机制能够及时自动检测出链路是否处于正常工作状态。</li>
+<li><strong>最大传送单元</strong>：前面提到每一种链路层协议都规定了MTU，PPP作为链路层协议也肯定得有</li>
+<li><strong>网络层地址协商</strong>： 不太懂</li>
+<li><strong>数据压缩协商</strong>：</li>
+<li><strong>只支持全双工链路</strong></li>
+</ol>
+<h5 id="PPP协议的组成"><a href="#PPP协议的组成" class="headerlink" title="PPP协议的组成"></a>PPP协议的组成</h5><p>PPP协议有三个组成部分：</p>
+<ul>
+<li><strong>将IP数据报封装到串行链路的方法</strong>。IP数据报是数据链路层<strong>帧的数据部分</strong>，需要有封装到帧里面的方法。</li>
+<li>一个用来建立，配置和测试数据链路连接的<strong>链路控制协议LCP(Link Control Protocol)</strong>。通信双方可以协商一些选项。</li>
+<li>一套<strong>网络控制协议NCP(Network Control Protocol)</strong>，其中的每一个协议支持不同的网络层协议。</li>
+</ul>
+<h5 id="PPP协议的帧格式"><a href="#PPP协议的帧格式" class="headerlink" title="PPP协议的帧格式"></a>PPP协议的帧格式</h5><p>PPP的帧格式如图：</p>
+<p><img src="/2021/06/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/8.jpg" style="zoom:20%;"></p>
+<p>如图所示，<strong>各字段的意义</strong>为：</p>
+<ul>
+<li><p>PPP帧的首部和尾部分别为四个字段和两个字段。首部的第一个字段和尾部的第二个字段都是标志字段F(Flag),规定为0x7E，表示一个帧的开始或结束，也就是我们前面说的<strong>帧定界符</strong>。</p>
+</li>
+<li><p>首部中的地址字段<strong>A</strong>规定为0xFF,控制字段<strong>C</strong>为0x03，这两个字段到如今也没什么特殊定义。</p>
+</li>
+<li><p>PPP首部的第四个字段是2字节的<strong>协议字段</strong>。当协议字段为0x0021时，PPP帧的信息字段为<strong>IP数据报</strong>。为0xC021,则信息字段为PPP链路控制协议LCP的数据，而0x8021表示这是网络层的控制数据。</p>
+</li>
+<li><p>信息字段的长度可变，不超过1500字节。</p>
+</li>
+<li>尾部中的第一个字段(2字节)，是使用<strong>CRC</strong>的帧检验序列<strong>FCS</strong>。</li>
+</ul>
+<p><strong>字节填充</strong>：在透明传输中我们知道，当数据帧中有字段出现和标志字段(<strong>帧定界符</strong>)意义的比特(这里是0x7E)组合，必须在该字段前面插入<strong>转义符</strong>，表示<strong>这不是帧定界符</strong>。PPP协议规定了如下所述的填充方法：</p>
+<ul>
+<li>把数据帧字段中出现的每一个0x7E字节转变成2字节序列(0x7D,0x5E)</li>
+<li>若数据帧中出现一个0x7D的字节，也就是出现了和转义字符一样的比特组合，则把0x7D转变为2字节序列(0x7D,0x5D)</li>
+<li>若信息字段中出现 ASCII 码的控制字符(即数值小于 0x20 的字符）则在该字符前面要加入一个 0x7D 字节，同时将该字符的编码加以改变。(说实在，感觉好复杂，<strong>相信用不着</strong>嘿嘿)</li>
+</ul>
+<p>在接收端进行与发送端相反的变换，<strong>正确恢复出原来的信息</strong>。</p>
+<p><strong>零比特填充</strong>：</p>
+<p>具体做法：在发送端，扫描数据帧，只要发现有5个连续1，则立即填入一个0。因此经过这种<strong>零比特填充</strong>后的数据，保证在信息字段中不会出现6个连续1。为什么不能出现6个连续的1？因为我们PPP协议的<strong>帧定界符</strong>为0x7E(也就是01111110)，所以保证了数据帧中不会出现0x7E字段。如图：</p>
+<p><img src="/2021/06/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/9.jpg" style="zoom:20%;"></p>
+<h5 id="PPP协议的工作状态"><a href="#PPP协议的工作状态" class="headerlink" title="PPP协议的工作状态"></a>PPP协议的工作状态</h5><p>PPP协议的工作状态可以用下图来描述</p>
+<p><img src="/2021/06/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/10.jpg" style="zoom:20%;"></p>
+<p>PPP链路的起始或终止状态永远是图中的<strong>链路静止</strong>，这时在用户个人电脑和ISP的路由器上不存在<strong>物理层的链接</strong>。</p>
+<p>当用户个人电脑呼叫路由器时，路由器能够检测到信号，<strong>物理层建立连接</strong>，PPP进入了<strong>链路建立</strong>状态，其目的是建立链路层的LCP连接。这时LCP开始<strong>协商</strong>一些<strong>配置选项</strong>，即发送LCP的<strong>配置请求帧</strong>。这是一个PPP帧，其PPP帧的协议字段置为LCP对应的代码，<strong>信息字段</strong>包含特定的<strong>配置请求</strong>。</p>
+<p>链路的另一端可以发送以下几种响应中的一种：</p>
+<ul>
+<li><strong>配置确认帧(Configure-Ack)</strong>: 所有配置选项都接受。</li>
+<li><strong>配置否认帧(Configure-Nak)</strong>: 所有选项都理解但不能接受</li>
+<li><strong>配置拒绝帧(Configure-Reject)</strong>: 选项有的无法识别或不能接受，还需要协商。 </li>
+</ul>
+<p>LCP<strong>配置选项</strong>包括了比如链路上的最大帧长，所要使用的<strong>鉴别协议</strong>，以及不使用PPP帧中的<strong>地址和控制字段</strong>，因为这两个字段前面提到了，暂时没有什么特殊的意思，所以双方规定了遇到这两个字段就忽略掉。</p>
+<p>协商结束后双方就建立了<strong>LCP链路</strong>，接着就进入了“<strong>鉴别</strong>”状态。在这一状态下，只允许传送LCP协议的分组，鉴别协议的分组以及监测链路质量的分组。鉴别身份失败，则转到<strong>链路终止</strong>状态，鉴别成功，则进入<strong>网络层协议</strong>状态。</p>
+<p>在<strong>网络层协议</strong>状态，PPP链路的两端的网络控制协议NCP<strong>根据网络层的不同协议</strong>互相交换网络层特定的网络控制分组。这个步骤保证我们前面提到的PPP所需要满足的一些需求的第四点：<strong>支持多种网络层协议</strong>。使得PPP协议的两端的网络层可以运行不同的网络层协议，但仍然可以使用同一个PPP协议进行通信。</p>
+<p>当网络层配置完毕后，链路就进入了可以进行数据通信的<strong>链路打开</strong>状态。链路的两个PPP端点可以彼此向对方发送分组。两个PPP端点还可以通过发送<strong>回送请求LCP</strong>分组和<strong>回送回答LCP</strong>分组，以检查链路的状态。</p>
+<p>数据传输结束后，可以由链路的一端发出<strong>终止请求LCP分组</strong>请求终止链路连接，在收到对方发来的<strong>终止确认LCP分组</strong>后，转到链路终止状态。链路出现故障，也会从<strong>链路打开</strong>状态转入到<strong>链路终止状态</strong>。</p>
+<h3 id="使用广播信道的数据链路层"><a href="#使用广播信道的数据链路层" class="headerlink" title="使用广播信道的数据链路层"></a>使用广播信道的数据链路层</h3><h4 id="局域网"><a href="#局域网" class="headerlink" title="局域网"></a>局域网</h4><p>广播信道最重要的一个应用就是<strong>局域网</strong>。局域网是<strong>一个为单位所拥有的的，且地理范围和站点数目均有限的网络</strong>。</p>
+<p>局域网具有如下一些主要优点：</p>
+<ul>
+<li><strong>具有广播功能</strong>：从一个站点可以很方便地访问全网。局域网上的主机共享连接在局域网上的各种硬件和软件资源。</li>
+<li>便于系统的拓展和逐渐演变，各设备的位置可灵活调整和改变。</li>
+<li>提高了系统的可靠性，可用性和生存性。</li>
+</ul>
+<p>局域网按照网络拓扑进行分类，可以分为<strong>星形网</strong>，<strong>环形网</strong>，<strong>总线网</strong>，他们的网络拓扑图如下：</p>
+<p><img src="/2021/06/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/11.jpg" style="zoom:20%;"></p>
+<p>这里指出，<strong>局域网</strong>工作的层次跨越了数据链路层和物理层，但因为局域网技术中的有关数据链路层的内容比较丰富，特在这里提出，并不表示局域网仅仅和数据链路层有关。</p>
+<p>在局域网中，<strong>以太网</strong>已经占据了统治的地位。</p>
+<h4 id="共享信道需要考虑的问题"><a href="#共享信道需要考虑的问题" class="headerlink" title="共享信道需要考虑的问题"></a>共享信道需要考虑的问题</h4><p>共享信道需要考虑的问题就是<strong>如何让众多用户能够合理而方便地通信资源</strong>，主要有两种方法</p>
+<ul>
+<li><strong>(1)静态划分信道</strong>： 静态分配用户使用的信道，用户只要分配到了信道就不会和其他用户发生冲突。但这种划分信道的方法代价很高，不适合局域网使用。比如说某用户分配到了信道，但是一直占着却不通信，其他用户就无法使用这段通信资源直到该用户释放该信道，这大大降低了通信效率。</li>
+<li><strong>(2)动态媒体接入控制</strong>：又称为<strong>多点接入</strong>(multiple access)，其特点是<strong>信道并非在用户通信时固定分配给用户</strong>，又主要分成以下两类：<ul>
+<li><strong>随机接入</strong>：随机接入的特点是所有的用户都随机德发送信息，但如果恰巧有两个或更多的用户在同一时刻发送消息，那么就发送了<strong>碰撞</strong>，使得这些用户的发送<strong>都失败</strong>，所有，需要有<strong>解决碰撞的网络协议</strong>。</li>
+<li><strong>受控接入</strong>：受控接入的特点是用户不能随机地发送信息而必须服从一定的控制。比如分散控制的<strong>令牌环局域网</strong>和集中控制的多点线路<strong>探询(polling)</strong>和<strong>轮询</strong>。</li>
+</ul>
+</li>
+</ul>
+<h4 id="CSMA-CD-协议"><a href="#CSMA-CD-协议" class="headerlink" title="CSMA/CD 协议"></a>CSMA/CD 协议</h4><p>这里需要提一下<strong>适配器</strong>，计算机与外界局域网的连接是通过通信<strong>适配器</strong>进行的，适配器是后面<strong>检测信道空闲</strong>，<strong>执行退避算法</strong>的主体。</p>
+<p>最早的以太网(一种局域网)将许多的计算机都连接到一根总线上。这是因为在哪个时代认为，”有源器件不可靠，而无源的电缆线才是最可靠的“。</p>
+<p>总线的特点就是当一台计算机发送数据时，<strong>总线上的所有计算机</strong>都能检测到这个数据，这种就是<strong>广播通信方式</strong>。</p>
+<p>为了通信的方便，以太网采取了一下的两种措施：</p>
+<ol>
+<li><p>采用灵活的<strong>无连接</strong>的工作方式，不需要在传输数据前先建立连接。对发送的数据帧不尽进行编号，也不要求对方发回确认。因此，<strong>以太网提供的服务是尽最大努力的交付</strong>，是<strong>不可靠的交付</strong>。当目的站收到有差错的帧时，就把帧丢弃，其他什么都不做。对<strong>有差错的帧是否需重传则由高层决定</strong>。例如，如果高层是TCP协议，TCP发现有数据丢失，重新发送数据，但<strong>以太网并不知道这是重传帧，只是当成新的数据帧来传送</strong>。<br>我们知道，<strong>总线上在同一时间只能允许一台计算机发送数据</strong>，否则各计算机之间就会互相干扰。因此，如何协调总线上各计算机的工作就是以太网要解决的一个重要问题。以太网使用的协议是<strong>CSMA/CD</strong>，意思是<strong>载波监听多点接入/碰撞检测(Carrier Sense Multiple Access with Collision Detection)</strong>。</p>
+</li>
+<li><p>第二，以太网发送的数据都使用<strong>曼彻斯特编码</strong>的信号。</p>
+</li>
+</ol>
+<h5 id="CSMA-CD协议的要点："><a href="#CSMA-CD协议的要点：" class="headerlink" title="CSMA/CD协议的要点："></a><strong>CSMA/CD协议的要点</strong>：</h5><ul>
+<li><p><strong>多点接入</strong>：指的是网络是总线型网络，计算器以多点接入的方式连接在一起。</p>
+</li>
+<li><p><strong>载波监听</strong>：载波监听其实就是<strong>检测信道</strong>。不管在发送前还是在发送中，<strong>每个站都必须不停地检测信道</strong>。在发送前检测信道，是为了<strong>获得发送权</strong>。检测到没有其他站在发送，就发送数据。在发送过程中检测信道，是为了及时发现有没有其他站的发送和本站发送的<strong>碰撞</strong>。这也称为<strong>碰撞检测</strong>，也叫<strong>冲突检测</strong>。</p>
+<p><strong>碰撞检测</strong>也就是<strong>边发送边监听</strong>。适配器边发送数据边检测信道上的信号电压的变化情况，以便判断自己发送数据时其他站是否也在发送数据。</p>
+<p>如果有多个站同时在总线上发送数据，总线上的信号电压会增大，电压超过一定门限值时，就认为了总线上至少有两个站同时在发送数据，表面发生了<strong>碰撞</strong>，也就是发生了冲突。任何一个正在发送数据的栈，一旦发现总线上出现了碰撞，就要<strong>立即停止发送</strong>，等待一段时间后再次发送。</p>
+</li>
+</ul>
+<p>我们不是在发送数据前<strong>检测信道</strong>监听到信道为<strong>空闲</strong>了吗？为什么还要<strong>边发送边监听呢</strong>？这是因为我们数据通过电磁波在总线上是以<strong>有限的速率传播的</strong>。正如在一个会议中，一听到会场安静，我们就立即发言，但恰好这时也有人发觉会场安静，也发言了，于是你们同时发言了，这就<strong>产生了冲突</strong>。</p>
+<h5 id="CSMA-CD协议的具体过程"><a href="#CSMA-CD协议的具体过程" class="headerlink" title="CSMA/CD协议的具体过程"></a>CSMA/CD协议的具体过程</h5><p>如图3-17，图中的局域网两端的站A和站B相距1km，用同轴电缆相连。<strong>电磁波在1km电缆的传播时延为5$\mu s$</strong>。因此，A检测到信道空闲后，向B发送数据，在约$5\mu s$才能传送到B，且A的传输的途中(未到达B)，B检测信道，<strong>信道此时也显示空闲</strong>，若此时B发送数据，则一定会在途中与A发送的数据<strong>发生碰撞</strong>，碰撞的结果是<strong>两个帧都变为无用帧</strong>。</p>
+<p>在局域网的分析中，我们常把总线上的<strong>单程端到端传播时延为τ</strong>。因此我们可以知道，A检测到信道控线后，发送数据，最迟经过<strong>2τ</strong>可以知道自己发送的数据与其他站发送的数据有没有发生碰撞，这种情况发生在A就快要到达B了(很接近很近但就是没到)，然后此时B默默发出一个数据，然后B主机发送的数据报经过<strong>τ</strong>时间后到达A，告诉A…………<strong>对不起碰撞了</strong>。</p>
+<p><img src="/2021/06/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/12.jpg" style="zoom:20%;"></p>
+<p>在使用CSMA/CD 协议时，一个站<strong>不可能同时进行发送和接收</strong>(但必须<strong>边发送边监听信道</strong>)。因此使用CSMA/CD协议的以太网不可能进行全双工的方式而只能进行<strong>半双工通信</strong>。注意与PPP协议区别，PPP协议只支持<strong>全双工链路</strong>。</p>
+<p>下面是图3-17一些重要的时刻</p>
+<ul>
+<li>t=0，此时A发送数据。B检测到信道为空闲。</li>
+<li>t=τ-$\delta$，此时A发送的数据还没有到达B，所以B检测到<strong>信道是空闲的</strong>，因此B发送数据。</li>
+<li>t=τ-$\delta$/2，此时A发送的数据和B发送的数据发生了碰撞。但这时<strong>A和B都不知道发送了碰撞</strong>。相当于可以看作A和B数据相遇，擦肩而过继续传播。</li>
+<li>t=τ，A的数据到达了B，<strong>并告诉B在过程中发生了碰撞</strong>，B于是停止发送数据。</li>
+<li>t=2π-τ，B的数据到达了A，<strong>并告诉了A在过程中发生了碰撞</strong>，A于是也停止发送数据。</li>
+</ul>
+<p>A和B发送数据<strong>均失败</strong>，它们都要<strong>推迟一段随机的时间再重新发送</strong>。</p>
+<p>由此可见，<strong>每一主机在检测到信道空闲后，选择发送数据，在发送数据之后的一小段时间内，仍然存在着遭遇碰撞的可能性</strong>。这一小段时间是<strong>不确定的</strong>，取决于另一个发送数据的站到本站的距离。因此，以太网<strong>不能保证</strong>某一时间之内一定能够把自己的数据帧成功地发送出去，这一特点称为<strong>发送的不确定性</strong>。</p>
+<p>我们前面提到，最先发数据帧的A主机，在发送数据帧后<strong>最多(最迟)</strong>经过<strong>2τ</strong>就可以知道所发送的数据帧是否遭到了碰撞。这是$\delta → 0$的情况，也就是前面说的在A就快要到达B了(很接近很近但就是没到)，然后此时B默默发出一个数据，几乎两个动作同时进行(极限的思想)。因此以太网的<strong>端到端往返时间$2τ$</strong>又称为<strong>争用期</strong>。<br><strong>争用期(contention period)</strong>又称<strong>碰撞窗口(collision window)</strong>。</p>
+<p>于是我们得到<strong>结论</strong>：一个主机A(站)在发送完数据后，只要通过争用期的<strong>考验</strong>，即经过争用期这段时间还没有检测到碰撞的话，这样，直到A的数据顺利发送完毕，任何其他站检测信道都会检测到<strong>信道忙</strong>，我们可以肯定A发送数据不会发生碰撞了。</p>
+<h5 id="重传机制—截断二进制指数退避-truncated-binary-exponential-backoff"><a href="#重传机制—截断二进制指数退避-truncated-binary-exponential-backoff" class="headerlink" title="重传机制—截断二进制指数退避(truncated binary exponential backoff)"></a>重传机制—截断二进制指数退避(truncated binary exponential backoff)</h5><blockquote>
+<p>前面我们提到，A和B发生碰撞后，发送数据<strong>均失败</strong>，它们都要<strong>推迟一段随机的时间再重新发送</strong>。</p>
+</blockquote>
+<p>这种重新发送我们又称为<strong>重传</strong>。问题就来了？<strong>推迟的机制</strong>是什么？如何确定<strong>推迟的时间呢</strong>？</p>
+<p>以太网使用<strong>截断二进制指数退避</strong>算法来确定碰撞后重传的时机。这种算法让发生碰撞的站(主机)在停止发送数据后，<strong>不是等待信号变为空闲后就立即再次发送数据</strong>，而是选择<strong>推迟</strong>(或叫<strong>退避</strong>)一个随机的时间。之所以要采取这种机制，原因很容易理解，因为如果几个发生碰撞的站都在监听信道，那么很大概率会<strong>同时发现信道变为空闲</strong>，于是再次冲突，再次退避，再次冲突，再次退避，再次冲突……….。</p>
+<p>具体的<strong>退避算法</strong>如下：</p>
+<ol>
+<li><p>首先协议规定了基本退避时间为争用期2τ，具体的<strong>争用期时间</strong>是$51.2\mu s$,对于10 Mbit/s的以太网，在争用期内可发送512bit(51.2<em>10)，也就是64字节,我们也说争用期是<strong>512比特时间</strong>。1比特时间就是发送1比特所的时间，争用期就是发送<em>*512bit所需的时间</em></em>。</p>
+</li>
+<li><p>从离散的整数集合$[0,1,…(2^{k}-1)]$中<strong>随机</strong>取出一个数，记为r。<strong>推迟重传的时间是r倍的争用期</strong>。k可以按下面的公式计算</p>
+<script type="math/tex; mode=display">
+k=Min[重传数，10]</script></li>
+<li><p>当重传<strong>16次仍不能成功</strong>时，表面此时的网络已经非常地拥挤了，以致于连续发生冲突，则丢弃该帧，向高层报告。</p>
+</li>
+</ol>
+<p>例如在第一次重传时，k=1，随机数r从整数{0,1}中选一个数，因此重传的时间为0τ或2τ，在这两个时间中随机选择一个。</p>
+<p>应当注意到，每发送一个新的帧，就要执行一次<strong>CSMA/CD 算法</strong>。适配器对过去发生的碰撞并无记忆，只能机械地按照退避算法进行退避，这都导致一种情况的发生：很可能某一个刚发送的新帧<strong>运气非常好</strong>，推迟时间非常短甚至是直接立即成功地插入到信道中，<strong>获得了发送权</strong>，而一些运气不好的“<strong>老帧</strong>”可能要无限期地等待下去..。</p>
+<p>还需要注意的一个问题是：上面我们提到了结论：</p>
+<blockquote>
+<p>一个主机A(站)在发送完数据后，只要通过争用期的<strong>考验</strong>，即经过争用期这段时间还没有检测到碰撞，这样，在A终止发数据前，任何其他站检测信道都会检测到<strong>信道忙</strong>，我们可以肯定A发送数据不会发生碰撞了，直到A的数据顺利发送完毕。</p>
+</blockquote>
+<p>我们知道，争用期共可以发送<strong>64个字节</strong>，因为一检测到冲突就终止发送，所以此时发送出去的数据一定是小于64字节的。所以有<strong>凡长度小于64字节的帧都是由于冲突而异常终止的无效帧</strong>，收到这样的帧，立即将其丢弃。</p>
+<h5 id="强化碰撞"><a href="#强化碰撞" class="headerlink" title="强化碰撞"></a><strong>强化碰撞</strong></h5><p>前面我们提到，发送数据的站一旦接收到<strong>发生了碰撞</strong>的信息后，立即停止发生数据。但在此基础上，我们还要继续发送<strong>32比特或48比特的人为干扰信号</strong>，以便所有用户都知道现在已经发生了碰撞。这就是<strong>强化碰撞</strong>。</p>
+<p>如下图3-18，A站从发送数据开始到发现碰撞并停止发送的时间时间是$T<em>{B}$。A站得知碰撞已经发生时所发送的<strong>强化碰撞的人为干扰信号</strong>的持续时间是$T</em>{J}$。发生碰撞使得A浪费的时间为$T<em>{B}+T</em>{J}$。而整个信道被占用的时间还要增加一个<strong>端到端的时延τ</strong>，因此总线被占用的时间是$T<em>{B}+T</em>{J}+τ$。</p>
+<p><img src="/2021/06/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/13.jpg" style="zoom:20%;"></p>
+<h5 id="帧间最小间隔"><a href="#帧间最小间隔" class="headerlink" title="帧间最小间隔"></a><strong>帧间最小间隔</strong></h5><p>以太网还规定了<strong>帧间最小间隔为$9.6\mu s$,相当于96bit时间</strong>，之所以这么做，是<strong>为了使刚刚收到数据帧的站的接受缓存来得及清理，做好接受下一帧的准备</strong>。</p>
+<p>综上所述，我们将利用<strong>CSMA/CD</strong>协议发送数据的过程归纳如下：</p>
+<blockquote>
+<p> 首先是发送前适配器<strong>检测信道</strong>，检测信道是否空闲。若信道忙，则不停地检测，一直等待<strong>信道空闲</strong>。一旦<strong>信道空闲</strong>，<strong>并在96比特时间内信道保持空闲</strong>(保证了帧间最小间隔)，适配器就<strong>发送这个帧</strong>。在边发送的过程中仍要不停地检测信道，及<strong>边发送边监听</strong>，如果在<strong>争用期</strong>内<strong>没有</strong>检测到碰撞，则这个帧肯定能够发送成功。 如果在争用期内<strong>检测到碰撞</strong>，这时应该立即停止正在发送的数据，并按规定发送<strong>人为干扰信号</strong>，告知所以用户都知道现在已经发生了碰撞，适配器执行<strong>指数退避算法</strong>，重新<strong>检测信道</strong>，准备发送。但若重传16次仍不能成功，停止重传并向上报错。</p>
+</blockquote>
+<h4 id="以太网的信道利用率"><a href="#以太网的信道利用率" class="headerlink" title="以太网的信道利用率"></a>以太网的信道利用率</h4><p>以图3-21为例，<strong>分析以太网的信道利用率</strong>。</p>
+<p><img src="/2021/06/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/14.jpg" style="zoom:20%;"></p>
+<p>一个站在发送帧时出现了<strong>碰撞</strong>。经过一个争用期2τ后，又出现了碰撞..，这样经过若干个争用期后，一个站发送成功了。假定发送帧需要的时间是$T<em>{0}$,我们应当注意，成功发送一个帧需要占用信道的时间是$T</em>{0}+τ$，因为发送完最后一个比特后，这个比特还需要在以太网上传播一个τ的时间。因此，必须在经过$T_{0}+τ$后以太网的信道才<strong>完全进入空闲状态</strong>，才允许其他站发送数据。</p>
+<p>从图3-21可看出，<strong>要提高以太网的信道利用率</strong>，就必须减小τ和$T<em>{0}$之比。在以太网中我们定义了参数$\alpha$,它是以太网<strong>单程端到端时延τ</strong>与**帧的发送时间$T</em>{0}$**之比：</p>
+<script type="math/tex; mode=display">
+\alpha=τ \ \div \ T_{0}</script><p>当$\alpha → 0$时，表示只要一发生碰撞，就立即可以检测出来，并立即停止发送，因为τ比较小，因而信道资源被浪费的时间非常非常少。反之，参数$\alpha$越大，表明<strong>争用期</strong>所占的比例越大，使得发生一次碰撞就浪费了不少的信道资源，<strong>信道利用率</strong>，明显降低。</p>
+<p>因而，以太网的$\alpha$的值应当尽可能小，如何让$\alpha$小？可以让<strong>τ</strong>小和让$T<em>{0}$大，τ变小也就是以太网端到端连线的长度要小，这也是为什么<strong>以太网的长度的通信距离比较短的原因</strong>，$T</em>{0}$变大就要求我们发送的<strong>以太网帧长</strong>不能太短。</p>
+<h4 id="以太网的MAC层"><a href="#以太网的MAC层" class="headerlink" title="以太网的MAC层"></a>以太网的MAC层</h4><h5 id="MAC层的硬件地址"><a href="#MAC层的硬件地址" class="headerlink" title="MAC层的硬件地址"></a>MAC层的硬件地址</h5><p>在局域网中，<strong>硬件地址</strong>又称为<strong>物理地址</strong>或<strong>MAC</strong>地址，有48位长。MAC地址一般固化在<strong>适配器</strong>的ROM中，则<strong>IP</strong>地址一般存在计算机存储器中。一台计算机的MAC地址一般是不可变的，除非你重新更换一个<strong>适配器</strong>，而IP地址是可以改变的，与你接入的网络有关。</p>
+<p>规定MAC地址字段的<strong>第一字节的最低位</strong>为I/G位，I/G表示 Individual/Group。当I/G为0时，地址字段表示一个<strong>单个站的地址</strong>，I/G位为1时表示<strong>组地址</strong>，用来表示<strong>多播</strong>。</p>
+<h5 id="MAC帧的格式"><a href="#MAC帧的格式" class="headerlink" title="MAC帧的格式"></a>MAC帧的格式</h5><p>如图3-22表示以太网V2的MAC帧格式，我们假定网络层使用的是IP协议。</p>
+<p><img src="/2021/06/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/15.jpg" style="zoom:20%;"></p>
+<p>MAC帧较为简单，由五个字段组成。前两个字段分别为6字节长的<strong>目的地址</strong>和<strong>源地址</strong>。第三个字段的2字节为<strong>类型字段</strong>，用来标志上一层使用的是什么协议。例如，当类型字段的值为0x0800时，表示上层使用的是<strong>IP数据报</strong>。第四个字段是<strong>数据字段</strong>，长度在<strong>46</strong>到<strong>1500</strong>字节之间，46是怎么来的？我们前面提到了</p>
+<blockquote>
+<p>我们知道，争用期共可以发送<strong>64个字节</strong>，因为一检测到冲突就终止发送，所以此时发送出去的数据一定是小于64字节的。所以有<strong>凡长度小于64字节的帧都是由于冲突而异常终止的无效帧</strong>，收到这样的帧，立即将其丢弃。</p>
+</blockquote>
+<p>所以发送的帧最小长度为64字节，减去18字节的首部和尾部就得到了46-<strong>数据字段的最小长度</strong>。最后一个字段是4字节的<strong>帧检验序列FCS</strong>。</p>
+<h5 id="无效的MAC帧"><a href="#无效的MAC帧" class="headerlink" title="无效的MAC帧"></a>无效的MAC帧</h5><ul>
+<li><p>帧的长度不是整数个字节。</p>
+</li>
+<li><p>用受到的帧检验序列FCS查出有出错。</p>
+</li>
+<li><p>受到的MAC帧的<strong>数据长度</strong>不在46~1500字节之间，也可以理解为<strong>MAC帧总长度</strong>不在64~1518之间。</p>
+</li>
+</ul>
+<h3 id="虚拟局域网VLAN"><a href="#虚拟局域网VLAN" class="headerlink" title="虚拟局域网VLAN"></a>虚拟局域网VLAN</h3><h5 id="以太网交换机"><a href="#以太网交换机" class="headerlink" title="以太网交换机"></a>以太网交换机</h5><p>虚拟局域网VLAN(Virtual LAN)是利用<strong>以太网交换机</strong>实现，所以我们要先简单提一下<strong>以太网交换机</strong>。</p>
+<p><strong>以太网交换机的出现</strong>其实是因为人们希望在<strong>数据链路层</strong>上拓展以太网，以太网交换机的作用就是对收到的帧根据其MAC帧的目的地址进行<strong>转发</strong>和<strong>过滤</strong>。一般都工作在<strong>全双工方式</strong>下，相互通信的主机都是<strong>独占传输媒体，无碰撞地传输数据</strong>，无碰撞，显然以太网交换机是不使用CSMA/CD协议的。</p>
+<p>以太网交换机通过<strong>自学算法</strong>建立起其内部的<strong>交换表</strong>或者说是<strong>地址表</strong>，根据受到的帧的目的地址，查表然后转发，不检查差错。</p>
+<h5 id="VLAN"><a href="#VLAN" class="headerlink" title="VLAN"></a>VLAN</h5><p>虚拟局域网VLAN是由一些局域网网段构成的<strong>与物理位置无关</strong>的逻辑组，而这些网段具有某种<strong>共同的需求</strong>。每一个VLAN的帧都有一个<strong>明确的标识符</strong>，指明发送这个帧的计算机属于哪一个VLAN。</p>
+<p><strong>虚拟局域网其实只是局域网给用户提供的一种服务，并不是一种新型的局域网</strong>。</p>
+<p>如图3-27，设有10台计算机分配在三个楼层中，成了三个局域网:</p>
+<p>LAN1(A1,A2,B1,C1)  LAN2: (A3,B2,C2),   LAN3(A4,B3,C3) 但这10个用户划分为了三个工作组，也就是三个虚拟局域网VLAN。即VLAN1：(A1,A2,A3,A4)  VLAN2: (B1,B2,B3)  VLAN3: (C1,C2,C3)</p>
+<p><img src="/2021/06/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/16.jpg" style="zoom:20%;"></p>
+<p>从图中看出，每一个VLAN的计算机可以处在<strong>不同的局域网</strong>中。利用以太网交换机可以将这10台计算机划分为三个虚拟局域网：VLAN1, VLAN2, VLAN3。<strong>在虚拟局域网上的每一个站都可以收到同一个虚拟局域网上的其他成员发出的广播</strong>。</p>
+<p>例如：计算机B1~B3同属虚拟局域网VLAN2，当B1向工作组内成员送数据时，B2和B3会收到广播的信息，即使他们没有跟B1连在同一个以太网交换机上，而A1,A2和C1都不会收到B1发出的广播信息，虽然它们都与B1连接在同一个交换机上。<strong>以太网交换机不向虚拟局域网以外的计算机传送B1的广播信息</strong>。这样，虚拟局域网限制了接收广播信息的计算机数，使得网络不会因传播过多的广播信息(<strong>广播风暴</strong>)而引起性能的恶化。</p>
+<p>同时，虚拟局域网可按照需要随时重新组合，很方便。</p>
+<p>如何指明发送数据帧的计算机属于哪一个局域网？虚拟局域网的协议在以太网的帧格式中插入了4字节的标识符，称为<strong>VLAN标记(tag)</strong>，指明发送该帧的计算机属于哪一个虚拟局域网。</p>
+<p>有关<strong>数据链路层</strong>的内容差不多就是这些了，真的太多太多了，感觉整理的不是很好，觉得什么东西都很重要，连贯性很强，你有部分东西不写后面又会用到这个名词，都想写下来哈哈</p>
+<p><strong>整个数据链路层</strong>的内容很多，这里做一个小小的总结：</p>
+<p>首先我们提到：</p>
+<blockquote>
+<p>1 数据链路层设计的初衷是为了向网络层提高更高质量的数据传输。</p>
+<p>2 网络层传输的是数据报，数据链路层传输的是帧，物理层传输的是比特流。</p>
+</blockquote>
+<p>之后我们引出了<strong>所有数据链路层都需要考虑的三个基本问题</strong>：<strong>封装成帧，透明传输，差错检测</strong></p>
+<p>为什么要封装成帧？因为<strong>数据链路层传输的是帧呀</strong>，为什么要透明传输？因为特定的帧定界符也需要封装进帧里，所以需要透明传输的原因也是<strong>数据链路层传输的是帧</strong>，为什么要差错检测？因为数据链路层的设计的初衷是为了<strong>向网络层提供更高质量的数据传输</strong>。所有三个基本问题的出现也就顺理成章了，之后就是三个基本问题引出的一系列问题，如CRC校验等。</p>
+<p>接着我们介绍了数据链路层的两种协议<strong>PPP协议</strong>和<strong>CSMA/CD</strong>协议，PPP协议支持的是点对点信道，CSMA/CD协议支持的是广播信道。后面就是对着两个协议一些细节的介绍了。</p>
+<p>本篇博客只是<strong>自己</strong>对课程学习的一些笔记和总结，大部分内容参考自<strong>《计算机网络》</strong>第七版，谢希仁编著。</p>
+<p>如有出错(非常大可能会出错哈哈)，欢迎指正！</p>
+<p>完………………………………………………………………….</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:1127959736@qq.com">luo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://luo41.top/2021/06/05/计算机网络数据链路层/">https://luo41.top/2021/06/05/计算机网络数据链路层/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://luo41.top">luo's Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/">数据链路层</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2021/06/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%89%A9%E7%90%86%E5%B1%82/"><i class="fa fa-chevron-left">  </i><span>计算机网络物理层</span></a></div><div class="next-post pull-right"><a href="/2021/06/03/hexo-melody%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE%E9%82%AE%E7%AE%B1%E9%93%BE%E6%8E%A5/"><span>hexo melody主题配置邮箱链接</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="gitalk-container"></div><script>var gitalk = new Gitalk({
+  clientID: '32255e197922b1ab75ad',
+  clientSecret: '9bbe47fc29096bda7c2e430895ef65fa58c8d7db',
+  repo: 'zhengjianda.github.io',
+  owner: 'zhengjianda',
+  admin: 'zhengjianda',
+  id: md5(decodeURI(location.pathname)),
+  language: 'zh-CN'
+})
+gitalk.render('gitalk-container')</script></div></div><footer class="footer-bg" style="background-image: url(/background2.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2021 By luo</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/lib/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  CommonHTML: {
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "HTML-CSS": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "SVG": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  }
+});
+</script><script type="text/x-mathjax-config">MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for (i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script id="ribbon" src="/js/third-party/canvas-ribbon.js" size="100" alpha="0.6" zIndex="-1" data-click="true"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

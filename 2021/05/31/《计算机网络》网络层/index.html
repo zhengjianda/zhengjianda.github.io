@@ -1,0 +1,260 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="《计算机网络》网络层"><meta name="keywords" content="计算机网络,网络层"><meta name="author" content="luo,1127959736@qq.com"><meta name="copyright" content="luo"><title>《计算机网络》网络层 | luo's Blog</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '5.4.0'
+} </script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="luo's Blog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82%E6%8F%90%E4%BE%9B%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84%E6%9C%8D%E5%8A%A1%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">网络层提供什么样的服务？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E9%99%85%E5%8D%8F%E8%AE%AEIP"><span class="toc-number">2.</span> <span class="toc-text">网际协议IP</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E4%BA%92%E8%BF%9E%E7%BD%91%E7%BB%9C%EF%BC%9A"><span class="toc-number">2.1.</span> <span class="toc-text">虚拟互连网络：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E4%BA%A4%E4%BB%98%E5%92%8C%E9%97%B4%E6%8E%A5%E4%BA%A4%E4%BB%98"><span class="toc-number">2.2.</span> <span class="toc-text">直接交付和间接交付</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%86%E7%B1%BB%E7%9A%84IP%E5%9C%B0%E5%9D%80"><span class="toc-number">2.3.</span> <span class="toc-text">分类的IP地址</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#IP%E5%9C%B0%E5%9D%80%E4%B8%8E%E7%A1%AC%E4%BB%B6%E5%9C%B0%E5%9D%80"><span class="toc-number">2.4.</span> <span class="toc-text">IP地址与硬件地址</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E8%A7%A3%E6%9E%90%E5%8D%8F%E8%AE%AEARP"><span class="toc-number">2.5.</span> <span class="toc-text">地址解析协议ARP</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#IP%E6%95%B0%E6%8D%AE%E6%8A%A5%E7%9A%84%E6%A0%BC%E5%BC%8F"><span class="toc-number">2.6.</span> <span class="toc-text">IP数据报的格式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E8%A1%A8"><span class="toc-number">2.7.</span> <span class="toc-text">路由表</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%92%E5%88%86%E5%AD%90%E7%BD%91%E5%92%8C%E6%9E%84%E9%80%A0%E8%B6%85%E7%BD%91"><span class="toc-number">3.</span> <span class="toc-text">划分子网和构造超网</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%92%E5%88%86%E5%AD%90%E7%BD%91"><span class="toc-number">3.1.</span> <span class="toc-text">划分子网</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%88%92%E5%88%86%E5%AD%90%E7%BD%91%EF%BC%9F"><span class="toc-number">3.1.1.</span> <span class="toc-text">为什么要划分子网？</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%88%92%E5%88%86%E5%AD%90%E7%BD%91%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E8%B7%AF"><span class="toc-number">3.1.2.</span> <span class="toc-text">划分子网的基本思路</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%88%92%E5%88%86%E5%AD%90%E7%BD%91%E7%9A%84%E5%85%B7%E4%BD%93%E6%96%B9%E6%B3%95"><span class="toc-number">3.1.3.</span> <span class="toc-text">划分子网的具体方法</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AD%90%E7%BD%91%E6%8E%A9%E7%A0%81"><span class="toc-number">3.2.</span> <span class="toc-text">子网掩码</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%89%BE%E5%88%B0%E5%AD%90%E7%BD%91%EF%BC%9F"><span class="toc-number">3.2.1.</span> <span class="toc-text">如何找到子网？</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E5%AD%90%E7%BD%91%E6%8E%A9%E7%A0%81"><span class="toc-number">3.2.2.</span> <span class="toc-text">默认子网掩码</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E8%A1%A8%E7%9A%84%E6%94%B9%E5%8F%98"><span class="toc-number">3.2.3.</span> <span class="toc-text">路由表的改变</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E8%B6%85%E7%BD%91-%E6%97%A0%E5%88%86%E7%B1%BB%E7%BC%96%E5%9D%80CIDR"><span class="toc-number">3.3.</span> <span class="toc-text">构造超网(无分类编址CIDR)</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E9%87%87%E7%94%A8%E6%97%A0%E5%88%86%E7%B1%BB%E7%BC%96%E5%9D%80%EF%BC%9F"><span class="toc-number">3.3.1.</span> <span class="toc-text">为什么要采用无分类编址？</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%97%A0%E5%88%86%E7%B1%BB%E7%BC%96%E5%9D%80"><span class="toc-number">3.3.2.</span> <span class="toc-text">什么是无分类编址</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E6%8E%A9%E7%A0%81"><span class="toc-number">3.3.3.</span> <span class="toc-text">地址掩码</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E8%81%9A%E5%90%88"><span class="toc-number">3.3.4.</span> <span class="toc-text">路由聚合</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E9%99%85%E6%8E%A7%E5%88%B6%E6%8A%A5%E6%96%87%E5%8D%8F%E8%AE%AEICMP"><span class="toc-number">4.</span> <span class="toc-text">网际控制报文协议ICMP</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#ICMP%E6%8A%A5%E6%96%87%E7%9A%84%E7%A7%8D%E7%B1%BB"><span class="toc-number">4.1.</span> <span class="toc-text">ICMP报文的种类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ICMP%E5%B7%AE%E9%94%99%E6%8A%A5%E6%96%87"><span class="toc-number">4.2.</span> <span class="toc-text">ICMP差错报文</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ICMP%E8%AF%A2%E9%97%AE%E6%8A%A5%E6%96%87"><span class="toc-number">4.3.</span> <span class="toc-text">ICMP询问报文</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IP%E5%A4%9A%E6%92%AD"><span class="toc-number">5.</span> <span class="toc-text">IP多播</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BB%A5%E5%A4%AA%E7%BD%91%E5%A4%9A%E6%92%AD"><span class="toc-number">5.0.1.</span> <span class="toc-text">以太网多播</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#IP%E5%A4%9A%E6%92%AD%E5%9C%B0%E5%9D%80%E5%92%8C%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84"><span class="toc-number">5.0.2.</span> <span class="toc-text">IP多播地址和地址映射</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#IP%E5%A4%9A%E6%92%AD%E4%BC%A0%E9%80%81%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%BF%87%E7%A8%8B"><span class="toc-number">5.0.3.</span> <span class="toc-text">IP多播传送的基本过程</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#IGMP%E5%8D%8F%E8%AE%AE"><span class="toc-number">5.0.4.</span> <span class="toc-text">IGMP协议</span></a></li></ol></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/touxiang.jpg"></div><div class="author-info__name text-center">luo</div><div class="author-info__description text-center">在一群优秀的人中间，常常以为自己是他们一员，然后忘了努力</div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">13</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">11</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">3</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">友情链接</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://m0d1.top">mod1</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://c10udlnk.top">c10udlnk</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://fxizenta.design">Fxizenta</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://mclaren888.cn">Mclaren</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/background2.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">luo's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">luo</a><a class="site-page" href="/archives">时间线</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/categories">分类</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">《计算机网络》网络层</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-05-31</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">8.6k</span><span class="post-meta__separator">|</span><span>阅读时长: 26 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>网络真是太复杂了………………感觉很多东西单独理解起来很简单，但合起来内容就变得很复杂，懂完过一阵子就忘记了。</p>
+<p>最近计算机网络课学到了网络层了，本文仅是自己对课本学习内容的一个整理，方便期末复习(其实也没怎么整理，本文<strong>巨长，阅读请谨慎</strong>！！！)</p>
+<p>参考书籍是 <strong>谢希仁</strong> 《计算机网络》第七版</p>
+<span id="more"></span>
+<h4 id="网络层提供什么样的服务？"><a href="#网络层提供什么样的服务？" class="headerlink" title="网络层提供什么样的服务？"></a>网络层提供什么样的服务？</h4><p>在计算机网络领域，网络层应该向运输层提高怎样的服务，是<strong>面向连接</strong>还是<strong>无连接</strong>？曾引起了长期的争论。争论的焦点的实质就是：在计算机通信中，<strong>可靠交付应当由谁来负责？</strong>是<strong>网络</strong>还是<strong>端系统</strong>？</p>
+<ul>
+<li>支持<strong>面向连接</strong>的人认为，坚持让网络借助电信网的成功经验，让<strong>网络负责可靠交付</strong>。他们认为网络的实现是：当两台计算机进行通信时，应当先建立连接，思路是建立一条<strong>虚电路VC Virtual Circult</strong>，虚电路预留双方通信所需的<strong>一切网络资源</strong>，然后双方就沿着已建立的虚电路发送分组。在分组交换中，分组的首部不需要填写完整的目的主机地址，而只需要填写这条虚电路的编号，因此减少了分组的开销。<br>采用虚电路的通信方式，分组<strong>无差错按序</strong>到达终点，不丢失，也不重复。在通信结束后释放建立了的虚电路。如图，主机H1和H2之间交换的分组都必须在实现建立的虚电路上传送。如图：</li>
+</ul>
+<p>  <img src="/2021/05/31/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E3%80%8B%E7%BD%91%E7%BB%9C%E5%B1%82/1.jpg" style="zoom:50%;"></p>
+<ul>
+<li><p>互联网的先驱者却提出了一种崭新的网络设计思路，采用<strong>无连接</strong>的方式。<br>设计的思路是这样的：<strong>网络层向上只提供简单灵活的，无连接的，尽最大努力交付的数据报服务</strong>。网络在发送分组不需要先建立连接。每一个分组(也就是IP数据报)<strong>独立</strong>发送，与其他分组无关。<strong>网络层不提供服务质量的承诺</strong>。所传送的分组<strong>可能出错，丢失，重复和失序，也不保证分组交付的时间</strong>。这种设计的好处是：网络不提供端到端的可靠传输服务，因此路由器的设计比较简单，造价也便宜。网络造价大大降低，运行方式也更加灵活。如图，主机H1和H2发送的分组各自独立地选择路由，并且在传送的过程中可能会丢失。</p>
+</li>
+<li><p><img src="/2021/05/31/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E3%80%8B%E7%BD%91%E7%BB%9C%E5%B1%82/2.jpg" style="zoom:80%;"></p>
+</li>
+</ul>
+<p>  下图归纳了<strong>虚电路服务和数据报服务的对比</strong>:</p>
+<p>  <img src="/2021/05/31/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E3%80%8B%E7%BD%91%E7%BB%9C%E5%B1%82/3.jpg" style="zoom: 25%;"></p>
+<h4 id="网际协议IP"><a href="#网际协议IP" class="headerlink" title="网际协议IP"></a>网际协议IP</h4><p>网际协议IP是TCP/IP体系中两个最主要的协议之一，也是最重要的互联网标准协议之一。IP协议又称为Kahn-Cerf协议，以纪念它的两个研发者Robert Kahn和Vint Cerf。与IP协议配套使用的还有三个协议：</p>
+<ul>
+<li><strong>地址解析协议ARP(Address Resolution Protocol)</strong></li>
+<li><strong>网际控制报文协议ICMP(Internet Control Message Protocol)</strong></li>
+<li><strong>网际组管理协议IGMP(Internet Group Management Protocol)</strong></li>
+</ul>
+<p>他们都属于<strong>网际协议</strong>，下图画出了这三个协议和IP协议的关系，ARP在最下面，因为IP协议经常需要ARP协议的辅助(后面会说到)，而ICMP和IGMP协议画在网际协议的上部，因为它们要用到IP协议。</p>
+<p><img src="/2021/05/31/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E3%80%8B%E7%BD%91%E7%BB%9C%E5%B1%82/4.jpg" style="zoom: 15%;"></p>
+<h5 id="虚拟互连网络："><a href="#虚拟互连网络：" class="headerlink" title="虚拟互连网络："></a>虚拟互连网络：</h5><p>我们知道，要把全世界方位内数百万计的网络互连起来将会非常复杂，需要解决很多的问题如：不同的寻址方案，不同的差错恢复方法，不同的服务，不同的管理和控制方式等等，<strong>没有一种单一的网络能够适应所有用户的需求</strong>。</p>
+<p>从一般的概念讲，将网络互相连接起来要使用一些<strong>中间设备</strong>，根据设备所处的层次大概有四种不同的中间设备：</p>
+<ul>
+<li><strong>转发器</strong>：<strong>物理层</strong>中使用的中间设备</li>
+<li><strong>网桥或桥接器</strong>：<strong>数据链路层</strong>中使用的中间设备</li>
+<li><strong>路由器</strong>：<strong>网络层</strong>使用的中间设备</li>
+<li><strong>网关</strong>： 网络层以上使用的中间设备</li>
+</ul>
+<p>用转发器或网桥作为中间设备，仅仅是将<strong>一个网</strong>扩大了，从网络层的角度上看，这仍然是<strong>一个网络</strong>，我们<strong>并不称为网络互连</strong>。我们现在指的<strong>网络互连</strong>一般都是指用路由器进行网络互连和路由选择。</p>
+<p>下面这张图表示有<strong>许多计算机网络通过众多路由器</strong>进行了互连，由于<strong>参加互连的计算机网络都使用相同的网际协议IP(Internet Protocal)</strong>,所以可以把互连后的计算机网络看成如图所示的一个<strong>虚拟互联网络</strong>，这些使用IP协议的虚拟互连网络也可简称为<strong>IP网</strong>。</p>
+<p><img src="/2021/05/31/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E3%80%8B%E7%BD%91%E7%BB%9C%E5%B1%82/5.jpg" style="zoom: 25%;"></p>
+<p>使用IP网的好处是当IP网上的主机进行通信时，就<strong>好像在一个单个网络上通信一样</strong>，忽略了互连的各网络的具体异构细节(不知道可不可以用一个计算机名词来形容：<strong>透明</strong>：指在计算机的实现中客观存在的但我们一般不太需要去了解它的很多细节)。</p>
+<p>如果在这种覆盖全球的<strong>IP网</strong>的上层使用TCP协议，就成为了现在的<strong>互联网</strong>了。 </p>
+<p>这里需要指出<strong>互联网(Internet)</strong>并不等于<strong>互连网(internet)</strong>,互连网泛指由多个计算机网络互连而成的网络，在这些网络之间的通信协议可以是任意的，而<strong>互联网</strong>采用的协议是<strong>TCP/IP协议族</strong>作为通信的规则，可以粗略的理解为<strong>互联网是互连网的一种实现</strong>。</p>
+<h5 id="直接交付和间接交付"><a href="#直接交付和间接交付" class="headerlink" title="直接交付和间接交付"></a>直接交付和间接交付</h5><p>直接交付和间接交付的区别，简单举例，假设如图的主机H1要把一个IP数据包发送给目的主机H2。主机H1首先会查找自己的路由表，如果目的主机在本网络上(与路由器直接相连的网络)，则不需要通过任何路由器<strong>直接交付</strong>，如不是，必须先把IP数据报发送给某个路由器(如图中的R1)进行<strong>间接交付</strong>。</p>
+<p><img src="/2021/05/31/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E3%80%8B%E7%BD%91%E7%BB%9C%E5%B1%82/14.jpg" style="zoom: 50%;"></p>
+<h5 id="分类的IP地址"><a href="#分类的IP地址" class="headerlink" title="分类的IP地址"></a>分类的IP地址</h5><p>整个互联网就是一个<strong>单一的，抽象的网络</strong>。IP地址就是给互联网上的每一台主机(或路由器)的每一个接口分配一个在全世界范围内是<strong>唯一的32位</strong>的标识符。</p>
+<p><strong>分类的IP地址</strong>就是将<strong>32位的IP</strong>地址划分为若干个固定的类，包括A,B,C,D,E五类地址。每一类的地址都由两个字段：<strong>网络号和主机号</strong>构成。IP地址之所以在全世界范围是唯一的，原因是<strong>一个网络号在整个互联网范围内是唯一的</strong>。</p>
+<p>这种两级的IP地址可以记为</p>
+<script type="math/tex; mode=display">
+IP地址= <网络号>,<主机号></script><p>下图给出了五类IP地址的网络号字段和主机号字段各自的位数：</p>
+<p><img src="/2021/05/31/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E3%80%8B%E7%BD%91%E7%BB%9C%E5%B1%82/6.jpg" style="zoom: 15%;"></p>
+<p>A类,B类,C类地址都是<strong>单播地址</strong>，是最常用的。D类地址为<strong>多播地址。</strong></p>
+<p>IP地址都是32位的二进制代码，为了提高可读性，采用了每8位为一个单位的<strong>点分十进制记法</strong>：每8位代表一位十进制数，中间用点隔开。</p>
+<p>如10000000 00001011 00000011 00011111可以读为128.11.3.31。</p>
+<p>注意1：IP地址中的<strong>全0的网络号</strong>表示<strong>”这个(this)“</strong>。意思是<strong>”本网络“</strong>，是个保留地址。第二，网络号为127，也就是01111111保留作为本地软件<strong>环回测试</strong>，所以<strong>网络号为127的地址不作为一个网络地址</strong>。</p>
+<p>注意2：<strong>全0的主机号</strong>(与上面区分，上面说的是网络号全0，这里指的是主机字段全0)，表示的是该IP地址是”本主机“所连接到的<strong>单个网络地址</strong>，例如，一主机的IP地址为5.6.7.8，则该主机所在的网络地址就是5.0.0.0，<strong>所以一般不会分配给某一台主机全0的主机号</strong>。而主机号全1表示<strong>”所有的“(all)</strong>,表示该网络上的所有主机。</p>
+<p>如B类地址128.7.255.255(255为全1的十进制)，表示<strong>”在网络128.7.0.0上的所有主机“</strong>。 而A类地址0.0.0.35，网络号为全0，表示本网络，主机号为35，所以表示的意思是<strong>”在本网络上主机号为35的主机</strong>。</p>
+<p>下图给出<strong>IP地址的指派范围</strong>和<strong>一般不使用的特殊IP地址</strong>：</p>
+<p><img src="/2021/05/31/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E3%80%8B%E7%BD%91%E7%BB%9C%E5%B1%82/7.jpg" style="zoom: 20%;"></p>
+<p>下面介绍IP地址一些重要的特点：</p>
+<ul>
+<li><p>IP地址由网络号和主机号组成，是一种分等级的地址结构。这种结构的好处首先是IP地址管理机构在分配地址的时候可以<strong>只分配网络号，主机号由各单位自己分配</strong>，就比如中国移动给某个学校分配一个C类地址的网络号，学校自行给校内主机编主机号。其次，路由器<strong>仅根据目的主机所连接的网络号转发分组</strong>，不考虑目的主机号，加快了查询的速度。</p>
+</li>
+<li><p>按照互联网的观点，一个网络指的是具有<strong>相同网络号的主机的集合</strong>，所以用<strong>转发器或网桥</strong>连接起来的若干个局域网仍为一个网络，因此这些局域网都具有相同的网络号。<strong>具有不同网络号的局域网必须使用路由器进行互连</strong>。</p>
+</li>
+</ul>
+<h5 id="IP地址与硬件地址"><a href="#IP地址与硬件地址" class="headerlink" title="IP地址与硬件地址"></a>IP地址与硬件地址</h5><p>硬件地址又称物理地址，MAC地址。</p>
+<ul>
+<li><strong>物理地址</strong>是数据链路层和物理层使用的地址</li>
+<li><strong>IP地址</strong>是网络层和以上各层使用的地址，是一种逻辑地址</li>
+</ul>
+<p><strong>IP地址和MAC地址的区别</strong>：可以简单这么理解：</p>
+<p><strong>从负责的层次角度来看</strong>：<strong>IP地址负责的是网络层和网络层以上层的运输，而物理地址负责的是数据链路层及以下层的运输</strong>。</p>
+<p>发送数据报时，当上层使用IP数据报一旦交给了数据链路层，就被封装成MAC帧了，而MAC帧在传送时使用的源地址和目的地址都是物理地址。收到数据报时，主机收下MAC帧后，将数据报上传给网络层后，网络层会获取数据报中的源IP地址和目的IP地址，再进行后面的处理。 </p>
+<p><strong>从可不可以改变的角度来看</strong>：<strong>IP地址一般是可以改变的，而MAC地址一般不可以改变(要改变一般要修改硬件)</strong></p>
+<p>但MAC地址和IP地址都可以我们标识一台主机的身份，MAC地址类似我们的姓名，而IP地址类似我们的学号。但我们改变了我们主机连接的网络(类似于升学),IP地址(学号)一般会改变，而MAC地址(姓名)一般不会改变。</p>
+<h5 id="地址解析协议ARP"><a href="#地址解析协议ARP" class="headerlink" title="地址解析协议ARP"></a>地址解析协议ARP</h5><p>APR协议简单地说就是<strong>在一个局域网上，根据某主机的IP地址找到该主机的MAC地址</strong>的一种协议。之所以需要知道MAC地址，是因为在数据链路层及以下的层次转发数据报需要MAC地址。</p>
+<h5 id="IP数据报的格式"><a href="#IP数据报的格式" class="headerlink" title="IP数据报的格式"></a>IP数据报的格式</h5><p>IP数据报的格式如图：</p>
+<p><img src="/2021/05/31/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E3%80%8B%E7%BD%91%E7%BB%9C%E5%B1%82/8.jpg" style="zoom: 25%;"></p>
+<p>下面对各字段的解释：</p>
+<ol>
+<li><strong>版本</strong>：占4位，指IP协议的版本，目前广泛使用的版本号为4(IPV4)。</li>
+<li><strong>首部长度</strong>：占4位，表示最大十进制数为15，<strong>注意首部长度的单位为32个字也就是四个字节</strong>，所以首部长度最大可为15<em>4=60字节。因为以32个字为单位，IP分组的首部长度不是4字节的整数倍时，需要<em>*填充</em></em>。也因此数据报的数据部分永远在4字节的整数倍开始。<br>最常用的首部长度是20字节(没有可选字段)，也就是0101。</li>
+<li>区别服务：没有被实际用过。</li>
+<li><strong>总长度</strong>：占16位，指的是<strong>首部和数据部分的长度和</strong>。</li>
+<li><strong>标识</strong>：占16位。每一个数据报都有一个标识位，因为当数据报大于数据帧的最大长度：我们称之为<strong>最大传送单元MTU Maximum Transfer Unit</strong>,需要进行分片转发。<strong>同一数据报分片后标识字段的值仍然是是相同的</strong>，这样在目的主机收到这些分了片的数据报后，就能<strong>根据相同的标识字段将分片后的各数据报正确地重装为原来的数据报</strong>。</li>
+<li><p><strong>标志位</strong>：占3位，目前只有2位有意义。</p>
+<ul>
+<li>标志字段的最低位为<strong>MF</strong> MF=1 表示后面还有分片，MF=0表示这已经是数据报片的最后一片了。</li>
+<li>标志字段的中间一位为<strong>DF</strong> DF=1 意思为不能分片 DF=0 才允许分片。</li>
+</ul>
+</li>
+<li><p><strong>片偏移</strong>：占13位。片偏移表示的是在分组分片后，某片在原分组的相对位置。<strong>片偏移</strong>以8个字节为偏移单位。也就是说，每个分片的长度一定是8字节(64位)的整数倍。<strong>标识</strong>位让我们知道是<strong>哪一个数据报</strong>，<strong>片偏移</strong>让我们知道了被分片了的某一块数据报是原来数据报里面的<strong>哪一块</strong>，加上标志位就可以<strong>不出差错的重组</strong>我们收到的多个数据报。</p>
+</li>
+<li><strong>生存时间</strong>：占8位 <strong>TTL Time To Live</strong>表明数据报在网络中的<strong>寿命</strong>。其目的是防止<strong>无法交付的数据报无限制地在互联网中兜圈子</strong>。具体是实现我们叫做<strong>“跳数限制”</strong>。路由器在每次转发数据报<strong>之前</strong>就把TTL值减1，若TTL值减小到0，就丢弃这个数据报，不再转发。显然：数据报能在互联网中经过的路由器的最大数值是<strong>255</strong>。利用TTL的属性，我们有时候把TTL的初始值设置为1，<strong>表示这个数据报只能在本局域网中传送</strong>。</li>
+<li><strong>协议</strong>：占8位，指出该数据报携带的数据使用了何种协议。</li>
+<li><strong>首部检验和</strong>：占16位。这个字段<strong>只检验数据报的首部，不包括数据部分</strong>。具体计算方法为：在发送方，先把IP数据报首部划分为许多16位字的序列，并把检验和字段置零。用反码算术运算把16位字相加后，将得到的<strong>和的反码</strong>写入检验和字段。接收方收到数据报后，将首部的所有16位再使用反码算术运算相加一次，将得到的<strong>和取反码</strong>，即得出接收方检验和的计算结果。若首部未发生任何变化，则此结果必为0。</li>
+<li><strong>源地址</strong>：32位的IP地址</li>
+<li><strong>目的地址</strong>：32位的目的IP地址</li>
+</ol>
+<h5 id="路由表"><a href="#路由表" class="headerlink" title="路由表"></a>路由表</h5><p>每一条路由最主要是两个信息(<strong>目的网络地址</strong>，<strong>下一条的地址</strong>)</p>
+<h4 id="划分子网和构造超网"><a href="#划分子网和构造超网" class="headerlink" title="划分子网和构造超网"></a>划分子网和构造超网</h4><h5 id="划分子网"><a href="#划分子网" class="headerlink" title="划分子网"></a>划分子网</h5><h6 id="为什么要划分子网？"><a href="#为什么要划分子网？" class="headerlink" title="为什么要划分子网？"></a>为什么要划分子网？</h6><p>在今天看来，IP地址的设计不够合理。原因有：</p>
+<ul>
+<li><strong>IP地址空间的利用率有时很低</strong> </li>
+<li>给每一个物理网络分配一个网络号会使得<strong>路由表变得太大</strong>而使网络性能变坏。</li>
+<li><strong>两级IP地址不够灵活</strong>。</li>
+</ul>
+<p>为解决上述问题，我们在IP地址中又增加了一个<strong>子网号</strong>字段，使得两级IP地址变成为<strong>三级IP地址</strong>，这种做法也叫做<strong>划分子网</strong>，或子网寻址或子网路由选择。</p>
+<h6 id="划分子网的基本思路"><a href="#划分子网的基本思路" class="headerlink" title="划分子网的基本思路"></a>划分子网的基本思路</h6><p>划分子网的基本思路，简单的两句话，一是<strong>内部划分</strong>，二是<strong>对外仍然表现为一个网络</strong>。</p>
+<p>一个拥有许多物理网络的单位，可将所属的物理网络划分为<strong>若干个子网</strong>。划分子网纯属一个单位内部的事情，本单位以外的网络<strong>看不见</strong>这个网络是由多少个子网组成，这个单位<strong>对外仍然表现为一个网络</strong>。</p>
+<h6 id="划分子网的具体方法"><a href="#划分子网的具体方法" class="headerlink" title="划分子网的具体方法"></a>划分子网的具体方法</h6><p>划分子网的具体方法是<strong>从网络的主机号</strong>借用若干位作为<strong>子网号</strong>。因此主机号也就减少了相应的位数，于是两级IP地址在<strong>本单位内部</strong>就变成了<strong>三级IP地址</strong></p>
+<script type="math/tex; mode=display">
+IP地址=<网络号>,<子网号>,<主机号></script><p>于是乎，凡是从<strong>其他网络</strong>发送给本单位某台主机的IP数据报，仍然是<strong>根据IP数据报的网络号</strong>找到连接在本单位网络上的路由器。但此路由器在收到IP数据报后，再按照目的网络和子网号找到<strong>目的子网</strong>，把IP数据报交付给主机。</p>
+<p>比如下面这个例子：</p>
+<p><img src="/2021/05/31/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E3%80%8B%E7%BD%91%E7%BB%9C%E5%B1%82/9.jpg" style="zoom: 15%;"></p>
+<p>图中表示某单位拥有一个B类IP地址，网络地址为145.13.0.0(网络号为145.13)。凡是目的地址为145.13.x.x的数据报都先发送这个网络的路由器R1。<strong>R1再根据数据报的目的地址把数据报转发到相应的子网</strong>。</p>
+<h5 id="子网掩码"><a href="#子网掩码" class="headerlink" title="子网掩码"></a>子网掩码</h5><h6 id="如何找到子网？"><a href="#如何找到子网？" class="headerlink" title="如何找到子网？"></a>如何找到子网？</h6><p><strong>上面我们讲到了R1要根据数据报的目的地址把数据报转发到相应的子网</strong>，那么问题就很自然地来了，如何找到子网？从IP数据报的首部是无法看出子网的划分的。解决方法就是<strong>子网掩码</strong>。</p>
+<p>如图：IP地址为145.13.3.10的主机本身是两级IP地址结构，网络号为145.13.0.0。如果我们用三级IP地址结构去解释这个IP地址，主机号拿出<strong>8位作为子网号</strong>，则网络号为145.13.3.0。为了使路由器R1能够很<strong>方便地从数据报中的目的IP地址中提取出所要找的子网的网络地址</strong>，路由器就要使用三级地址的子网掩码。三级地址的子网掩码这里也是32位的，由一串24个1和跟随的一串8个0组成。</p>
+<p><img src="/2021/05/31/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E3%80%8B%E7%BD%91%E7%BB%9C%E5%B1%82/10.jpg" style="zoom: 15%;"></p>
+<p><strong>子网掩码中1的位数对应于IP地址中原来二级地址中的16位网络号和新加上的8位子网号，而0的位数对应于主机号所占的位数</strong></p>
+<p>把三级IP地址的子网掩码和收到的数据报中的目的IP地址进行<strong>与运算</strong>，就可以得到我们要的<strong>子网的网络地址</strong>，解决了如何找到子网的问题。</p>
+<p><strong>归述</strong>，对于IP地址145.13.0.0从网络<strong>外面</strong>看，这就是一个普通的B类网络，网络号为145.13.0.0。但<strong>进入</strong>到这个网络后(即到了路由器R1)，我们对该网络进行了不同的子网划分，记录下子网掩码，就看到了还有许多网络。如我们设置子网掩码为24个1和8个0，其内部的网络地址就变为145.13.x.0。x可以为不同的数值，表示不同的子网。再次显示了子网设计的基本思路：<strong>内部划分</strong>，<strong>对外仍表现为一个网络</strong>。</p>
+<h6 id="默认子网掩码"><a href="#默认子网掩码" class="headerlink" title="默认子网掩码"></a>默认子网掩码</h6><p>在不划分子网时，虽然没有子网，但为了方便路由表查找的统一性，使用<strong>默认子网掩码</strong></p>
+<ul>
+<li><p>A类地址的默认子网掩码为255.0.0.0</p>
+</li>
+<li><p>B类地址的默认子网掩码为255.255.0.0</p>
+</li>
+<li><p>C类地址的默认子网掩码为255.255.255.0</p>
+</li>
+</ul>
+<h6 id="路由表的改变"><a href="#路由表的改变" class="headerlink" title="路由表的改变"></a>路由表的改变</h6><p><strong>子网掩码是一个网络或一个子网的重要属性</strong>。在划分了子网后，路由器在和相邻路由器交换路由信息时，必须把自己所在网络(或子网)的<strong>子网掩码告诉相邻路由器</strong>。</p>
+<p>我们之前提到，路由表的每一条目有两个信息(目的网络地址，下一跳的地址)。但在划分完子网后，除了要给出目的网络地址外，还<strong>必须同时给出该网络的子网掩码</strong>。所以路由表的每一条两个三个信息(<strong>目的网络地址</strong>，<strong>目的网络地址的子网掩码</strong>，<strong>下一跳的地址</strong>)。</p>
+<p>现在路由表是如何工作的呢？原理挺简单，当路由表收到数据报，从首部提取出目的IP地址D，与路由表中各网络的子网掩码进行逐为与操作，与其对应的目的网络地址匹配，若<strong>匹配则直接交付或将数据报传给下一跳路由器</strong>。</p>
+<p><strong>总结</strong>：<strong>划分子网增加了灵活性，但却减少了能够连接在网络上的主机总数</strong>。原因很简单：划分子网使得能划分出来的网络更多了，而每个网络总要排除全0的主机号和全1的总机号，一般这两个不作为主机的IP地址，所以减少了能够连接在网络上的主机总数。</p>
+<h5 id="构造超网-无分类编址CIDR"><a href="#构造超网-无分类编址CIDR" class="headerlink" title="构造超网(无分类编址CIDR)"></a>构造超网(无分类编址CIDR)</h5><h6 id="为什么要采用无分类编址？"><a href="#为什么要采用无分类编址？" class="headerlink" title="为什么要采用无分类编址？"></a>为什么要采用无分类编址？</h6><p>划分子网在一定程度上缓解了互联网在发展中遇到的困难，但是仍面临着<strong>B类地址已经要全部分配完毕，互联网主干网上的路由表中的项目数目急剧增长</strong>。因此，IETF研究出<strong>无分类编址</strong>的方法来解决问题。</p>
+<h6 id="什么是无分类编址"><a href="#什么是无分类编址" class="headerlink" title="什么是无分类编址"></a>什么是无分类编址</h6><p>无分类编址的正式名字是<strong>无分类域间路由选择CIDR(Classless Inter-Domain Routing)</strong>，它的主要特点有两个：</p>
+<ul>
+<li><strong>消除了传统的A类，B类，C类地址以及划分子网的概念。</strong>把32位的IP地址划分为前后两个部分，前面部分为<strong>网络前缀</strong>，或简称为<strong>前缀</strong>，用来指明网络，后面部门则用来表面主机。其实就是一种<strong>无分类的两级编址</strong>，记法为：<script type="math/tex; mode=display">
+IP地址=<网络前缀>,<主机号></script>同时，CIDR还使用<strong>斜线记法</strong>，或称<strong>CIDR记法</strong>，即在IP地址后面加上斜线“/”，然后写上网络前缀所占IP地址的位数。</li>
+</ul>
+<ul>
+<li><p><strong>CIDR</strong>把<strong>网络前缀相同</strong>的连续的IP地址组成一个<strong>CIDR地址块</strong>。我们只要知道CIDR地址块中的任何一个地址，就可以知道这个地址块的最小地址和最大地址，以及地址块中的地址数。</p>
+<p>例如，IP地址128.14.35.7/20 是某CIDR地址块中的一个地址，其前20位是网络前缀，只要把IP地址的二进制写出来，进行简单修改很容易就知道，这个地址块中的最小地址为128.14.32.0，最大地址为128.14.47.255。</p>
+<p>我们通常<strong>用最小地址和网络前缀的位数指明一个CIDR地址块</strong>，例如上面的地址块可以表示为128.14.32.0/20。</p>
+</li>
+</ul>
+<h6 id="地址掩码"><a href="#地址掩码" class="headerlink" title="地址掩码"></a>地址掩码</h6><p>为了更方便地进行路由选择，CIDR使用32位的<strong>地址掩码</strong>。<strong>地址掩码由一串1和一串0组成</strong>，与子网掩码是一样的，不过地址掩码<strong>1的位数</strong>等于<strong>网络前缀的长度</strong>，而子网掩码的1的位数等于网络号的长度。之所以要引进<strong>地址掩码</strong>，是因为CIDR根本就不使用子网(指的是并没有直接指明若干位作为子网号），自然也不存在什么子网掩码。</p>
+<p>但分配到一个CIDR地址块的单位，仍然可以在本单位内部根据需要“<strong>划分子网</strong>”，这些子网也都只有一个网络前缀和一个主机号字段。其实也可以理解为，<strong>这里说的子网也就是前缀更长些的CIDR块</strong>，有了更长的前缀，就可以划分出更多的网络。</p>
+<h6 id="路由聚合"><a href="#路由聚合" class="headerlink" title="路由聚合"></a>路由聚合</h6><p>前面我们提到<strong>互联网主干网上的路由表中的项目数目急剧增长</strong>。CIDR设计解决这个问题的方法是<strong>路由聚合</strong>。</p>
+<p>由于一个CIDR地址块有很多的地址，所以在路由表中就利用<strong>CIDR地址块</strong>来查找目的网络，这种地址的聚合就称之为<strong>路由聚合</strong>。它<strong>使得路由表中的一个项目可以表示原来传统分类地址的很多个路由，以此减少表项目</strong>。路由聚合也称为<strong>构成超网</strong>。</p>
+<p><strong>每一个CIDR地址块中的地址数一定是2的整数次幂。</strong></p>
+<p><strong>下面给出一个CIDR地址块分配的例子</strong>：</p>
+<p>假定某ISP(互联网服务提供商如中国移动)拥有地址块206.0.64.0/18，也就是相当于有64个C类网络。现在某大学需要800个IP地址，ISP可以给该大学分配一个地址块206.0.68.0/22，它包括1024个IP地址。然后这个大学可以自由地对本校的各系分配地址块，各系还可以再划分地址块。如下图：</p>
+<p><img src="/2021/05/31/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E3%80%8B%E7%BD%91%E7%BB%9C%E5%B1%82/11.jpg" style="zoom: 20%;"></p>
+<p>对于该图，我们分析<strong>地址聚合</strong>的意义。</p>
+<p>这个ISP共拥有64个C类网络，如果不采用CIDR技术，则与在与该ISP的路由器交换路由信息的每一个路由器的路由表中，<strong>都需要有64个项目</strong>。但采用路由聚合后，就只需要路由聚合后的一个项目206.0.64.0/18就可以找到该ISP。同理，四个系的路由也可以聚合为大学的路由<strong>206.0.65.0/22</strong>，简单地理解就是这个项目就是大学的收发室，寄给这个大学任何一个系的邮件，邮递员都不会考虑大学各个系的地址，而是不管三七二十一把邮件集中投递到大学的收发室，然后剩下的就交给大学的收发室，这样就减轻了邮递员的工作量，只需要把邮件发给某个大学，不管大学如何再把这封信交给各个系(相当于<strong>简化了路由表的查找</strong>)。</p>
+<p>结论：<strong>路由聚合</strong>实际上是将<strong>网络前缀缩短</strong>，网络前缀越短，其地址块所包含的地址数越多。</p>
+<p><strong>最长前缀原则</strong>：在使用CIDR时，因为采用了网络前缀的这种记法，在查找路由表时可能<strong>会得到不止一个匹配结果</strong>，出现这种情况，<strong>我们应当从匹配结果中选择具有最长网络前缀的路由</strong>，也称之为<strong>最长前缀匹配</strong>。仍然用前面的例子，在ISP的路由表中，有以下两个项目，即206.0.68.0/22(大学)和206.0.71.128/25(四系)。现假设ISP收到一个数据报，其目的IP地址为D=206.0.71.130分别与这两个项目的掩码逐位与，得到结果206.0.68.0/22和206.0.71.128/25都匹配。这是我们选择后者，因为它是更具体的一个。</p>
+<h4 id="网际控制报文协议ICMP"><a href="#网际控制报文协议ICMP" class="headerlink" title="网际控制报文协议ICMP"></a>网际控制报文协议ICMP</h4><p>网际控制报文协议的出现，是为了<strong>更有效地转发IP数据报和提高交付的机会</strong>。ICMP允许主机或路由器报告差错情况和提供有关异常情况的报告。</p>
+<p>ICMP报文是装在IP数据报中，作为其中的数据部分，是IP层的协议。ICMP报文格式如下图：</p>
+<h5 id="ICMP报文的种类"><a href="#ICMP报文的种类" class="headerlink" title="ICMP报文的种类"></a>ICMP报文的种类</h5><p>ICMP报文的种类有两种，<strong>ICMP差错报告报文</strong>和<strong>ICMP询问报文</strong>。</p>
+<p>常用的ICMP报文类型，如图：</p>
+<p><img src="/2021/05/31/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E3%80%8B%E7%BD%91%E7%BB%9C%E5%B1%82/12.jpg" style="zoom: 20%;"></p>
+<p>ICMP检验和字段用来<strong>检验整个ICMP报文</strong>，前面提到，IP数据报的首部的检验并不检验IP数据报的内容，因此无法保证经过传输的ICMP报文不产生差错。</p>
+<h5 id="ICMP差错报文"><a href="#ICMP差错报文" class="headerlink" title="ICMP差错报文"></a>ICMP差错报文</h5><p>ICMP差错报文共有四种：</p>
+<ul>
+<li><strong>终点不可达</strong>：当路由器或主机不能交付数据报时就向源点发送<strong>终点不可达报文</strong></li>
+<li><strong>时间超过</strong>：路由器收到生存时间为0的数据报时，丢弃该数据报外，向源点<strong>发送时间超过报文</strong> 。当终点在预先规定的时间内<strong>不能收到一个数据报的全部数据报片时</strong>，丢弃数据报片，向源点<strong>发送时间超过报文</strong>。<strong>Traceroute</strong>就是利用了该原理。 </li>
+<li><strong>参数问题</strong>：当路由器或目的主机收到的<strong>数据报的首部中有的字段的值不正确</strong>(通过检查首部检验和)，就丢弃数据报，向源点<strong>发送参数问题报文</strong></li>
+<li><strong>改变路由</strong>(<strong>重定向</strong>)：路由器把改变路由报文发送给主机，<strong>让主机知道下次数据报发送给另外的路由</strong>(可通过更好的路由)</li>
+</ul>
+<p><strong>不应发送ICMP差错报文报告的几种情况</strong>：</p>
+<ul>
+<li>对ICMP差错报告报文，不再发送ICMP差错报告报文(<strong>禁止套娃</strong>!!!)</li>
+<li>对第一个分片的数据包片的所有后续数据报片，都不发送ICMP差错报告报文</li>
+<li><strong>对具有多播地址的数据报</strong>，都不发送ICMP差错报告报文</li>
+<li>对具有特殊地址的数据报，不发送ICMP差错报告报文。</li>
+</ul>
+<h5 id="ICMP询问报文"><a href="#ICMP询问报文" class="headerlink" title="ICMP询问报文"></a>ICMP询问报文</h5><p>ICMP询问报文有两种</p>
+<ul>
+<li><strong>回送请求和回答</strong> ICMP回送请求报文是由主机或路由器向一个特定的目的主机<strong>发出的询问</strong>。<strong>收到此报文的主机必须给源主机或路由器发送ICMP回送回答报文</strong>。这种询问可以用来测试目的站是否可达以及了解有关状态。如我们的cmd命令 <strong>PING</strong>就是利用回送请求与回送回答报文。</li>
+<li><strong>时间戳请求和回答</strong>：ICMP时间戳请求报文是<strong>请某台主机或路由器回答当前的日期和时间</strong>。</li>
+</ul>
+<h4 id="IP多播"><a href="#IP多播" class="headerlink" title="IP多播"></a>IP多播</h4><p>IP多播即一对多的通信</p>
+<h6 id="以太网多播"><a href="#以太网多播" class="headerlink" title="以太网多播"></a>以太网多播</h6><p>以太网网卡接收两种帧：</p>
+<ul>
+<li>目的MAC地址为本机网卡地址</li>
+<li>目的MAC地址为广播地址(FF-FF-FF-FF-FF-FF)</li>
+</ul>
+<p>且以太网网卡对单播和广播，硬件判别能力很好。<strong>以太网多播地址的最高字节的最低位为1</strong>。</p>
+<p><strong>以太网多播实现机制</strong>：目前网卡或网卡驱动软件能进行多播地址的判别与过滤，看主机是否属于一个或多个多播组，然后决定丢弃或接受。</p>
+<h6 id="IP多播地址和地址映射"><a href="#IP多播地址和地址映射" class="headerlink" title="IP多播地址和地址映射"></a>IP多播地址和地址映射</h6><p>前面提到了D类地址，D类地址就是专用多播地址，范围为224.0.0.0~239.255.255.255</p>
+<p><strong>一个D类多播地址对应一组计算机，这组计算机的集合成为多播主机组</strong>。主机组成员可以是因特网上的任何主机，成员是动态的。多播地址不是一般的IP主机地址，而是参加多播组的所有主机的组地址，为一组主机共有。</p>
+<p>那么问题来了，当一个IP多播组传送到一个以太网时，如何传送到LAN中的几台计算机上？这就要知道<strong>IP多播到以太网多播地址转换</strong>。</p>
+<p>IP多播包从路由网进入以太网前，通过<strong>多播地址的转换</strong>，把IP多播地址<strong>转化为相应的以太网硬件多播地址，然后利用以太网的多播机制完成多播</strong>。</p>
+<p>IANA定义的可转化的以太网多播地址范围为：<strong>01:00:5e:00:00:00~01:00:5e:7f:ff:ff</strong>。</p>
+<p>IP多播与以太网多播的映射关系如图（图源来自张老师PPT）</p>
+<p><img src="/2021/05/31/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E3%80%8B%E7%BD%91%E7%BB%9C%E5%B1%82/13.png" style="zoom: 50%;"></p>
+<p><strong>映射地址的前25bit是固定的</strong></p>
+<h6 id="IP多播传送的基本过程"><a href="#IP多播传送的基本过程" class="headerlink" title="IP多播传送的基本过程"></a>IP多播传送的基本过程</h6><p>​    <strong>单个物理网络中的IP多播过程</strong>：</p>
+<ol>
+<li>发送主机的<strong>多播进程</strong>将目的IP地址设置为一个<strong>多播</strong>地址。</li>
+<li>主机的设备驱动<strong>将IP多播地址转换为相应的以太网多播地址</strong>，并发送数据。</li>
+<li>接收端的<strong>接收程序</strong>，先加入一个多播组，让驱动设备能够接收这些数据报。</li>
+<li><p>当以太网以多播形式接收数据后，根据地址映射关系，传送给<strong>IP层相应的多播进程</strong>处理。</p>
+<p><strong>多个物理网络中的IP多播过程</strong>：<br> 比较复杂，需要使用支持多播的路由器，不太懂略。</p>
+</li>
+</ol>
+<h6 id="IGMP协议"><a href="#IGMP协议" class="headerlink" title="IGMP协议"></a>IGMP协议</h6><p>前面提到了多播的实现原理是利用多播组，那么<strong>主机如何加入或撤出多播组，多播组的状态如何维护？</strong>这就需要用到<strong>IGMP</strong>协议。</p>
+<p>IGMP：Internet Group Management Protocol <strong>解决互联网中多播组成员的加入或撤出，多播组状态维护的问题</strong>。</p>
+<p><strong>多播工作的两个阶段</strong>：</p>
+<p>1 加入多播组：<strong>IGMP报告</strong>：主机A要加入一个多播组时，向多播地址发出一个IGMP报文，表明要成为组成员，本地多播路由收到该报文后，将该成员关系转发给互联网上的多播路由器，告诉大家有个B…..站用户<strong>打不过就加入我们了</strong>，以后大家收到这个多播组的信息就传一份给他。</p>
+<p>2 维护多播组：<strong>IGMP查询</strong>：A主机撤出多播组时，可以报告离开或不报告，多播组中成员是动态的。为了及时掌握组中的成员情况，多播路由器对所以多播组不断发出IGMP查询报文，<strong>问谁还在啊？还需要我给你转发多播数据报吗？</strong>根据组中各主机的响应判断还有哪些<strong>“活跃成员”</strong>，并将还存在的成员转告路由器，不活跃的成员就不再给他转发信息了。</p>
+<p>本篇博客只是<strong>自己</strong>对课程学习的一些笔记和总结，大部分内容参考自<strong>《计算机网络》</strong>第七版，谢希仁编著。</p>
+<p>如有出错(非常大可能会出错哈哈)，欢迎指正！</p>
+<p>完………………………………………………………………….</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:1127959736@qq.com">luo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://luo41.top/2021/05/31/《计算机网络》网络层/">https://luo41.top/2021/05/31/《计算机网络》网络层/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://luo41.top">luo's Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><a class="post-meta__tags" href="/tags/%E7%BD%91%E7%BB%9C%E5%B1%82/">网络层</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2021/06/02/%E5%87%BD%E6%95%B0%E4%BE%9D%E8%B5%96%EF%BC%8C%E7%A0%81%E5%92%8C%E8%8C%83%E5%BC%8F/"><i class="fa fa-chevron-left">  </i><span>函数依赖，码和范式</span></a></div><div class="next-post pull-right"><a href="/2021/05/22/Git%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><span>Git教程学习笔记</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="gitalk-container"></div><script>var gitalk = new Gitalk({
+  clientID: '32255e197922b1ab75ad',
+  clientSecret: '9bbe47fc29096bda7c2e430895ef65fa58c8d7db',
+  repo: 'zhengjianda.github.io',
+  owner: 'zhengjianda',
+  admin: 'zhengjianda',
+  id: md5(decodeURI(location.pathname)),
+  language: 'zh-CN'
+})
+gitalk.render('gitalk-container')</script></div></div><footer class="footer-bg" style="background-image: url(/background2.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2021 By luo</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/lib/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  CommonHTML: {
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "HTML-CSS": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "SVG": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  }
+});
+</script><script type="text/x-mathjax-config">MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for (i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script id="ribbon" src="/js/third-party/canvas-ribbon.js" size="100" alpha="0.6" zIndex="-1" data-click="true"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>
