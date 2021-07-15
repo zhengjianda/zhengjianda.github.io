@@ -158,7 +158,7 @@ D=2Blog_{2}K=N_{b}log_{2}K （bps)</script><p>$N_{b}$: 波特率bps<br>D：介�
 <h4 id="4-3-码分复用"><a href="#4-3-码分复用" class="headerlink" title="4.3 码分复用"></a>4.3 码分复用</h4><p><strong>码元复用CDM(Code Division Multiplexing)</strong>也是一种共享信道的方法。更常用的名词是<strong>码分多址CDMA(Code Division Multiple Access)</strong>。每一个用户可以在<strong>同样的时间</strong>使用<strong>同样的频带</strong>进行通信。</p>
 <p>如何实现这种同时同频带通信而不相互干扰？<strong>各用户使用经过特殊挑选的不同码型，因此各用户之间不会造成干扰</strong>。</p>
 <p>在CDMA中，每一比特时间再划分为m个短的间隔，称为<strong>码片(chip sequence)</strong>。一个站如果要发送比特1，则发送给它自己的m bit码片序列，如果要发送比特0，则发送该码片序列的二进制反码。</p>
-<p>例如，指派给S站的8bit 码片序列为0011011.当S发送比特1时，它就发送序列00011011，而当S发送比特0时，就发送11100100。为了方便，我们按照惯例将码片中的0写为-1,1写为+1，因此S站的码片序列是(-1 -1 -1 +1 +1 -1 -1 -1)。</p>
+<p>例如，指派给S站的8bit 码片序列为00011011.当S发送比特1时，它就发送序列00011011，而当S发送比特0时，就发送11100100。为了方便，我们按照惯例将码片中的0写为-1,1写为+1，因此S站的码片序列是(-1 -1 -1 +1 +1 -1 +1 +1)。</p>
 <p>CDMA系统的一个重要特点就是每个站分配的码片序列不仅必须各不相同，而且还必须互相<strong>正交(orthogonal)</strong>。在实用的系统中使用<strong>伪随机码序列</strong>。</p>
 <p>令向量S表示站S的码片向量，令T表示其他任何站的码片向量。两个不同站的码片序列正交，就是向量S和T的规格化<strong>内积(inner product)都是0</strong>。</p>
 <script type="math/tex; mode=display">
