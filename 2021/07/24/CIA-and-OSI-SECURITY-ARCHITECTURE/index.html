@@ -1,0 +1,206 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="CIA and OSI SECURITY ARCHITECTURE"><meta name="keywords" content="CANS"><meta name="author" content="luo,1127959736@qq.com"><meta name="copyright" content="luo"><title>CIA and OSI SECURITY ARCHITECTURE | luo's Blog</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '5.4.0'
+} </script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="luo's Blog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-CIA%E4%B8%89%E5%85%83%E7%BB%84%E5%92%8C%E4%B8%80%E4%BA%9B%E5%AE%89%E5%85%A8%E6%A6%82%E5%BF%B5"><span class="toc-text">1 CIA三元组和一些安全概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-THE-OSI-SECURITY-ARCHITECTURE"><span class="toc-text">2 THE OSI SECURITY ARCHITECTURE</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Threat-and-Attack"><span class="toc-text">2.1 Threat and Attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Security-Attack"><span class="toc-text">2.2 Security Attack</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-Passive-Attack"><span class="toc-text">2.2.1 Passive Attack</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-Active-Attack"><span class="toc-text">2.2.2 Active Attack</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-SECURITY-SERVICES"><span class="toc-text">2.3 SECURITY SERVICES</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-SECURITY-MECHANISMS"><span class="toc-text">2.4 SECURITY MECHANISMS</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/touxiang.jpg"></div><div class="author-info__name text-center">luo</div><div class="author-info__description text-center">在一群优秀的人中间，常常以为自己是他们一员，然后忘了努力</div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">14</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">12</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">3</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">友情链接</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://m0d1.top">mod1</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://c10udlnk.top">c10udlnk</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://www.fxizenta.design/">Fxizenta</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://mclaren888.cn">Mclaren</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/background2.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">luo's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">luo</a><a class="site-page" href="/archives">时间线</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/categories">分类</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">CIA and OSI SECURITY ARCHITECTURE</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-07-24</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">3.8k</span><span class="post-meta__separator">|</span><span>阅读时长: 12 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>写这篇文章的原因：考完试后经过半个月的补觉和躺平，本菜狗终于想起来<del>要学习了</del>(不是)，《密码编码学于网络安全》简称CANS之前其实看过一二章，然后再次看的时候，完全不记得以前看过了(淦)，算了算了重新开始看吧，写博客单纯记录自己学习的过程和尽量避免<strong>学完就忘</strong>(dalao们不要见笑，原谅我这个菜狗的水平hh)，如有错误，敬请指出！！！</p>
+<h2 id="1-CIA三元组和一些安全概念"><a href="#1-CIA三元组和一些安全概念" class="headerlink" title="1 CIA三元组和一些安全概念"></a>1 CIA三元组和一些安全概念</h2><blockquote>
+<p>The cybersecurity definition introduces <strong>three key objectives</strong> that are <strong>the heart</strong> of information and network secutiry. </p>
+</blockquote>
+<p>大概就是说计算机安全定义了最核心的三个关键目标，如下：</p>
+<ul>
+<li><p><strong>Confidentiality 机密性</strong><br>又包括了两个方面：</p>
+<ul>
+<li><p>Data confidentiality 数据机密性 ，原书给的定义是：</p>
+<blockquote>
+<p>Assures that private or confidential information is not made available or disclosed to <strong>unauthorized</strong> individuals.</p>
+</blockquote>
+<p>意思大概就是说 <strong>数据机密性</strong>保证未经授权的个人不得获取或披露私人的或机密的信息。</p>
+</li>
+<li><p>Privacy 个人隐私：</p>
+<blockquote>
+<p>Privacy: assures that individuals control or influence what information related to them may be collected and stored and by whom and to whom that information may be disclosed</p>
+</blockquote>
+<p>意思大概就是说 保证个人控制或影响与他们相关的哪些信息是可能被收集和存储的，以及这些信息可能由谁或向谁公开。</p>
+<p>举个例子，学生的分数信息在一些国家受到法律的保护，他们认为学生分数的机密性非常重要，学生分数仅仅能被学生自己，父母和需要这些信息完成工作的学校员工得到，这就需要保证学生分数的机密性，防止被<strong>未经授权的个人获取和泄露</strong>。</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p><strong>Integrity 完整性</strong><br>数据完整性防止对信息的不恰当修改或破坏，包括确保信息的不可否认性(nonrepudiation)和真实性(data authenticity)。</p>
+<p><strong>不可否认性</strong>就是通过某种机制，防止发送方或接收方否认传输或接收过某条信息。发送方有<strong>信息已经送达的证明</strong>(接收方你不能否认你没收到信息~)，而接收方有信息<strong>发送方的身份证明</strong>(发送方你不能否认你发过了该信息，因为该信息有你的身份证明)。</p>
+<p>而<strong>真实性</strong>(这里指的是信息的真实性，与后面实体的真实性还有所区别)：保证信息是真实的，不是虚假的，就是信息就是如同信息所说的那样。(比如说信息写着某某病人对什么食物过敏，那这个病人就是真的对该食物过敏)</p>
+<blockquote>
+<p>Data authenticity also means that a digital object is indeed <strong>what it claims to be</strong> or what it is claimed to be.</p>
+</blockquote>
+</li>
+</ul>
+<p>完整性的例子：医院的数据库存储着病人的过敏信息，在保证<strong>完整性</strong>的前提下，医生能够信任这些信息是<strong>正确的</strong>和<strong>最新的</strong>。现假设一个护士对该信息进行了不恰当的修改，或者一个黑客对该数据库进行破坏，插入了虚假的信息，在完整性机制的保证下，数据库需要<strong>快速恢复到可以信赖</strong>的状态，保证数据库存储的信息是<strong>正确的</strong>，<strong>值得信赖的</strong>。</p>
+<ul>
+<li><strong>Availability</strong> 可用性 确保系统工作的及时性和不对授权用户拒绝服务</li>
+</ul>
+<blockquote>
+<p>Availability assures that systems <strong>work promptly</strong> and service is <strong>not denied to authorized user.</strong></p>
+</blockquote>
+<p>可用性的例子就比较多了，比如一台服务器瘫痪了导致用户不能访问计算机资源，比如上面那个数据库的例子，该数据库所在的服务器瘫痪了，医生无法访问数据库可能会造成一定的麻烦，所以服务器要保证可用性。</p>
+<p>这就是CIA三元组，CIA三元组对于安全目标的定义已经比较清晰和全面了，但有时候还需要一些补充的安全概念，呈现更完整的安全定义，如：</p>
+<ul>
+<li><p>Authenticity 真实性 书里写的是(being genuine,being able to be verified and trusted) 大概就是说安全主体是真实的，可验证的，可信赖的。对传输信息来说，就是要保证<strong>信息</strong>和<strong>信息源</strong>是正确的，信息源是正确的，我的理解是，也就是能验证说 <strong>用户(信息源)就是他声称的那个人</strong>。比如有个人跟你说他是张三~，嗯你把他身份证拿来一看，哦<strong>确实是张三</strong>，他没欺骗你(这里排除拿假身份证的情况)。还有就是系统的每个输入是否均来自可信任的信源。信息是正确的就是上面的data Authenticity。</p>
+</li>
+<li><p>Accountability 可追溯性 这一安全概念要求<strong>实体的行为可以唯一性地追溯到该实体</strong>，该属性支撑事后恢复以及后续的如法律诉讼等。</p>
+<p><img src="/2021/07/24/CIA-and-OSI-SECURITY-ARCHITECTURE/1.jpg" style="zoom: 25%;"></p>
+</li>
+</ul>
+<h2 id="2-THE-OSI-SECURITY-ARCHITECTURE"><a href="#2-THE-OSI-SECURITY-ARCHITECTURE" class="headerlink" title="2 THE OSI SECURITY ARCHITECTURE"></a>2 THE OSI SECURITY ARCHITECTURE</h2><p>为了有效地评价安全需求，以及对各种安全的产品和政策进行评价和选择，OSI安全架构给出了一种系统的定义方法。</p>
+<p>OSI安全架构主要关注安全攻击，安全机制和安全服务，简短地定义如下</p>
+<ul>
+<li><p>安全攻击：可以简单地理解<strong>任何危机信息系统安全的行为</strong></p>
+<blockquote>
+<p>Security attack: Any action that compromises the security of information owned by an organization.</p>
+</blockquote>
+</li>
+<li><p>安全机制 用来<strong>检测</strong>，<strong>阻止</strong>攻击和从被攻击状态<strong>恢复到正常状态</strong>的过程(或实现该过程的设备)</p>
+<blockquote>
+<p>Security mechanism: A process(or a device incorporating such a process) that designed to <strong>detect</strong>, <strong>prevent</strong>, or <strong>recover</strong> from a security attack</p>
+</blockquote>
+</li>
+<li><p>安全服务 <strong>加强数据处理系统</strong>和<strong>信息传输的安全性</strong>的一种处理过程或通信服务，目的在于<strong>利用一种或多种安全机制对安全攻击进行反攻击</strong>。</p>
+<p>安全攻击，安全机制和安全攻击一些类型如下图：</p>
+</li>
+</ul>
+<p><img src="/2021/07/24/CIA-and-OSI-SECURITY-ARCHITECTURE/2.jpg" style="zoom: 50%;"></p>
+<h3 id="2-1-Threat-and-Attack"><a href="#2-1-Threat-and-Attack" class="headerlink" title="2.1 Threat and Attack"></a>2.1 Threat and Attack</h3><ul>
+<li>威胁：破坏安全的<strong>潜在</strong>(potential)可能，在环境，行为事件允许的情况下，会破坏安全。</li>
+<li>攻击: 对系统安全的攻击，有意违反安全服务和侵犯系统安全策略的<strong>恶毒(malicious)行为</strong>。</li>
+</ul>
+<h3 id="2-2-Security-Attack"><a href="#2-2-Security-Attack" class="headerlink" title="2.2 Security Attack"></a>2.2 Security Attack</h3><p>安全攻击分为被动攻击(Passive Attack)和主动攻击(Active Attack)。</p>
+<p>被动攻击试图<strong>获取或利用</strong>系统的信息但<strong>不影响系统资源</strong>。</p>
+<blockquote>
+<p> A passive attack attempts to <strong>learn or make use of information</strong> from system <strong>but does not affect system resources</strong>.</p>
+</blockquote>
+<p>而主动攻击试图去改变系统资源或影响系统运行。</p>
+<blockquote>
+<p>An active attack attempts to alter system resources or affect their operation. </p>
+</blockquote>
+<h4 id="2-2-1-Passive-Attack"><a href="#2-2-1-Passive-Attack" class="headerlink" title="2.2.1 Passive Attack"></a>2.2.1 Passive Attack</h4><p>被动攻击的本质是对传输进行<strong>窃听(eavesdropping)</strong>和<strong>监测(monitoring)</strong>。攻击者的目的是获得传输的信息。<strong>信息内容的泄露</strong>和<strong>流量分析</strong>都属于被动攻击。</p>
+<ul>
+<li><p><strong>The release of message content 信息内容的泄露</strong> 比如说你打电话，电子邮件消息和传输的文件，开腾讯会议会议内容都可能含有敏感的机密的信息，我们需要防止这些传输内容的泄露。</p>
+</li>
+<li><p><strong>Traffic analysis 流量分析</strong> 假设我们已经使用方法隐藏了消息内容，比如对传输的消息进行加密(encrtption)，这样攻击者即使截获了消息也无法从消息中<strong>直接</strong>获得信息。但是攻击者依然可以观察到这些消息的一些模式，比如传输消息的频率和长度，通信主机的身份和位置。利用这些信息攻击者可以来判断通信中的某些性质。书中原文：</p>
+<blockquote>
+<p>If we had encryption protection in place,an opponent might <strong>still</strong> be able to <strong>observe the pattern of these messages</strong>. The opponent could determine the <strong>location and identity of communicatio hosts</strong> and could observe <strong>the frequency and length of messages</strong> being exchanged. </p>
+</blockquote>
+</li>
+</ul>
+<p>被动攻击由于并不修改数据，所以信息流正常的发送和送达，双方都没有意识到有第三方正在获取和观察流量模型，因此很难去察觉到。</p>
+<blockquote>
+<p>The message traffic is sent and received in an apparently normal fashion and <strong>neither the sender nor receiver is aware that a third party has read the message or observed the traffic pattern</strong>. </p>
+</blockquote>
+<p>因此对于被动攻击，重点在于<strong>预防</strong>，而不是检测。</p>
+<h4 id="2-2-2-Active-Attack"><a href="#2-2-2-Active-Attack" class="headerlink" title="2.2.2 Active Attack"></a>2.2.2 Active Attack</h4><p>主动攻击包括对数据流进行修改(<strong>modification</strong>)或伪造数据量(the creation of a <strong>false</strong> stream)。具体分为四类：<strong>replay</strong>,<strong>masquerade</strong>,<strong>modification of messages</strong>，<strong>denial of service</strong> </p>
+<ol>
+<li><strong>masquerade</strong> 伪装是指实体假装成其他实体，违背了前面提到的<strong>真实性(Authenticity)</strong>(那个人拿着张三的身份证，但其实他不是张三)，无权限的实体可以通过伪装成有权限的实体来获得<strong>权力</strong>，然后进行其他的操作，比如修改数据(modification of messages)，所以伪装攻击通常还包含其他形式的主动攻击。</li>
+<li><strong>replay</strong>: 重放包括对数据单元的捕获(<strong>被动攻击</strong>)和对捕获后的数据单元进行重传，以<strong>获得未经授权的效果</strong>。我的理解是A给B发送数据，但C没有权限给B发送数据，然后C把A发送给B的数据捕获了，然后可能进行一些自己想要的修改，再重放给B，B此时依旧认为是A给他发送的数据，C就达到了给B发送数据的目的(该行为本是未被授权的)。</li>
+<li><strong>modification  of messages</strong> 消息修改指的是<strong>未经授权地修改合法消息的一部分</strong>，或者是<strong>延迟消息的传输</strong>，<strong>改变消息的顺序</strong>。比如说原来的消息是”luo is vegetable dog”(luo是菜狗)，被修改为”luo is not vegetable dog”(luo不是菜狗)。再比如说”Allow <strong>John</strong> to read confidential file accounts”修改为”Allow <strong>Fred Brown</strong> to read confidential file accounts”。从而带来一些麻烦，比如说luo是菜狗居然变成了luo不是菜狗，麻烦大了…</li>
+<li><strong>denial of service</strong> 拒绝服务破坏了可用性(availability)，这种攻击可能针对的是具体的目标，比如某个服务器拒绝提供服务，另一种形式是破坏了整个网络，使网络失效。</li>
+</ol>
+<p>主动攻击难以做到绝对的预防，所以对于主动攻击，重点在于<strong>检测并从攻击造成的破坏或延迟中恢复回来</strong>。</p>
+<p>下图说明了在CS机制交互过程中，各种攻击是如何实现的。</p>
+<p><img src="/2021/07/24/CIA-and-OSI-SECURITY-ARCHITECTURE/0.jpg" style="zoom: 50%;"></p>
+<p>如(b)图机制适用于被动攻击，包括窃听和流量分析，在Client和Server正常通信的过程中，Attacker窃听和检测该过程，实现被动攻击。其他也是类似</p>
+<h3 id="2-3-SECURITY-SERVICES"><a href="#2-3-SECURITY-SERVICES" class="headerlink" title="2.3 SECURITY SERVICES"></a>2.3 SECURITY SERVICES</h3><blockquote>
+<p>A security service is a capability that <strong>supports one or more of the seurity requirements</strong>(confidentiality,integrity,availability,authenticity,and accountability).</p>
+<p>Security services implement security policies and are implemented by <strong>security mechanisms</strong></p>
+</blockquote>
+<p>我的简单理解是 安全服务支持一个或多个安全需求的功能(就是前面说的机密性，完整性，可用性，真实性和可追溯性)。</p>
+<p>安全服务实现安全策略，并由安全机制去实现安全服务。</p>
+<p>一些比较重要的安全服务包括认证，访问控制，数据保密性，数据完整性和不可否认性。</p>
+<ol>
+<li><p>Authentication 认证服务<br>认证服务用来保证通信的真实性(<strong>authentic</strong>)。对于单条信息而言，认证服务功能向接收方<strong>保证消息确实来自其所声称的发送方</strong>。对于正在进行的通信，比如终端和主机连接，在初始化的时候，<strong>认证服务保证两个实体都是可信的</strong>，也就是前面说的每个实体都是他们所声称的实体(What is claim to be)，其次，<strong>认证服务保证该连接不受第三方的干扰</strong>(干扰指的是第三方能够伪装成两个合法实体中的一个进行非授权的传输或接收)</p>
+<p>两个特殊的认证服务</p>
+<ul>
+<li>Peer entity authentication 对等实体认证</li>
+<li>Data origin authentication 数据源认证 为数据的来源提供确认。 </li>
+</ul>
+</li>
+<li><p>Access Control 访问控制<br>访问控制是<strong>限制和控制</strong>那些通过通信连接对主机和应用进行访问 的一种能力，为此，<strong>每个试图获得访问控制的实体必须被识别或认证后，才能获得相应的访问权限</strong>。保证的是<strong>真实性</strong>。</p>
+</li>
+<li><p>Data Confidentiality 数据机密性</p>
+</li>
+</ol>
+<p>​     数据机密性服务保证数据机密性，主要是防止传输的数据遭到被动攻击，造成私人信息和机密信息的泄露。</p>
+<ol>
+<li><p>Data Integrity 数据完整性<br>数据完整性服务保证数据的完整性。简单地理解，如果是在通信中，就是保证<strong>收到的消息和发出的消息是一致的</strong>。如果是上面提到的数据库系统的数据完整性的话，就要保证数据库的信息是<strong>正确的</strong>且<strong>可以信赖的</strong>，对于非法修改做出反应和及时恢复(恢复就要用到一些机制)。</p>
+</li>
+<li><p>Nonrepudiation 不可否认性</p>
+<p>不可否认性服务保证不可否认性。 <strong>防止发送方和接收方否认传输或接收过某条信息</strong>。</p>
+<blockquote>
+<p>发送方有<strong>信息已经送达的证明</strong>(接收方你不能否认你没收到信息~)，而接收方有信息<strong>发送方的身份证明</strong>(发送方你不能否认你发过了该信息，因为该信息有你的身份证明)。</p>
+</blockquote>
+</li>
+<li><p>Availability Service 可用性服务</p>
+<p>保证可用性…..处理由拒绝服务攻击引起的安全问题，依赖于对系统资源的合适管理和控制，同时还需要其他的安全服务配合，比如认证(以防止未授权的坏人破坏系统资源从而破坏可用性)。<br>系统是可用的当系统资源可被授权实体请求访问或使用。</p>
+</li>
+</ol>
+<h3 id="2-4-SECURITY-MECHANISMS"><a href="#2-4-SECURITY-MECHANISMS" class="headerlink" title="2.4 SECURITY MECHANISMS"></a>2.4 SECURITY MECHANISMS</h3><p>………书里这里说本书会到处覆盖安全机制，暂时不多说，只是简单罗列，好吧….后面看到再说</p>
+<ul>
+<li><p>Cryptographic algorithms 加密算法 运用数学算法将数据转换为<strong>不可知</strong>的形式，再通过密钥等方法还原。分为<strong>可逆加密算法</strong>和<strong>不可逆加密算法</strong>。</p>
+</li>
+<li><p>Data integrity 数据完整性  怎么又是它，嗯其实差不多意思，就是用以保证数据完整性的各种机制</p>
+</li>
+<li><p>Digital signature 数字签名 附加在数据单元之后的一种数据，是对数据单元的密码变化，使得接收方可以证明数据源和数据完整性，防止<strong>伪造</strong></p>
+</li>
+<li><p>Traffic padding 流量填充 在数据流空隙中填充若干位，以防止<strong>流量分析</strong>，改变了数据流的模式(pattern)。</p>
+</li>
+<li><p>Routing control 路由控制 能够为某些数据选择特殊的物理上安全的路线。</p>
+</li>
+<li><p>Notarization 公证 利用可信的第三方来保证数据交换的某些性质</p>
+</li>
+<li><p>Access control  跟上同，只不过这里是机制。</p>
+</li>
+</ul>
+<p>参考资料 《密码编码学与网络安全》——原理与实践(第八版)</p>
+<p><strong>vegetable dog———-&gt;me</strong></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:1127959736@qq.com">luo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://luo41.top/2021/07/24/CIA-and-OSI-SECURITY-ARCHITECTURE/">https://luo41.top/2021/07/24/CIA-and-OSI-SECURITY-ARCHITECTURE/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://luo41.top">luo's Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CANS/">CANS</a></div><nav id="pagination"><div class="next-post pull-right"><a href="/2021/06/18/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E8%BF%90%E8%BE%93%E5%B1%82/"><span>计算机网络运输层</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="gitalk-container"></div><script>var gitalk = new Gitalk({
+  clientID: '32255e197922b1ab75ad',
+  clientSecret: '9bbe47fc29096bda7c2e430895ef65fa58c8d7db',
+  repo: 'zhengjianda.github.io',
+  owner: 'zhengjianda',
+  admin: 'zhengjianda',
+  id: md5(decodeURI(location.pathname)),
+  language: 'zh-CN'
+})
+gitalk.render('gitalk-container')</script></div></div><footer class="footer-bg" style="background-image: url(/background2.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2021 By luo</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/lib/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  CommonHTML: {
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "HTML-CSS": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "SVG": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  }
+});
+</script><script type="text/x-mathjax-config">MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for (i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script id="ribbon" src="/js/third-party/canvas-ribbon.js" size="100" alpha="0.6" zIndex="-1" data-click="true"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>
