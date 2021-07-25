@@ -1,0 +1,408 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="传统加密技术"><meta name="keywords" content="-CANS -密码学"><meta name="author" content="luo,1127959736@qq.com"><meta name="copyright" content="luo"><title>传统加密技术 | luo's Blog</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '5.4.0'
+} </script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="luo's Blog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CANS3-CLASSICAL-ENCRYPTION-TECHNIQUES-%E4%BC%A0%E7%BB%9F%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF"><span class="toc-text">CANS3-CLASSICAL ENCRYPTION TECHNIQUES(传统加密技术)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-SYMMETRIC-CIPHER-MODEL"><span class="toc-text">1 SYMMETRIC CIPHER MODEL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%BA%94%E4%B8%AA%E5%9F%BA%E6%9C%AC%E6%88%90%E5%88%86"><span class="toc-text">1.1 五个基本成分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%AE%80%E5%8C%96%E6%A8%A1%E5%9E%8B"><span class="toc-text">1.2 对称加密简化模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-Ctyptography"><span class="toc-text">1.3 Ctyptography</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-Cryptanalysis-and-Brute-Force-Attack"><span class="toc-text">1.4 Cryptanalysis and Brute-Force Attack</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-SUBTITUTION-TECHNIQUES"><span class="toc-text">2 SUBTITUTION TECHNIQUES</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-1-Caesar-%E5%AF%86%E7%A0%81"><span class="toc-text">2.2.1 Caesar 密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-2-Monoalphabetic-Ciphers"><span class="toc-text">2.2.2 Monoalphabetic Ciphers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-3-Playfair-Cipher"><span class="toc-text">2.2.3 Playfair Cipher</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-4-Hill-Cipher"><span class="toc-text">2.2.4 Hill Cipher</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-5-Polyalphabetic-Ciphers"><span class="toc-text">2.2.5 Polyalphabetic Ciphers</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Vigenere-%E5%AF%86%E7%A0%81"><span class="toc-text">Vigenere 密码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Vernam-CIPHER"><span class="toc-text">Vernam CIPHER</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-6-One-Time-pad"><span class="toc-text">2.2.6 One-Time pad</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-TRANSPOSITION-TECHNIQUES"><span class="toc-text">3 TRANSPOSITION TECHNIQUES</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/touxiang.jpg"></div><div class="author-info__name text-center">luo</div><div class="author-info__description text-center">在一群优秀的人中间，常常以为自己是他们一员，然后忘了努力</div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">15</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">13</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">3</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">友情链接</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://m0d1.top">mod1</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://c10udlnk.top">c10udlnk</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://www.fxizenta.design/">Fxizenta</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://mclaren888.cn">Mclaren</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/background2.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">luo's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">luo</a><a class="site-page" href="/archives">时间线</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/categories">分类</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">传统加密技术</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-07-26</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">7.2k</span><span class="post-meta__separator">|</span><span>阅读时长: 24 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="CANS3-CLASSICAL-ENCRYPTION-TECHNIQUES-传统加密技术"><a href="#CANS3-CLASSICAL-ENCRYPTION-TECHNIQUES-传统加密技术" class="headerlink" title="CANS3-CLASSICAL ENCRYPTION TECHNIQUES(传统加密技术)"></a>CANS3-CLASSICAL ENCRYPTION TECHNIQUES(传统加密技术)</h1><h2 id="1-SYMMETRIC-CIPHER-MODEL"><a href="#1-SYMMETRIC-CIPHER-MODEL" class="headerlink" title="1 SYMMETRIC CIPHER MODEL"></a>1 SYMMETRIC CIPHER MODEL</h2><h3 id="1-1-五个基本成分"><a href="#1-1-五个基本成分" class="headerlink" title="1.1 五个基本成分"></a>1.1 五个基本成分</h3><p>对于一个对称加密的过程，有五个基本成分：</p>
+<ul>
+<li>明文 Plaintext 原始的可理解的消息或数据，是加密算法的输入</li>
+<li>加密算法 Encryption algorithm 加密算法是对明文进行各种<strong>代替(substitutions)</strong>和<strong>置换(transformation)</strong>，以产生不可理解的密文</li>
+<li>密钥 Secret key 密钥也是加密算法的输入，<strong>独立于</strong>明文和算法，算法根据所用的特定密钥而产生不同的输出，算法所进行的各种代替和置换也依靠密钥。</li>
+<li>密文 Ciphertext 密文是加密算法的输出，直观看起来不可理解其代表的意识，依赖于<strong>明文</strong>和<strong>密钥</strong>，对于给定的相同的明文，不同的密钥将产生不同的密文。</li>
+<li>解密算法 Decryption algorithm 本质上是加密算法的逆运算，输入为密文和密钥，输出<strong>原始明文</strong></li>
+</ul>
+<p>而对称密码对称的意识就是加密使用的密钥和解密使用的密钥是<strong>相同的</strong>。</p>
+<span id="more"></span>
+<h3 id="1-2-对称加密简化模型"><a href="#1-2-对称加密简化模型" class="headerlink" title="1.2 对称加密简化模型"></a>1.2 对称加密简化模型</h3><p>图3.1是对称加密的简化模型：</p>
+<p><img src="/2021/07/26/%E4%BC%A0%E7%BB%9F%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/1.jpg" style="zoom: 20%;"></p>
+<p>在一般的情况下，我们假设已知密文和加密/解密算法而破译消息是不实际的(<strong>impratical</strong>)，换而言之，我们并不需要对加密解密算法保密，最重要的是<strong>对密钥保密</strong>。使用对称密码，首要的安全问题就是<strong>密钥的保密性</strong>。</p>
+<p>从图3.2理解对称加密的基本过程：</p>
+<p><img src="/2021/07/26/%E4%BC%A0%E7%BB%9F%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/11.jpg" style="zoom: 15%;"></p>
+<p>发送方产生明文消息X=$[X<em>{1},X</em>{2},….X<em>{M}]$，X的M个元素是某个字母表上的字母，传统上，字母表由26个大写字母组成，现在最常用的是二进制字母表{0,1}。加密时，先声成一个形如K=$[K</em>{1},K<em>{2},….K</em>{J}]$的密钥,如果密钥是由信息的发送方产生的，那么密钥需要通过某些安全的渠道发送到接收方，另一种方法是<strong>由可信赖的第三方生成密钥</strong>再安全地<strong>分发</strong>给发送方和接收方。</p>
+<p>前面提到，加密算法根据输入信息X和密钥K生成密文Y=$[Y<em>{1},Y</em>{2},….Y_{N}]$，用数学公式可表示为</p>
+<script type="math/tex; mode=display">
+Y=E(K,X)</script><p>表示密文Y是明文X的函数，什么样的函数？由<strong>密钥K</strong>决定。</p>
+<p>解密的过程可表示为</p>
+<script type="math/tex; mode=display">
+X=D(K,Y)</script><h3 id="1-3-Ctyptography"><a href="#1-3-Ctyptography" class="headerlink" title="1.3 Ctyptography"></a>1.3 Ctyptography</h3><p>google了一下，Ctyptography的翻译是密码学，而cryptology的翻译也是密码学，在书里有：</p>
+<blockquote>
+<p>The areas of cryptography and cryptanalysis together are call <strong>crtptology</strong></p>
+</blockquote>
+<p>cryptanalysis是密码分析学，看了网上的一些翻译，Ctyptography译为密码编码学好像更好理解一点，这样<strong>密码编码学</strong>和<strong>密码分析学</strong>就统称为密码学。</p>
+<p>Cryptography systems(密码编码学系统)有三个独立特征：</p>
+<ul>
+<li>The type of operations used for transforming plaintext to ciphertext 就是说是一种把明文转换为密文的运算，所以的加密算法都基于两个原理，代替(substitution)和置换(transposition)，代替是将明文中的每个元素(这个元素可以是位(bit)，字母(letter)等)映射成(<strong>mapped into</strong>)另一个元素。置换是将明文中的元素重新排列(rearrange)。运算的基本要求是不允许有信息丢失，也就是说所有的运算是<strong>可逆</strong>，通过密文和密钥可以解密出明文，并与原来加密前的明文完全一致。</li>
+<li>The number of keys used 使用的密钥数 如果发送方和接收方使用相同的密钥，这种密码就称为对称密码(Symmetric)，又称单钥密码，传统密码。如果发收双方使用不同的密钥，这种密码就称为非对称密码(asymmetric)，双钥或公钥密码。</li>
+<li>The way in which thee plaintext is processed 处理明文的方式 分组密码(<strong>block cipher</strong>)每次处理<strong>输入的一组元素</strong>，相应地<strong>输出一组元素</strong>。流密码(<strong>stream cipher</strong>)则是连续地处理输入元素，每次输出一个元素。</li>
+</ul>
+<h3 id="1-4-Cryptanalysis-and-Brute-Force-Attack"><a href="#1-4-Cryptanalysis-and-Brute-Force-Attack" class="headerlink" title="1.4 Cryptanalysis and Brute-Force Attack"></a>1.4 Cryptanalysis and Brute-Force Attack</h3><p>通常，攻击密码系统的典型目标是得到加密所使用的<strong>密钥</strong>，而不是仅仅恢复出单个密文对应的明文，攻击传统的密码系统有两种通用的方法</p>
+<ul>
+<li>Crytanalysis 密码分析学:  密码分析学攻击根据于算法的性质，明文的一般特征或某些<strong>明密文对</strong>，企图利用算法的特征推导出<strong>特定的明文</strong>和<strong>使用的密钥</strong>。</li>
+<li>Brute-force attack 穷举攻击 攻击者对一条密文尝试<strong>所有可能的密钥</strong>，直到把它转换为<strong>可读的有意义的明文</strong>才算成功。平均而言，获得成功至少要尝试所有密钥的一半。</li>
+</ul>
+<p>如果<strong>密钥被推导出来了</strong>，那么影响是<strong>灾难性的(catastrophic)</strong>,意味着过去的和未来的所有使用该密钥加密的明文都将被推导出来，完全失去了加密的功能。</p>
+<p>基于密码分析者知道信息的多少，表3.1概括了密码攻击的几种类型。</p>
+<p>其中<strong>唯密文攻击</strong>(Ciphertext Only)难度最大，我们通常假设攻击者知道加密算法。最简单暴力的方法就是尝试遍所有密钥可能的穷举攻击，但是如果密钥空间非常大，这种方法就<strong>不切实际</strong>(impractic)，我们知道平均而言，获得成功至少要尝试所有密钥的一半。</p>
+<p>因此，攻击者必须对密文本身分析，使用各种统计的方法。使用这种统计的方法，攻击者通常也需要对隐含的明文类型有所了解，是英文文本？可执行EXE文件？还是其他具有<strong>特定特征</strong>的文件。我的理解是，要根据对明文和密文的分析，<strong>大量</strong>排除掉那些不可能使用的密钥，<strong>减小密钥空间</strong>，当密钥空间小到一定程序时(也可以说我们已经分析到极限了，无法再通过分析的方法排除密钥)，再用穷举攻击去得到有意义的明文。</p>
+<p><img src="/2021/07/26/%E4%BC%A0%E7%BB%9F%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/2.png" style="zoom: 67%;"></p>
+<p>如图表3-1</p>
+<p><strong>唯密文攻击(Ciphertext Only)</strong>是最容易防范的，因为攻击者拥有的信息量最少。</p>
+<p>与<strong>已知明文攻击(Known Plaintext)</strong>紧密相关的是可能词攻击(<strong>Probable-word attack</strong>)。如果攻击者处理的是一般的无固定格式的信息，那么他对信息的内容是一无所知的。但他如果处理的是一些特定的信息，比如特定的文件，一般这些文件的某些位置(比如说文件头部)是固定不变的，所以攻击者可能利用这些固定不变的字段。</p>
+<p>如果攻击者能够通过某种方式获得信源系统，可以在发送方发送的信息中插入一段<strong>由他自己选择</strong>的信息，那么<strong>选择明文攻击(Chosen Plaintext)</strong>就有可能实现，攻击者当然会选择<strong>插入</strong>那些<strong>最有可能恢复出密钥的数据</strong>。</p>
+<p>只有相对较弱的算法才抵挡不住唯密文攻击，一般地，<strong>加密算法起码要能经受得住已知明文攻击才行</strong>。</p>
+<p><strong>unconditionally secure</strong> 无条件安全 ：如果一个密码体制满足条件，那就是：无论有多少可使用的密文，都不足以<strong>唯一地</strong>确定密文所对应的密文，则称该加密体制是<strong>无条件安全的</strong>。除了一次一密(one-time pad)之外，所有的加密算法都不是无条件安全的。</p>
+<p>但是，尽管很难达到<strong>无条件安全</strong>，在挑选加密算啊时，我们要尽量满足以下两个条件的算法：</p>
+<ul>
+<li>破译密码的代价超出了密文信息的价值</li>
+<li>破译密码的时间超出密文信息的有效生命期</li>
+</ul>
+<p>满足以上两条标准的任意一条，则称为是<strong>计算上安全的(Computationally secure</strong>)。</p>
+<p>需要提到的是，对称密码的所有分析方法都利用了这样的一个事实：<strong>明文的结构和模式(the traces of structure or pattern)在加密之后仍然保存了下来，并能在密文中找到一些蛛丝马迹</strong>。</p>
+<h2 id="2-SUBTITUTION-TECHNIQUES"><a href="#2-SUBTITUTION-TECHNIQUES" class="headerlink" title="2 SUBTITUTION TECHNIQUES"></a>2 SUBTITUTION TECHNIQUES</h2><blockquote>
+<p>所以的加密算法都基于两个原理，代替(substitution)和置换(transposition)，代替是将明文中的每个元素(这个元素可以是位(bit)，字母(letter)等)映射成(<strong>mapped into</strong>)另一个元素。</p>
+</blockquote>
+<p>如果把明文看成是二进制序列，那么代替就是用密文位串来代替明文位串。</p>
+<h3 id="2-2-1-Caesar-密码"><a href="#2-2-1-Caesar-密码" class="headerlink" title="2.2.1 Caesar 密码"></a>2.2.1 Caesar 密码</h3><p>凯撒密码是最早的代替密码，它的加密算法非常简单，就是简单地对字母表中的每个字母，用它之后的第3个字母来代替。</p>
+<p>如：</p>
+<p>明文：meet me after the toga party<br>密文：PHHW PH DIWHV WKH WRJD SDUWB</p>
+<p>注意字母表是循环的，即紧随Z后的字母是A，我们列出所有的映射关系定义如下变换：</p>
+<p>明文 a  b  c  d  e  f  g  h  i   j  k  l  m n  o   p   q   r  s  t   u  v  w  x   y  z<br>密文 D E  F G  H I  J  K L M N O P  Q R  S   T  U V W X Y  Z  A  B  C</p>
+<p>为了方便列出加密算法的表达式，我们让每个字母等价与一个数值：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+<th>d</th>
+<th>e</th>
+<th>f</th>
+<th>g</th>
+<th>h</th>
+<th>i</th>
+<th>j</th>
+<th>k</th>
+<th>l</th>
+<th>m</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>10</td>
+<td>11</td>
+<td>12</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>o</th>
+<th>p</th>
+<th>q</th>
+<th>r</th>
+<th>s</th>
+<th>t</th>
+<th>u</th>
+<th>v</th>
+<th>w</th>
+<th>x</th>
+<th>y</th>
+<th>z</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>13</td>
+<td>14</td>
+<td>15</td>
+<td>16</td>
+<td>17</td>
+<td>18</td>
+<td>19</td>
+<td>20</td>
+<td>21</td>
+<td>22</td>
+<td>23</td>
+<td>24</td>
+<td>25</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>那么加密算法可以如下表达，对于每个明文字母p，代替称密文字母C</p>
+<script type="math/tex; mode=display">
+C=E(3,p)=(p+3)\  mod (26)</script><p>同时，移位量可以是任意的整数k，也就是说可以用它之后的第k个字母表示该字母，这样就得到了一般的Caesar算法：</p>
+<script type="math/tex; mode=display">
+C=E(k,p)=(p+k)\  mod (26)</script><p>k的取值范围是1~25</p>
+<p>解密算法是</p>
+<script type="math/tex; mode=display">
+p=D(k,C)=(C-k)\ mod (26)</script><p>如果判断出给定的密文是凯撒密码，破译算法是容易的，因为密钥k只有25种可能，穷举攻击非常容易实现。</p>
+<h3 id="2-2-2-Monoalphabetic-Ciphers"><a href="#2-2-2-Monoalphabetic-Ciphers" class="headerlink" title="2.2.2 Monoalphabetic Ciphers"></a>2.2.2 Monoalphabetic Ciphers</h3><p>Caesar密码仅仅有25种可能的密钥，是远不够安全的，需要增大密钥空间。我们知道Caesar密码密钥k一旦确定，每一个字母都被加密称其后的第k个字母，但如果通过<strong>任意替代</strong>，密钥空间将会急剧增大。</p>
+<ul>
+<li><strong>permutation  排列</strong>：我们定义排列，有限元素的集合S的排列是S的所有元素的有序排放，且<strong>每个元素只出现一次</strong>，例如S={a,b,c}，则S有6个排列 abc,acb,bac,bca,cab,cba，显然，<strong>具有n个元素的集合有n!个排列方式</strong>。</li>
+</ul>
+<p>前面提到的Caesar</p>
+<p>明文 a  b  c  d  e  f  g  h  i   j  k  l  m n  o   p   q   r  s  t   u  v  w  x   y  z<br>密文 D E  F G  H I  J  K L M N O P  Q R  S   T  U V W X Y  Z  A  B  C</p>
+<p>如果每一个字母都可以对应26个字母中的任意一个字母，那么我们就有26!或大于$4 <em> 10^{26}$中可能的密钥，密钥空间大大增大，似乎可以抵挡穷举攻击了。这种方法就称为单表替代 <em>*Monoalphabetic Ciphers</em></em></p>
+<p>考虑以下的一段密文：</p>
+<p><img src="/2021/07/26/%E4%BC%A0%E7%BB%9F%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/3.png"></p>
+<p>首先我们把字母使用的相对频率统计出来，得到密文中个字母的相对频率(百分比)如下：</p>
+<p><img src="/2021/07/26/%E4%BC%A0%E7%BB%9F%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/4.png"></p>
+<p>与英文文本中字母的使用频率分布做比较(如下图)</p>
+<p><img src="/2021/07/26/%E4%BC%A0%E7%BB%9F%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/12.jpg"></p>
+<p>我们在前面提到：</p>
+<blockquote>
+<p>需要提到的是，对称密码的所有分析方法都利用了这样的一个事实：<strong>明文的结构和模式(the traces of structure or pattern)在加密之后仍然保存了下来，并能在密文中找到一些蛛丝马迹</strong>。</p>
+</blockquote>
+<p>我们所说的明文的结构和模式在加密之后仍然被保存了下来，字母出现的频率就是其中一个特征，明文的字母频率会保存在密文当中。</p>
+<p>将明文和密文中的字母的出现频率做比较，我们可以得出初步的结论，密文字母中的P和Z可能相当于明文中的e和t，但是并不能完全确实P对于的是e还是t，Z对应的是e还是t，因为<strong>字母频率虽然保存了下来，但并不是完全一致的，是大致接近</strong>。原因是英语中各字母的出现频率是基于大量的英文文本统计得到的，而这里一小段密文可能个字母出现的频率会有所差异，当密文的长度足够长时，就会越接近。<br>S,U,O,M和H的相对频率也比较高，可能与明文中的字母a,h,i,n,o,r,s中某一个对应，以此类推。</p>
+<p>此时如何进一步确定对应关系？</p>
+<p>统计双字母组合(我们称一个双字母组合为<strong>digrams</strong>)是比较有效地工具，英语(明文)中最常用的一个字母组合为th，而在我们的密文中，用得最多的双字母组合是ZW，因此我们进一步估计Z对应明文t，W对应明文h，根据先前的假设，可以暂且认为P对应e，所以密文中的ZWP很可能就是the。</p>
+<p>进一步观察明文序列，第一行中出现了子序列ZWSZ，根据我们已有的假设，它应该被翻译为th_t，根据我们的<strong>英语能力！！！</strong>，S很有可能是a,<strong>that!</strong>。</p>
+<p>至此我们得到了以下的结果：<img src="/2021/07/26/%E4%BC%A0%E7%BB%9F%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/5.png"></p>
+<p>继续以上类似的分析，测试就可以得到完整的明文，加上空格后如下：<img src="/2021/07/26/%E4%BC%A0%E7%BB%9F%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/6.png"></p>
+<p><strong>单表替代密码</strong>改进了凯撒密码密钥空间小的问题，但是仍然容易被攻破，因为密文中<strong>仍然保留着原始明文的字母频率等一些统计学特征</strong>。解决的对策有对每个字母提供<strong>多种代替</strong>，一个明文单元变换称不同的密文单元，比如字母e可以替换成16,74,35,21，然后循环或者随机地选取其中一个同音词即可，但仍然<strong>存在明文的一个元素只能影响密文中一个元素</strong>的缺陷，明文的一些结构和模式还残留在密文中，使得密码分析者得以利用。</p>
+<p>有两种主要的减少代替密码明文结构在密文中的<strong>残留度</strong>，一种是明文中的<strong>多个字母(multiple letters)</strong>一起加密，另一种是采用<strong>多表(multiple cipher alphabets)代替密码</strong>，后面会提及。</p>
+<h3 id="2-2-3-Playfair-Cipher"><a href="#2-2-3-Playfair-Cipher" class="headerlink" title="2.2.3 Playfair Cipher"></a>2.2.3 Playfair Cipher</h3><blockquote>
+<p>The best-known multiple-letter encryption cipher is the Playfair, which treats <strong>disgrams</strong> in the plaintext as <strong>single units</strong> and translates these units into ciphertext diagrams.</p>
+</blockquote>
+<p>Playfair 密码是最著名的多字母代替密码，它将明文中的<strong>diagrams</strong>,也就是双字母组合作为一个单元，并将其转换成密文中的<strong>diagram</strong>(双字母组合)。</p>
+<p>Playfair算法基于一个由密钥词构成的5×5字母矩阵，假设使用的密钥词为monarchy，填充矩阵的方法是首先将密钥词从左至右，从上至下填在矩阵格子中(注意重复字母只填一次)，再将剩余的字母按字母表的顺序从左至右，从上至上填在矩阵剩下的格子里，字母I/J暂且当成一个字母。以密钥monarchy为例，填完矩阵如下：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>M</th>
+<th>O</th>
+<th>N</th>
+<th>A</th>
+<th>R</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C</td>
+<td>H</td>
+<td>Y</td>
+<td>B</td>
+<td>D</td>
+</tr>
+<tr>
+<td>E</td>
+<td>F</td>
+<td>G</td>
+<td>I/J</td>
+<td>K</td>
+</tr>
+<tr>
+<td>L</td>
+<td>P</td>
+<td>Q</td>
+<td>S</td>
+<td>T</td>
+</tr>
+<tr>
+<td>U</td>
+<td>V</td>
+<td>W</td>
+<td>X</td>
+<td>Z</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>对明文的双字母组合按如下的规则加密：</p>
+<ol>
+<li>如果该字母对的两个相同的，那么在它们之间加一个填充字母，比如x。例如balloon先把它变成ba lx lo on 这样四个字母对。</li>
+<li>落在矩阵同一行的明文字母对中的字母均由其<strong>右边</strong>的字母来代替，每行的最右边一个字母就用该行的最左边的第一个字母代替，相当于一个<strong>循环</strong>，比如AR就变成RM。</li>
+<li>落在矩阵同一列中的明文字母对中的字母均由其<strong>下方</strong>的字母来代替，每列中最下面的一个字母由每列的最上面字母代替，比如mu就变成CM。</li>
+<li>其他的明文的字母对按以下的方式代替，该字母所在的行作为对应密文字母的行，另一字母的列作为对应密文字母所在的列，比如hs变成BP,ea变成IM(或JM)。</li>
+</ol>
+<p>Playfair密码相对于简单地单表密码进步在于，26个字母共有676种字母对组合，因此识别出单个字母对要困难得多，同时因为是两个字母加密得到两个字母。单个字母的<strong>相对频率特征</strong>(在密文中的残留度)在一定程度上减弱了，这样利用频率分析字母对就更困难一些。</p>
+<p>虽然在一定程度上减弱了，但是它的密文仍然完好地保留了明文的大部分结构特征(<strong>频率特征</strong>)。</p>
+<p>图3.6显示了Playfair密码和其他一些密码加密的有效性。标有”明文”的曲线画出了26个字母的频率分布(不区分大小写)，这也是<strong>任意单表代替密码的频率分布</strong>，因为单表代替密码的方式是一个明文字母对应一个密文字母，所以频率被完整保留了下来。</p>
+<p>曲线代表的意思是：对文章中出现的每个字母计数，计数结果除以使用频率最高的字母e的出现次数，设e出现的频率为1，则t大约为9.056/12.702约为0.72。水平轴上的点对应着<strong>按使用频率递降</strong>的字母。</p>
+<p>也表明了使用Playfair密码加密后文本的字母频率分布情况，曲线体现了加密后字母频率分布被<strong>隐藏</strong>的程度，单表代替密码，有了提高。</p>
+<p>可以看到一条水平的线，该线表示，频率分布的信息完全被加密过程隐藏了，唯密文密码分析由字母频率去下手一无所获，因为每个字母出现的相对频率都是一样的。</p>
+<p><img src="/2021/07/26/%E4%BC%A0%E7%BB%9F%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/15.jpg"></p>
+<h3 id="2-2-4-Hill-Cipher"><a href="#2-2-4-Hill-Cipher" class="headerlink" title="2.2.4 Hill Cipher"></a>2.2.4 Hill Cipher</h3><p>Hill密码属于<strong>多表代替密码(multiletter cipher)</strong>。</p>
+<p>Hill密码需要一些线代代数的知识。定义方阵M，M有逆矩阵$M^{-1}$满足M($M^{-1}$)=($M^{-1}$)M=I，其中I为单位矩阵。</p>
+<p>Hill算法 该加密算法将m个连续地明文字母代替成m个密文字母，这是由m个线性等式决定的，在等式里每一个字母被指定为一个数值,例如m=3，系统可以描述为：</p>
+<script type="math/tex; mode=display">
+(c_{1}\ c_{2}\ c_{3} )=(p_{1}\ p_{2}\ p_{3})\begin{pmatrix} k_{11} & k_{12} & k_{13} \\ k_{21} & k_{22} & k_{23} \\ k_{31} & k_{32} &k_{33} \end{pmatrix}  mod \  26</script><p>展开有：</p>
+<script type="math/tex; mode=display">
+c_{1}=(k_{11}p_{1}+k_{21}p_{2}+k_{31}p_{3}) \ mod \ 26 \\ c_{2}=(k_{12}p_{1}+k_{22}p_{2}+k_{32}p_{3}) \ mod \ 26 \\ c_{3}=(k_{13}p_{1}+k_{23}p_{2}+k_{33}p_{3}) \ mod \ 26</script><p>或</p>
+<script type="math/tex; mode=display">
+C=PK \ mod \ 26</script><p>C和K是长度为3的行向量，分别代表密文和明文，K为3×3的矩阵，代表加密密钥，运算按模26执行。</p>
+<p>举书里的例子，明文为“paymoremoney”，加密密钥为</p>
+<script type="math/tex; mode=display">
+K\ = 
+\begin{pmatrix}
+17 & 17 & 5 \\
+21 & 18 & 21\\
+2  & 2 &19
+\end{pmatrix}</script><p>明文以三个字母为一组，用向量表示，比如前三个字母用向量表示为(15 2 24)，那么(15 0 24) K = (303 303 531) mod 26 =(17 17 11)=RRL，照此方式转换余下字母，可得整段明文对应的密文位RRLLMWBKASPDH。</p>
+<p>解密则需要矩阵K的逆矩阵$K^{-1}$，表示为</p>
+<script type="math/tex; mode=display">
+P=D(K,C) = CK^{-1} \ mod \ 26</script><p><strong>同Playfair密码相比</strong>，Hill密码的优点是完全隐蔽了单字母频率特性，因为Hill密码是m个明文字母影响m个密文字母。<strong>如果用的密钥矩阵越大，隐藏的频率信息就越多</strong>。</p>
+<p>Hill密码能<strong>很好地抵挡唯密文攻击</strong>，但是它容易被<strong>已知明文攻击破解</strong>。考虑以下的例子，假设明文”hillcipher”经过一个2×2的Hill密码加密生成HCRZSSXNSP，因此我们知道hi=(7,8)被加密为HC=(7,2)，有(7 8)K mod 26 =(7 2) 同理 (11 11)K mod 26 = (17 25)；以此类推，由前两个明密文对，可得</p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}
+7 & 2 \\
+17& 25
+\end{pmatrix}=
+\ 
+\begin{pmatrix}
+7 & 8 \\
+11& 11
+\end{pmatrix}K \ mod \ 26</script><script type="math/tex; mode=display">
+\begin{pmatrix}
+7 & 8 \\
+11& 11
+\end{pmatrix}的逆矩阵为
+\begin{pmatrix}
+25 & 22 \\
+1& 23
+\end{pmatrix}</script><p>弱弱问一句，有没有看官知道逆矩阵怎么用LATEX书写出来……</p>
+<p>因此</p>
+<script type="math/tex; mode=display">
+K=
+\begin{pmatrix}
+25 & 22 \\
+1  & 23
+\end{pmatrix}
+\begin{pmatrix}
+7 & 2 \\
+17 & 25
+\end{pmatrix}
+= 
+\begin{pmatrix}
+549 & 600 \\
+398 & 577
+\end{pmatrix}
+mod \ 26 =
+\begin{pmatrix}
+3 &2 \\
+8 &5 
+\end{pmatrix}</script><p>得到了密钥K，可以由剩下的明密文对去验证。</p>
+<h3 id="2-2-5-Polyalphabetic-Ciphers"><a href="#2-2-5-Polyalphabetic-Ciphers" class="headerlink" title="2.2.5 Polyalphabetic Ciphers"></a>2.2.5 Polyalphabetic Ciphers</h3><p>对简单单表代替的改进方法是在明文消息中采用不同的单表代替，这种方法我们一般称之为<strong>多表代替密码</strong>。所以这些方法都有以下的共同特征：</p>
+<ol>
+<li>采用<strong>相关的单表代替规则集</strong>。</li>
+<li>密钥决定变换的具体规则。</li>
+</ol>
+<h4 id="Vigenere-密码"><a href="#Vigenere-密码" class="headerlink" title="Vigenere 密码"></a>Vigenere 密码</h4><p>Vigenere代替规则由26个Caesar密码的代替表组成，其中每一个代替表是对明文字母表移位0~25次后得到的代替单表。<strong>每个密码由一个密钥字母来表示</strong>。</p>
+<p>可以那个如下的方式表述Vigenere密码，假设明文序列为$P=p<em>{0},p</em>{1},…,p<em>{n-1}$,密钥由序列$K=k</em>{0},k<em>{1},…k</em>{m-1}$构成，其中m&lt;n。密码序列$C=C<em>{0},C</em>{1},…C_{n-1}$，计算如下：</p>
+<script type="math/tex; mode=display">
+C=C_{0},C_{1},C_{2}...C_{n-1}=E(K,P) \\
+=(p_{0}+k_{0})\ mod\ 26,(p_{1}+k_{1})\ mod \ 26 .... (p_{m-1}+k_{m-1})\ mod \ 26,\\(p_{m}+k_{0})\ mod\ 26,...(P_{2m-1}+k_{m-1})\ mod \ 26</script><p><strong>注意$p<em>m$对应的密钥字母为$k</em>{0}$</strong>，开始新一轮的循环。</p>
+<p>所以，加密过程的一般方程为：</p>
+<script type="math/tex; mode=display">
+C_{i}=(p_{i}+k_{\ i\ mod \ m})\ mod \ 26</script><p>与Caesar密码的加密过程的表达式类似，<strong>本质上</strong>，每一个明文字母根据相应的密钥字母进行着Caesar密码加密。</p>
+<p>解密过程也与Caesar密码类似：</p>
+<script type="math/tex; mode=display">
+p_{i}= (C_{i}-k_{\ i \ mod \ m})\ mod \ 26</script><p><strong>加密一条消息需要与消息一样长的密钥</strong>。所以通常，密钥是一个<strong>密钥词</strong>的重复，比如密钥词为deceptive，那么消息”we are discovered save yourself”将被这样加密</p>
+<p><img src="/2021/07/26/%E4%BC%A0%E7%BB%9F%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/7.png"></p>
+<p>用表格来表述，有：<img src="/2021/07/26/%E4%BC%A0%E7%BB%9F%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/14.jpg"></p>
+<p>这种密码的强度在于<strong>每个明文字母对应着多个密文字母</strong>，且<strong>每个密文字母使用唯一的密钥字母</strong>，因此字母出现的频率信息被屏蔽了。</p>
+<p>破译Vigenere密码的关键在于<strong>能否判断密钥词的长度</strong>。</p>
+<p>很关键的一点，如果<strong>两个相同的明文序列之间的距离是密钥词长度的整数倍</strong>，那么<strong>产生的密文序列也是相同的</strong>。因为明文序列相同，距离是密钥词长度的整数倍，所以对于的密钥字母相等，这样产生的密文序列也一定相同。</p>
+<p>实际上，如果密钥长度是m，那么密码实际上包含了m个单表代替。以DECEPTIVE作为密钥词，那么处在位置1,10,19,…的字母的加密实际上是凯撒密码(单表加密)，因为他们都加上D，mod 26。因此，如果我们得到了密钥的长度m，我们可以将密文拆成多个凯撒密码加密(单表代替)，然后利用单表代替加密没有消除的频率特征分布进行攻击，破译密码。</p>
+<h4 id="Vernam-CIPHER"><a href="#Vernam-CIPHER" class="headerlink" title="Vernam CIPHER"></a>Vernam CIPHER</h4><p>Vernam密码其运算基于二进制数据而非字母，该加密过程可以简明的描述为：</p>
+<script type="math/tex; mode=display">
+c_{i}=p_{i}\oplus k_{i}</script><p>其中<br>$p<em>{i}$是明文第i个二进制位<br>$k</em>{i}$是密钥的第i个二进制位<br>$c_{i}$是密文的第i个二进制位，使用的是异或运算。</p>
+<p>根据异或运算的性质，解密过程为：</p>
+<script type="math/tex; mode=display">
+p_{i}=c_{i}\oplus k_{i}</script><p>这种加密技术的<strong>本质在于构造密钥的方式</strong>。</p>
+<p><img src="/2021/07/26/%E4%BC%A0%E7%BB%9F%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/8.png"></p>
+<h3 id="2-2-6-One-Time-pad"><a href="#2-2-6-One-Time-pad" class="headerlink" title="2.2.6 One-Time pad"></a>2.2.6 One-Time pad</h3><p>One-Time pad为一次一密。是对Vernam密码的改进方案，从而达到了<strong>最完善的安全性</strong>。</p>
+<p>One-Time pad使用与消息(明文)<strong>一样长</strong>且<strong>无重复</strong>的随机密钥来加密消息，另外，密钥只对一个消息进行加解密，之后就丢弃不用了。因此，每一条新消息都需要一个与其等长的新密钥，这就是著名的一次一密。它是不可攻破的(<strong>unbreakable</strong>)。</p>
+<p>如果密码分析者得到了密文，假设出了两个密钥，破译出明文，但他没有理由认为哪一个明文是正确的。因此这种<strong>密码是不可破</strong>的。</p>
+<p>一次一密的安全性<strong>完全取决于密钥的随机性</strong>。如果构成密钥的字符流是真正随机地，那么构成密文的字符流也是真正随机的，因此分析者没有任何攻击密文的模式和规律可用。</p>
+<p>理论上，One-Time pad提供了完美的安全性，但在实际中，存在两个基本的难点</p>
+<ul>
+<li>产生大规模<strong>随机密钥</strong>是有困难的。</li>
+<li>密钥的分配和保护。每一条发送的消息，都需要提供给发送方和接收方<strong>等长</strong>的密钥，存在着庞大的密钥分配问题。</li>
+</ul>
+<p><strong>一次一密</strong>是<strong>唯一</strong>的<strong>具有完美保密</strong>(perfect secrecy)的密码机制。</p>
+<p>任何满足perfect secrecy的加密系统都需要满足两个前提：</p>
+<ol>
+<li>密钥空间足够大，至少等于明文空间</li>
+<li>一个密钥只能用于一次加密</li>
+</ol>
+<p>但实际上perfect secrecy的加密系统的不切实际的(impractical)，原因就在于以上说的两个难点。</p>
+<h2 id="3-TRANSPOSITION-TECHNIQUES"><a href="#3-TRANSPOSITION-TECHNIQUES" class="headerlink" title="3 TRANSPOSITION TECHNIQUES"></a>3 TRANSPOSITION TECHNIQUES</h2><p>到目前为止，前面我们所讨论的都是将明文字母代替为密文字母，与之非常不同的一种加密方法是对明文进行<strong>置换</strong> Transposition，这种密码称为置换密码。</p>
+<p>最简单的例子是栅栏(fence)技术,按照对角线的顺序写出明文，而按行的顺序读出作为密文。例如，假设用密钥为<strong>2</strong>的栅栏技术加密信息“meet me after the toga party” 可写为</p>
+<p>m    e    m     a     t   r     h    t     g   p   r     y<br>    e    t     e     f     e    t     e    o    a    a    t</p>
+<p>根据行读出作为密文，加密后的信息为<strong>MEMATRHTGPRYETEFETEOAAT</strong></p>
+<p>再比如使用密钥为8的V型栅栏密码加密明文“Don’t deny something easily, maybe you’re just in a bad mood today”(不要轻易否认一切事情，你可能今天只是心情不好！)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">D............. e.............m.............u.............o.............</span><br><span class="line">.o........... m.t........... .a...........j.s ..........m.o.............</span><br><span class="line">..n......... o...h.........y...y......... ...t.........&#x27;...d............</span><br><span class="line">...‘....... s.....i.......l.....b ......e..... .......d ..... ..........</span><br><span class="line">....t ..... .......n.....i.......e.....r.......i.....a....... t..........</span><br><span class="line">..... ...y......... g...s ........ ...’.........n...b.......... o...！....</span><br><span class="line">......d.n........... .a........... y.u........... . .............d.y....</span><br><span class="line">.......e.............e............. o.............a...............a......</span><br></pre></td></tr></table></figure>
+<p>按行读出密文位：DEMUOOMTAJSMONOHYY T’D’SILBE D T NIERIAT YGS ‘NBO!DN AYU  DYEEOAA </p>
+<p>因为形状像V，也称位V型栅栏密码</p>
+<p>一个更复杂的方案是把消息一行一行地写成矩形块，然后按列读出，把列的次序打乱，列的次序就是算法的密钥。例如：</p>
+<p><img src="/2021/07/26/%E4%BC%A0%E7%BB%9F%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/9.png"></p>
+<p>明文为”attackpostponeduntiltwoamxyz”，按行写入矩阵，然后按密钥给出的各列次序，依次读出各列作为密文，最终密文为TTNAAPTMTDUOAODWCDIXKNLYPETZ</p>
+<p><strong>单纯的置换密码</strong>因为有着与原始明文相同的字母频率特征而容易被识别，因为置换只是将位置打乱，并没有将各元素改变。</p>
+<p>多次置换密码使得消息更难被重构起来，我们可以用前面得到的密文TTNAAPTMTDUOAODWCDIXKNLYPETZ作为明文，做再一次的置换，得到新的密文，如图：</p>
+<p><img src="/2021/07/26/%E4%BC%A0%E7%BB%9F%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/10.png"></p>
+<p>这样操作后，分析者攻击它要困难得多了~</p>
+<p>终于写完了(这玩意居然写了我一天？！)</p>
+<p><strong>仅仅是初学者的学习笔记</strong>，很多东西还没有学到而且对新学的东西认识也还很浅，如有错误，欢迎指正！！！！</p>
+<p>参考资料 《密码编码学与网络安全》第八版</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:1127959736@qq.com">luo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://luo41.top/2021/07/26/传统加密技术/">https://luo41.top/2021/07/26/传统加密技术/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://luo41.top">luo's Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CANS-%E5%AF%86%E7%A0%81%E5%AD%A6/">-CANS -密码学</a></div><nav id="pagination"><div class="next-post pull-right"><a href="/2021/07/24/CIA-and-OSI-SECURITY-ARCHITECTURE/"><span>CIA and OSI SECURITY ARCHITECTURE</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="gitalk-container"></div><script>var gitalk = new Gitalk({
+  clientID: '32255e197922b1ab75ad',
+  clientSecret: '9bbe47fc29096bda7c2e430895ef65fa58c8d7db',
+  repo: 'zhengjianda.github.io',
+  owner: 'zhengjianda',
+  admin: 'zhengjianda',
+  id: md5(decodeURI(location.pathname)),
+  language: 'zh-CN'
+})
+gitalk.render('gitalk-container')</script></div></div><footer class="footer-bg" style="background-image: url(/background2.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2021 By luo</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/lib/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  CommonHTML: {
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "HTML-CSS": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "SVG": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  }
+});
+</script><script type="text/x-mathjax-config">MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for (i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script src="/js/search/local-search.js"></script><script id="ribbon" src="/js/third-party/canvas-ribbon.js" size="100" alpha="0.6" zIndex="-1" data-click="false"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
