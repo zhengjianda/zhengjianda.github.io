@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="传统加密技术"><meta name="keywords" content="-CANS -密码学"><meta name="author" content="luo,1127959736@qq.com"><meta name="copyright" content="luo"><title>传统加密技术 | luo's Blog</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="传统加密技术"><meta name="keywords" content="CANS,密码学"><meta name="author" content="luo,1127959736@qq.com"><meta name="copyright" content="luo"><title>传统加密技术 | luo's Blog</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
   root: '/',
   algolia: undefined,
   localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
@@ -17,7 +17,7 @@
 <li>密文 Ciphertext 密文是加密算法的输出，直观看起来不可理解其代表的意识，依赖于<strong>明文</strong>和<strong>密钥</strong>，对于给定的相同的明文，不同的密钥将产生不同的密文。</li>
 <li>解密算法 Decryption algorithm 本质上是加密算法的逆运算，输入为密文和密钥，输出<strong>原始明文</strong></li>
 </ul>
-<p>而对称密码对称的意识就是加密使用的密钥和解密使用的密钥是<strong>相同的</strong>。</p>
+<p>而对称密码对称的意思就是加密使用的密钥和解密使用的密钥是<strong>相同的</strong>。</p>
 <span id="more"></span>
 <h3 id="1-2-对称加密简化模型"><a href="#1-2-对称加密简化模型" class="headerlink" title="1.2 对称加密简化模型"></a>1.2 对称加密简化模型</h3><p>图3.1是对称加密的简化模型：</p>
 <p><img src="/2021/07/26/%E4%BC%A0%E7%BB%9F%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/1.jpg" style="zoom: 20%;"></p>
@@ -56,8 +56,8 @@ X=D(K,Y)</script><h3 id="1-3-Ctyptography"><a href="#1-3-Ctyptography" class="he
 <p>与<strong>已知明文攻击(Known Plaintext)</strong>紧密相关的是可能词攻击(<strong>Probable-word attack</strong>)。如果攻击者处理的是一般的无固定格式的信息，那么他对信息的内容是一无所知的。但他如果处理的是一些特定的信息，比如特定的文件，一般这些文件的某些位置(比如说文件头部)是固定不变的，所以攻击者可能利用这些固定不变的字段。</p>
 <p>如果攻击者能够通过某种方式获得信源系统，可以在发送方发送的信息中插入一段<strong>由他自己选择</strong>的信息，那么<strong>选择明文攻击(Chosen Plaintext)</strong>就有可能实现，攻击者当然会选择<strong>插入</strong>那些<strong>最有可能恢复出密钥的数据</strong>。</p>
 <p>只有相对较弱的算法才抵挡不住唯密文攻击，一般地，<strong>加密算法起码要能经受得住已知明文攻击才行</strong>。</p>
-<p><strong>unconditionally secure</strong> 无条件安全 ：如果一个密码体制满足条件，那就是：无论有多少可使用的密文，都不足以<strong>唯一地</strong>确定密文所对应的密文，则称该加密体制是<strong>无条件安全的</strong>。除了一次一密(one-time pad)之外，所有的加密算法都不是无条件安全的。</p>
-<p>但是，尽管很难达到<strong>无条件安全</strong>，在挑选加密算啊时，我们要尽量满足以下两个条件的算法：</p>
+<p><strong>unconditionally secure</strong> 无条件安全 ：如果一个密码体制满足条件，那就是：无论有多少可使用的密文，都不足以<strong>唯一地</strong>确定密文所对应的明文，则称该加密体制是<strong>无条件安全的</strong>。除了一次一密(one-time pad)之外，所有的加密算法都不是无条件安全的。</p>
+<p>但是，尽管很难达到<strong>无条件安全</strong>，在挑选加密算法时，我们要尽量满足以下两个条件的算法：</p>
 <ul>
 <li>破译密码的代价超出了密文信息的价值</li>
 <li>破译密码的时间超出密文信息的有效生命期</li>
@@ -65,7 +65,7 @@ X=D(K,Y)</script><h3 id="1-3-Ctyptography"><a href="#1-3-Ctyptography" class="he
 <p>满足以上两条标准的任意一条，则称为是<strong>计算上安全的(Computationally secure</strong>)。</p>
 <p>需要提到的是，对称密码的所有分析方法都利用了这样的一个事实：<strong>明文的结构和模式(the traces of structure or pattern)在加密之后仍然保存了下来，并能在密文中找到一些蛛丝马迹</strong>。</p>
 <h2 id="2-SUBTITUTION-TECHNIQUES"><a href="#2-SUBTITUTION-TECHNIQUES" class="headerlink" title="2 SUBTITUTION TECHNIQUES"></a>2 SUBTITUTION TECHNIQUES</h2><blockquote>
-<p>所以的加密算法都基于两个原理，代替(substitution)和置换(transposition)，代替是将明文中的每个元素(这个元素可以是位(bit)，字母(letter)等)映射成(<strong>mapped into</strong>)另一个元素。</p>
+<p>所有的加密算法都基于两个原理，代替(substitution)和置换(transposition)，代替是将明文中的每个元素(这个元素可以是位(bit)，字母(letter)等)映射成(<strong>mapped into</strong>)另一个元素。</p>
 </blockquote>
 <p>如果把明文看成是二进制序列，那么代替就是用密文位串来代替明文位串。</p>
 <h3 id="2-1-Caesar-密码"><a href="#2-1-Caesar-密码" class="headerlink" title="2.1 Caesar 密码"></a>2.1 Caesar 密码</h3><p>凯撒密码是最早的代替密码，它的加密算法非常简单，就是简单地对字母表中的每个字母，用它之后的第3个字母来代替。</p>
@@ -158,13 +158,13 @@ C=E(k,p)=(p+k)\  mod (26)</script><p>k的取值范围是1~25</p>
 <p>解密算法是</p>
 <script type="math/tex; mode=display">
 p=D(k,C)=(C-k)\ mod (26)</script><p>如果判断出给定的密文是凯撒密码，破译算法是容易的，因为密钥k只有25种可能，穷举攻击非常容易实现。</p>
-<h3 id="2-2-Monoalphabetic-Ciphers"><a href="#2-2-Monoalphabetic-Ciphers" class="headerlink" title="2.2 Monoalphabetic Ciphers"></a>2.2 Monoalphabetic Ciphers</h3><p>Caesar密码仅仅有25种可能的密钥，是远不够安全的，需要增大密钥空间。我们知道Caesar密码密钥k一旦确定，每一个字母都被加密称其后的第k个字母，但如果通过<strong>任意替代</strong>，密钥空间将会急剧增大。</p>
+<h3 id="2-2-Monoalphabetic-Ciphers"><a href="#2-2-Monoalphabetic-Ciphers" class="headerlink" title="2.2 Monoalphabetic Ciphers"></a>2.2 Monoalphabetic Ciphers</h3><p>Caesar密码仅仅有25种可能的密钥，是远不够安全的，需要增大密钥空间。我们知道Caesar密码密钥k一旦确定，每一个字母都被加密成其后的第k个字母，但如果通过<strong>任意替代</strong>，密钥空间将会急剧增大。</p>
 <ul>
 <li><strong>permutation  排列</strong>：我们定义排列，有限元素的集合S的排列是S的所有元素的有序排放，且<strong>每个元素只出现一次</strong>，例如S={a,b,c}，则S有6个排列 abc,acb,bac,bca,cab,cba，显然，<strong>具有n个元素的集合有n!个排列方式</strong>。</li>
 </ul>
 <p>前面提到的Caesar</p>
 <p>明文 a  b  c  d  e  f  g  h  i   j  k  l  m n  o   p   q   r  s  t   u  v  w  x   y  z<br>密文 D E  F G  H I  J  K L M N O P  Q R  S   T  U V W X Y  Z  A  B  C</p>
-<p>如果每一个字母都可以对应26个字母中的任意一个字母，那么我们就有26!或大于$4 <em> 10^{26}$中可能的密钥，密钥空间大大增大，似乎可以抵挡穷举攻击了。这种方法就称为单表替代 <em>*Monoalphabetic Ciphers</em></em></p>
+<p>如果每一个字母都可以对应26个字母中的任意一个字母，那么我们就有26!或大于4×$10^{26}$中可能的密钥，密钥空间大大增大，似乎可以抵挡穷举攻击了。这种方法就称为<strong>单表替代 Monoalphabetic Ciphers</strong></p>
 <p>考虑以下的一段密文：</p>
 <p><img src="/2021/07/26/%E4%BC%A0%E7%BB%9F%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/3.png"></p>
 <p>首先我们把字母使用的相对频率统计出来，得到密文中个字母的相对频率(百分比)如下：</p>
@@ -262,7 +262,7 @@ K\ =
 17 & 17 & 5 \\
 21 & 18 & 21\\
 2  & 2 &19
-\end{pmatrix}</script><p>明文以三个字母为一组，用向量表示，比如前三个字母用向量表示为(15 2 24)，那么(15 0 24) K = (303 303 531) mod 26 =(17 17 11)=RRL，照此方式转换余下字母，可得整段明文对应的密文位RRLLMWBKASPDH。</p>
+\end{pmatrix}</script><p>明文以三个字母为一组，用向量表示，比如前三个字母用向量表示为(15 2 24)，那么(15 0 24) K = (303 303 531) mod 26 =(17 17 11)=RRL，照此方式转换余下字母，可得整段明文对应的密文为RRLLMWBKASPDH。</p>
 <p>解密则需要矩阵K的逆矩阵$K^{-1}$，表示为</p>
 <script type="math/tex; mode=display">
 P=D(K,C) = CK^{-1} \ mod \ 26</script><p><strong>同Playfair密码相比</strong>，Hill密码的优点是完全隐蔽了单字母频率特性，因为Hill密码是m个明文字母影响m个密文字母。<strong>如果用的密钥矩阵越大，隐藏的频率信息就越多</strong>。</p>
@@ -315,7 +315,7 @@ mod \ 26 =
 <p>可以那个如下的方式表述Vigenere密码，假设明文序列为$P=p<em>{0},p</em>{1},…,p<em>{n-1}$,密钥由序列$K=k</em>{0},k<em>{1},…k</em>{m-1}$构成，其中m&lt;n。密码序列$C=C<em>{0},C</em>{1},…C_{n-1}$，计算如下：</p>
 <script type="math/tex; mode=display">
 C=C_{0},C_{1},C_{2}...C_{n-1}=E(K,P) \\
-=(p_{0}+k_{0})\ mod\ 26,(p_{1}+k_{1})\ mod \ 26 .... (p_{m-1}+k_{m-1})\ mod \ 26,\\(p_{m}+k_{0})\ mod\ 26,...(P_{2m-1}+k_{m-1})\ mod \ 26</script><p><strong>注意$p<em>m$对应的密钥字母为$k</em>{0}$</strong>，开始新一轮的循环。</p>
+=(p_{0}+k_{0})\ mod\ 26,(p_{1}+k_{1})\ mod \ 26 .... (p_{m-1}+k_{m-1})\ mod \ 26,\\(p_{m}+k_{0})\ mod\ 26,...(P_{2m-1}+k_{m-1})\ mod \ 26</script><p>注意$p<em>{m}$对应的密钥字母为$k</em>{0}$，开始新一轮的循环。</p>
 <p>所以，加密过程的一般方程为：</p>
 <script type="math/tex; mode=display">
 C_{i}=(p_{i}+k_{\ i\ mod \ m})\ mod \ 26</script><p>与Caesar密码的加密过程的表达式类似，<strong>本质上</strong>，每一个明文字母根据相应的密钥字母进行着Caesar密码加密。</p>
@@ -326,11 +326,11 @@ p_{i}= (C_{i}-k_{\ i \ mod \ m})\ mod \ 26</script><p><strong>加密一条消息
 <p>用表格来表述，有：<img src="/2021/07/26/%E4%BC%A0%E7%BB%9F%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/14.jpg"></p>
 <p>这种密码的强度在于<strong>每个明文字母对应着多个密文字母</strong>，且<strong>每个密文字母使用唯一的密钥字母</strong>，因此字母出现的频率信息被屏蔽了。</p>
 <p>破译Vigenere密码的关键在于<strong>能否判断密钥词的长度</strong>。</p>
-<p>很关键的一点，如果<strong>两个相同的明文序列之间的距离是密钥词长度的整数倍</strong>，那么<strong>产生的密文序列也是相同的</strong>。因为明文序列相同，距离是密钥词长度的整数倍，所以对于的密钥字母相等，这样产生的密文序列也一定相同。</p>
+<p>很关键的一点，如果<strong>两个相同的明文序列之间的距离是密钥词长度的整数倍</strong>，那么<strong>产生的密文序列也是相同的</strong>。因为明文序列相同，距离是密钥词长度的整数倍，所以对应的密钥字母相等，这样产生的密文序列也一定相同。</p>
 <p>实际上，如果密钥长度是m，那么密码实际上包含了m个单表代替。以DECEPTIVE作为密钥词，那么处在位置1,10,19,…的字母的加密实际上是凯撒密码(单表加密)，因为他们都加上D，mod 26。因此，如果我们得到了密钥的长度m，我们可以将密文拆成多个凯撒密码加密(单表代替)，然后利用单表代替加密没有消除的频率特征分布进行攻击，破译密码。</p>
 <h4 id="Vernam-CIPHER"><a href="#Vernam-CIPHER" class="headerlink" title="Vernam CIPHER"></a>Vernam CIPHER</h4><p>Vernam密码其运算基于二进制数据而非字母，该加密过程可以简明的描述为：</p>
 <script type="math/tex; mode=display">
-c_{i}=p_{i}\oplus k_{i}</script><p>其中<br>$p<em>{i}$是明文第i个二进制位<br>$k</em>{i}$是密钥的第i个二进制位<br>$c_{i}$是密文的第i个二进制位，使用的是异或运算。</p>
+c_{i}=p_{i}\oplus k_{i}</script><p>其中<br>$p<em>{i}$是明文第i个二进制位，<br>$k</em>{i}$是密钥的第i个二进制位，<br>$c_{i}$是密文的第i个二进制位，使用的是异或运算。</p>
 <p>根据异或运算的性质，解密过程为：</p>
 <script type="math/tex; mode=display">
 p_{i}=c_{i}\oplus k_{i}</script><p>这种加密技术的<strong>本质在于构造密钥的方式</strong>。</p>
@@ -369,7 +369,7 @@ p_{i}=c_{i}\oplus k_{i}</script><p>这种加密技术的<strong>本质在于构�
 <p>终于写完了(这玩意居然写了我一天？！)</p>
 <p><strong>仅仅是初学者的学习笔记</strong>，很多东西还没有学到而且对新学的东西认识也还很浅，如有错误，欢迎指正！！！！</p>
 <p>参考资料 《密码编码学与网络安全》第八版</p>
-</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:1127959736@qq.com">luo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://luo41.top/2021/07/26/传统加密技术/">https://luo41.top/2021/07/26/传统加密技术/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://luo41.top">luo's Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CANS-%E5%AF%86%E7%A0%81%E5%AD%A6/">-CANS -密码学</a></div><nav id="pagination"><div class="next-post pull-right"><a href="/2021/07/24/CIA-and-OSI-SECURITY-ARCHITECTURE/"><span>CIA and OSI SECURITY ARCHITECTURE</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="gitalk-container"></div><script>var gitalk = new Gitalk({
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:1127959736@qq.com">luo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://luo41.top/2021/07/26/传统加密技术/">https://luo41.top/2021/07/26/传统加密技术/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://luo41.top">luo's Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CANS/">CANS</a><a class="post-meta__tags" href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/">密码学</a></div><nav id="pagination"><div class="next-post pull-right"><a href="/2021/07/24/CIA-and-OSI-SECURITY-ARCHITECTURE/"><span>CIA and OSI SECURITY ARCHITECTURE</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="gitalk-container"></div><script>var gitalk = new Gitalk({
   clientID: '32255e197922b1ab75ad',
   clientSecret: '9bbe47fc29096bda7c2e430895ef65fa58c8d7db',
   repo: 'zhengjianda.github.io',
