@@ -26,7 +26,6 @@
 <p>注：可能有同学会觉得是否可用布尔类型实现标签字段，如果是只有两个字段是可以的，当多个字段，还是得用枚举类型。</p>
 <p>(<strong>未学过数据结构同学这段可以不看</strong>）关于互斥的例子，我记得大二上的时候在讲中序线索二叉树的遍历时就遇到过这种情况，中序线索二叉树每个结点有两个字段leftChild和rightChild。对于某一个结点，当左子女存在时，leftChild指向左子女结点，不存在时，leftChild指向该结点的前驱结点，当右子女存在时，rightChild指向右子女结点，不存在时，rightChild指向的是该节点的后继结点。那么如何区别leftChild和rightChild是子女还是前驱结点或后继结点，当时书里给出的是给两个标志位ltag和rtag，标志位为0时表示子女，为1时表示前驱结点或后序结点。</p>
 <p>该二叉树结点的结构大概如下，这段好像没有明显用到联合，但我觉得跟联合的思想很像，就是用一个标志位，根据标志位的不同，判断同一个内存段里面的数据代表的是不同的含义。(<strong>或者说，如果去解读这段内存？</strong>)</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -43,10 +42,10 @@
 <td></td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
+<td style="text-align:center"></td>
 </tr>
 </tbody>
 </table>
-</div>
 <p>下面是一个用联合实现的数据类型转换的函数。</p>
 <p>联合里面用两个字段，一个是整数字段d，一个是无符号整数字段u，所以内存会分配给union字段8个字节也就是32个位，这时参数为num传进来，num的值为-1，执行temp.d=num=-1,此时分配的内存块里的数据情况是32个1，也就是0xffff ffff(有符号数表示为-1），随后执行return temp.u</p>
 <p>temp.u的内存块里的数据是多少？同样也是0xffff ffff，因为它和temp.d共享内存块，所以程序就会以无符号数解读0xffff ffff，返回值<strong>4294967295</strong>，实现了数据类型的转换。</p>
