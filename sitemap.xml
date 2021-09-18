@@ -2,13 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://luo41.top/2021/09/19/Spring-Autowired%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E9%97%AE%E9%A2%98/</loc>
-    
-    <lastmod>2021-09-18</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://luo41.top/2021/08/11/DNS%E5%9F%BA%E6%9C%AC%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</loc>
     
     <lastmod>2021-09-06</lastmod>
@@ -144,14 +137,14 @@
 
   
   <url>
-    <loc>https://luo41.top/tags/CANS/</loc>
+    <loc>https://luo41.top/tags/CSAPP/</loc>
     <lastmod>2021-09-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://luo41.top/tags/CSAPP/</loc>
+    <loc>https://luo41.top/tags/CANS/</loc>
     <lastmod>2021-09-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
