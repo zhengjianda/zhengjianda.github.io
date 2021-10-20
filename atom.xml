@@ -6,7 +6,7 @@
   <link href="https://luo41.top/atom.xml" rel="self"/>
   
   <link href="https://luo41.top/"/>
-  <updated>2021-09-18T17:08:48.782Z</updated>
+  <updated>2021-10-20T07:19:57.949Z</updated>
   <id>https://luo41.top/</id>
   
   <author>
@@ -15,6 +15,39 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>串行，并发与并行</title>
+    <link href="https://luo41.top/2021/10/20/%E4%B8%B2%E8%A1%8C%EF%BC%8C%E5%B9%B6%E5%8F%91%E4%B8%8E%E5%B9%B6%E8%A1%8C/"/>
+    <id>https://luo41.top/2021/10/20/%E4%B8%B2%E8%A1%8C%EF%BC%8C%E5%B9%B6%E5%8F%91%E4%B8%8E%E5%B9%B6%E8%A1%8C/</id>
+    <published>2021-10-20T07:13:02.000Z</published>
+    <updated>2021-10-20T07:19:57.949Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="串行并发与并行"><a class="markdownIt-Anchor" href="#串行并发与并行"></a> 串行，并发与并行</h2><p>最近看到一个问题 串行，并发与并行的区别，查阅了一些网上的资料和视频，谈谈自己的理解,不当之处，欢迎指正！</p><p>首先看两句话：</p><blockquote><ul><li>Concurrency is not Parallelism.  并发不是并行</li></ul></blockquote><blockquote><ul><li>Concurrency enables parallelism &amp; makes parallelism(and scaling and everything) easy. 并发允许去并行，并发让并行更容易</li></ul></blockquote><span id="more"></span><p>我的理解是，并发其实是一种<strong>处理问题的方法</strong>，可以让问题处理起来更高效，<strong>但不是必然</strong>。</p><p>关于并发和并行网络上有很多的例子，比如说小学初中常见的数学题目修路，路的规格是5000米×25米，处理这个问题的方法有很多，<strong>只给一个工程队干</strong>，这是一种<strong>串行</strong>的解决方法。分成两条2500×25米的路，分别给两个工程队干，这是一种<strong>并发</strong>的解决方法。</p><p><strong>串行</strong>就是很简单的一个工程队一段一段地修完整路，直到最后解决了修路的问题。</p><p><strong>并发</strong>就是我将这条路分给多个工程队干，至于各个工程队怎么干我不管，等到多个工程队各自完成任务，我这个问题也就解决了，并发相比串行来说，效率提高了不少，但是<strong>并发不是必然的</strong>，因为串行是可以解决问题的，只是我们需要提高效率，追求更快，才考虑通过<strong>并发</strong>去解决问题。</p><p>那么<strong>并行</strong>又是什么？当我们对问题进行了<strong>并发</strong>处理，把修路问题分给了多个工程队，如果多个工程队<strong>同时再施工现场修路</strong>，这就是<strong>并行</strong>，可以说<strong>并发是一种处理问题的思路</strong>，而并行是真正去<strong>实行这种方法</strong>(真正的同时有多支工程队在现场干活)了。</p><p>有下面的一些结论</p><ol><li><strong>当找不到一个问题如果并发的方法，也就不可能对该问题并行执行</strong>。</li></ol><p>还是拿修路为例，如果找不到把路分给多个工程队修的方案(并发)，又怎么会有多个工程队同时在施工现场施工呢(并行)？</p><ol start="2"><li><strong>并行的上限是由并发的方法设计决定的</strong>。</li></ol><p>以修路为例：<strong>并行的上限</strong>(最多有多少工程队能同时在现场施工)是由<strong>并发的方法</strong>(把这条路分给多少个工程队修)所决定的。</p><ol start="3"><li>并发是多个任务交替使用CPU，在只有一个CPU的情况下，同一时刻<strong>只有一个任务</strong>在跑，但任务之间切换非常快，给我们的感觉是<strong>多个任务同时跑</strong>，其实不是。(相当于只有一个工程队的情况)</li><li>只有并行才是真正意义上的多个任务<strong>同时</strong>跑。(<strong>多个CPU</strong>，多个工程队)</li><li>并行跑的多个任务如果是<strong>一个问题分解出来的</strong>，那么这些任务既是并发，又是并行。如果不是<strong>同一个问题</strong>分解出来的，那么是并行，不是并发。</li></ol><p>上面关于串行，并行，并发仅仅局限在单任务中，也是只有一条公路要修。</p><p>而真实计算机中的串行，并发，并行多发生在需要解决多任务问题。计算机中待解决的很多个任务，可以看成是多条待修的公路，而<strong>一个CPU就是一个工程队</strong>。</p><p>当只有单核CPU(单个工程队)的时候，首先可以确定是不可能有<strong>并行</strong>情况出现的。</p><p>单个工程队按照顺序依次修路，把公路A整条修完，再去修公路B，修完公路B，再去修公路C，直到所有的路修完。</p><p>就相当于计算机CPU，先把任务A做完，再把任务B<strong>做完</strong>，再把任务C做完，直到所有的任务完成。这种方式就是<strong>串行</strong>。</p><p>而虽然只有一个工程队，那我工程队今天去修公路A，没有修完，但是明天开始公路A需要保养几天，不能干活了。如果死死坚持串行的话，那工程队这几天不是没事干了嘛，太浪费资源了，所以这时候就可以这几天先修公路B嘛，等到公路A保养好了可以干活了，我再继续修公路A。</p><p>这就相当于CPU先把任务A需要CPU的地方处理完成了，在任务A使用I/O或其他资源，而CPU空闲的时候，CPU<strong>抽空</strong>去把任务B需要CPU部分的部分帮他处理了，这样就大大提高了CPU的利用率，这种方式就是<strong>并发</strong>。</p><p>而如果我有<strong>多个工程队</strong>，那干活的方式就灵活多变了，可以让多个工程队同时<strong>修一条路</strong>，修路这个任务既是<strong>并发，也是并行</strong>。也可以让多个工程队分别去修多条公路，这是<strong>并发，不是并行</strong>。</p><p>相当于有多个CPU，让多个CPU同时处理<strong>一个任务</strong>中多个需要CPU的子任务，<strong>是并行，也是并发</strong>。让多个CPU分别去处理多个任务，<strong>是并发，不是并行</strong>。</p><p>参考资料：</p><p><a href="https://www.bilibili.com/video/BV1N741177F5?from=search&amp;seid=17674790371197472246&amp;spm_id_from=333.337.0.0">B站 蒋炎岩 “操作系统：设计与实现</a></p>]]></content>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;串行并发与并行&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#串行并发与并行&quot;&gt;&lt;/a&gt; 串行，并发与并行&lt;/h2&gt;
+&lt;p&gt;最近看到一个问题 串行，并发与并行的区别，查阅了一些网上的资料和视频，谈谈自己的理解,不当之处，欢迎指正！&lt;/p&gt;
+&lt;p&gt;首先看两句话：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;Concurrency is not Parallelism.  并发不是并行&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;Concurrency enables parallelism &amp;amp; makes parallelism(and scaling and everything) easy. 并发允许去并行，并发让并行更容易&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    <category term="学习笔记" scheme="https://luo41.top/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="操作系统" scheme="https://luo41.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>Spring Autowired的一个小问题</title>

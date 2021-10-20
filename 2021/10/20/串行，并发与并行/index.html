@@ -1,0 +1,70 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="串行，并发与并行"><meta name="keywords" content="操作系统"><meta name="author" content="luo,1127959736@qq.com"><meta name="copyright" content="luo"><title>串行，并发与并行 | luo's Blog</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '5.4.0'
+} </script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="luo's Blog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%B2%E8%A1%8C%E5%B9%B6%E5%8F%91%E4%B8%8E%E5%B9%B6%E8%A1%8C"><span class="toc-number">1.</span> <span class="toc-text"> 串行，并发与并行</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/touxiang.jpg"></div><div class="author-info__name text-center">luo</div><div class="author-info__description text-center">在一群优秀的人中间，常常以为自己是他们一员，然后忘了努力</div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">18</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">16</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">3</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">友情链接</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://m0d1.top">mod1</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://c10udlnk.top">c10udlnk</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://www.fxizenta.design/">Fxizenta</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://mclaren888.cn">Mclaren</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/background2.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">luo's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">luo</a><a class="site-page" href="/archives">时间线</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/categories">分类</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">串行，并发与并行</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-10-20</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">1.4k</span><span class="post-meta__separator">|</span><span>阅读时长: 4 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h2 id="串行并发与并行"><a class="markdownIt-Anchor" href="#串行并发与并行"></a> 串行，并发与并行</h2>
+<p>最近看到一个问题 串行，并发与并行的区别，查阅了一些网上的资料和视频，谈谈自己的理解,不当之处，欢迎指正！</p>
+<p>首先看两句话：</p>
+<blockquote>
+<ul>
+<li>Concurrency is not Parallelism.  并发不是并行</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>Concurrency enables parallelism &amp; makes parallelism(and scaling and everything) easy. 并发允许去并行，并发让并行更容易</li>
+</ul>
+</blockquote>
+<span id="more"></span>
+<p>我的理解是，并发其实是一种<strong>处理问题的方法</strong>，可以让问题处理起来更高效，<strong>但不是必然</strong>。</p>
+<p>关于并发和并行网络上有很多的例子，比如说小学初中常见的数学题目修路，路的规格是5000米×25米，处理这个问题的方法有很多，<strong>只给一个工程队干</strong>，这是一种<strong>串行</strong>的解决方法。分成两条2500×25米的路，分别给两个工程队干，这是一种<strong>并发</strong>的解决方法。</p>
+<p><strong>串行</strong>就是很简单的一个工程队一段一段地修完整路，直到最后解决了修路的问题。</p>
+<p><strong>并发</strong>就是我将这条路分给多个工程队干，至于各个工程队怎么干我不管，等到多个工程队各自完成任务，我这个问题也就解决了，并发相比串行来说，效率提高了不少，但是<strong>并发不是必然的</strong>，因为串行是可以解决问题的，只是我们需要提高效率，追求更快，才考虑通过<strong>并发</strong>去解决问题。</p>
+<p>那么<strong>并行</strong>又是什么？当我们对问题进行了<strong>并发</strong>处理，把修路问题分给了多个工程队，如果多个工程队<strong>同时再施工现场修路</strong>，这就是<strong>并行</strong>，可以说<strong>并发是一种处理问题的思路</strong>，而并行是真正去<strong>实行这种方法</strong>(真正的同时有多支工程队在现场干活)了。</p>
+<p>有下面的一些结论</p>
+<ol>
+<li><strong>当找不到一个问题如果并发的方法，也就不可能对该问题并行执行</strong>。</li>
+</ol>
+<p>还是拿修路为例，如果找不到把路分给多个工程队修的方案(并发)，又怎么会有多个工程队同时在施工现场施工呢(并行)？</p>
+<ol start="2">
+<li><strong>并行的上限是由并发的方法设计决定的</strong>。</li>
+</ol>
+<p>以修路为例：<strong>并行的上限</strong>(最多有多少工程队能同时在现场施工)是由<strong>并发的方法</strong>(把这条路分给多少个工程队修)所决定的。</p>
+<ol start="3">
+<li>并发是多个任务交替使用CPU，在只有一个CPU的情况下，同一时刻<strong>只有一个任务</strong>在跑，但任务之间切换非常快，给我们的感觉是<strong>多个任务同时跑</strong>，其实不是。(相当于只有一个工程队的情况)</li>
+<li>只有并行才是真正意义上的多个任务<strong>同时</strong>跑。(<strong>多个CPU</strong>，多个工程队)</li>
+<li>并行跑的多个任务如果是<strong>一个问题分解出来的</strong>，那么这些任务既是并发，又是并行。如果不是<strong>同一个问题</strong>分解出来的，那么是并行，不是并发。</li>
+</ol>
+<p>上面关于串行，并行，并发仅仅局限在单任务中，也是只有一条公路要修。</p>
+<p>而真实计算机中的串行，并发，并行多发生在需要解决多任务问题。计算机中待解决的很多个任务，可以看成是多条待修的公路，而<strong>一个CPU就是一个工程队</strong>。</p>
+<p>当只有单核CPU(单个工程队)的时候，首先可以确定是不可能有<strong>并行</strong>情况出现的。</p>
+<p>单个工程队按照顺序依次修路，把公路A整条修完，再去修公路B，修完公路B，再去修公路C，直到所有的路修完。</p>
+<p>就相当于计算机CPU，先把任务A做完，再把任务B<strong>做完</strong>，再把任务C做完，直到所有的任务完成。这种方式就是<strong>串行</strong>。</p>
+<p>而虽然只有一个工程队，那我工程队今天去修公路A，没有修完，但是明天开始公路A需要保养几天，不能干活了。如果死死坚持串行的话，那工程队这几天不是没事干了嘛，太浪费资源了，所以这时候就可以这几天先修公路B嘛，等到公路A保养好了可以干活了，我再继续修公路A。</p>
+<p>这就相当于CPU先把任务A需要CPU的地方处理完成了，在任务A使用I/O或其他资源，而CPU空闲的时候，CPU<strong>抽空</strong>去把任务B需要CPU部分的部分帮他处理了，这样就大大提高了CPU的利用率，这种方式就是<strong>并发</strong>。</p>
+<p>而如果我有<strong>多个工程队</strong>，那干活的方式就灵活多变了，可以让多个工程队同时<strong>修一条路</strong>，修路这个任务既是<strong>并发，也是并行</strong>。也可以让多个工程队分别去修多条公路，这是<strong>并发，不是并行</strong>。</p>
+<p>相当于有多个CPU，让多个CPU同时处理<strong>一个任务</strong>中多个需要CPU的子任务，<strong>是并行，也是并发</strong>。让多个CPU分别去处理多个任务，<strong>是并发，不是并行</strong>。</p>
+<p>参考资料：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1N741177F5?from=search&amp;seid=17674790371197472246&amp;spm_id_from=333.337.0.0">B站 蒋炎岩 “操作系统：设计与实现</a></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:1127959736@qq.com">luo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://luo41.top/2021/10/20/串行，并发与并行/">https://luo41.top/2021/10/20/串行，并发与并行/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://luo41.top">luo's Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></div><nav id="pagination"><div class="next-post pull-right"><a href="/2021/09/18/Spring-Autowired%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E9%97%AE%E9%A2%98/"><span>Spring Autowired的一个小问题</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="gitalk-container"></div><script>var gitalk = new Gitalk({
+  clientID: '32255e197922b1ab75ad',
+  clientSecret: '9bbe47fc29096bda7c2e430895ef65fa58c8d7db',
+  repo: 'zhengjianda.github.io',
+  owner: 'zhengjianda',
+  admin: 'zhengjianda',
+  id: md5(decodeURI(location.pathname)),
+  language: 'zh-CN'
+})
+gitalk.render('gitalk-container')</script></div></div><footer class="footer-bg" style="background-image: url(/background2.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2021 By luo</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/lib/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script src="/js/search/local-search.js"></script><script id="ribbon" src="/js/third-party/canvas-ribbon.js" size="100" alpha="0.6" zIndex="-1" data-click="false"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
